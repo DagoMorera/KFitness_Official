@@ -1,402 +1,1526 @@
+
 <!DOCTYPE html>
-<html lang='es'>
+<html lang="es">
 <head>
-  <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title>KFitness - Servicios</title>
-  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
-  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
-  <style>
-    .servicio-card-v2 {
-      display: flex;
-      flex-direction: column;
-      padding: 0;
-      overflow: hidden;
-      min-width: 0;
-      background: #111;
-      border: 1px solid #2c2c2c;
-    }
-    .servicio-card-media {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #1a1a1c;
-      border-bottom: 1px solid rgba(237, 28, 46, 0.25);
-      display: block;
-    }
-    .servicio-card-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      border: 0;
-      cursor: pointer;
-    }
-    .servicio-card-v2[data-servicio-clave='hot-pilates'] .servicio-card-img {
-      object-position: center 32%;
-    }
-    .servicio-card-media-fallback {
-      display: none;
-      width: 100%;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 1rem;
-      color: #cfcfd4;
-      font-weight: 600;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-    }
-    .servicio-card-media--sin-imagen .servicio-card-img {
-      display: none;
-    }
-    .servicio-card-media--sin-imagen .servicio-card-media-fallback {
-      display: flex;
-    }
-    .servicio-card-contenido {
-      display: flex;
-      flex-direction: column;
-      gap: .65rem;
-      padding: 1rem;
-      min-width: 0;
-      flex: 1;
-    }
-    .chip-categoria {
-      display: inline-block;
-      width: fit-content;
-      padding: .15rem .6rem;
-      border-radius: 999px;
-      background: #2b2b2b;
-      color: #ddd;
-      font-size: .78rem;
-    }
-    .servicio-card-titulo {
-      border: 0;
-      background: transparent;
-      color: inherit;
-      text-align: left;
-      padding: 0;
-      margin: 0;
-      font: inherit;
-      font-weight: 700;
-      font-size: 1.2rem;
-      line-height: 1.3;
-      cursor: pointer;
-      white-space: normal;
-      overflow-wrap: anywhere;
-    }
-    .servicio-card-titulo:hover,
-    .servicio-card-titulo:focus-visible {
-      color: #ffffff;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-    .servicio-card-descripcion {
-      margin: 0;
-      color: var(--texto-claro);
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
-      overflow: hidden;
-    }
-    .servicio-card-acciones {
-      display: flex;
-      gap: .5rem;
-      flex-wrap: wrap;
-      margin-top: auto;
-      padding-top: .2rem;
-    }
-    @media (max-width: 620px) {
-      .servicio-card-acciones .boton {
-        flex: 1 1 100%;
-      }
-    }
-  </style>
-</head>
-<body class='fondo-gimnasio-rojo'>
-  <header class='site-header' aria-label='Encabezado del sitio'></header>
-  <main>
-    <section class='seccion servicios-principal' aria-label='Listado y filtros de servicios'>
-      <div class='contenedor'>
-        <div class='pagina-intro-compacta'>
-          <h1 id='servicios-principal-titulo'>Encontrá tu próximo entrenamiento</h1>
-          <p>Explorá nuestros servicios y reservá tu próxima sesión en pocos pasos.</p>
-        </div>
-        <div class='filtros-servicios' role='group' aria-label='Filtros de servicios'>
-          <button class='boton boton-pequeno filtro activo' data-filtro='todos'>Todos</button>
-          <button class='boton boton-pequeno filtro' data-filtro='entrenamiento'>Entrenamiento</button>
-          <button class='boton boton-pequeno filtro' data-filtro='asesoria'>Asesoría</button>
-          <button class='boton boton-pequeno filtro' data-filtro='clases'>Clases</button>
-        </div>
-        <p id='estado-servicios' class='detalle' aria-live='polite'>Cargando servicios...</p>
-        <div class='grid tarjetas-servicios' id='lista-servicios' data-servicios-render='inline'></div>
-        <div class='pagination' id='servicios-pagination-wrap' hidden>
-          <span id='servicios-pagination-summary'>Mostrando 0–0 de 0</span>
-          <div class='pagination-nav'>
-            <button type='button' class='boton boton-secundario boton-pequeno' id='servicios-pagination-prev'>Anterior</button>
-            <span id='servicios-pagination-pageinfo'>Página 1 de 1</span>
-            <button type='button' class='boton boton-secundario boton-pequeno' id='servicios-pagination-next'>Siguiente</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-  <footer class='site-footer' aria-label='Pie de página'></footer>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KFitness - Servicios</title>
 
-  <div id='servicio-detalle-modal' class='perfil-modal-overlay' role='dialog' aria-modal='true' aria-labelledby='servicio-detalle-titulo' hidden>
-    <div class='perfil-modal'>
-      <div class='perfil-modal-header'>
-        <h2 id='servicio-detalle-titulo'>Detalle del servicio</h2>
-      </div>
-      <div id='servicio-detalle-contenido'></div>
-      <div class='perfil-modal-actions'>
-        <button type='button' id='servicio-detalle-cerrar' class='boton boton-secundario'>Cerrar</button>
-      </div>
-    </div>
-  </div>
-  <script src='js/app.js?v=20261112-5' defer></script>
-  <script>
-    (function () {
-      'use strict';
+    <link rel="stylesheet" href="css/estilos.css?v=20261112-5">
+    <link rel="stylesheet" href="css/responsive.css?v=20261112-5">
 
-      var estado = { servicios: [], filtro: 'todos', cargando: false, paginacion: { pagina: 1, pageSize: 6 } };
-      var lista = document.getElementById('lista-servicios');
-      var estadoEl = document.getElementById('estado-servicios');
-      var botonesFiltro = Array.prototype.slice.call(document.querySelectorAll('.filtros-servicios .filtro'));
-      var pagWrap = document.getElementById('servicios-pagination-wrap');
-      var pagSummary = document.getElementById('servicios-pagination-summary');
-      var pagPageInfo = document.getElementById('servicios-pagination-pageinfo');
-      var pagPrev = document.getElementById('servicios-pagination-prev');
-      var pagNext = document.getElementById('servicios-pagination-next');
-      var modal = document.getElementById('servicio-detalle-modal');
-      var modalContenido = document.getElementById('servicio-detalle-contenido');
-      var modalCerrar = document.getElementById('servicio-detalle-cerrar');
-      var focoPrevio = null;
+    <style>
+        /* =========================================
+           KFITNESS - TARJETAS DEL CATÁLOGO
+        ========================================= */
 
-      if (!lista || !estadoEl) return;
-
-      function formatearCRC(valor) {
-        try {
-          return new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'CRC', maximumFractionDigits: 0 }).format(Number(valor || 0));
-        } catch (e) {
-          return '₡ ' + Number(valor || 0).toFixed(0);
-        }
-      }
-
-      function normalizar(texto) {
-        return String(texto || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-      }
-
-      function coincideFiltro(servicio) {
-        if (estado.filtro === 'todos') return true;
-        return normalizar(servicio.categoria).indexOf(estado.filtro) >= 0;
-      }
-
-      function obtenerImagen(servicio) {
-        if (!servicio) return '';
-
-        var nombre = normalizar(servicio.nombre || '');
-        var referencia = String(servicio.imagenPrincipal || '').trim();
-
-        if (!referencia) {
-          if (nombre.indexOf('hot pilates') >= 0) return 'img/servicio-clases.png';
-          return '';
+        .servicio-card-v2 {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            overflow: hidden;
+            min-width: 0;
+            background: #111;
+            border: 1px solid #2c2c2c;
         }
 
-        if (/^\/?img\/[a-z0-9._-]+$/i.test(referencia)) return '/' + referencia.replace(/^\//, '');
-
-        if (/^https?:\/\//i.test(referencia)) return referencia;
-
-        var desdeApi = referencia.match(/[?&]v=([^&]+)/i);
-        if (/service-image\.ashx/i.test(referencia) && desdeApi && desdeApi[1]) {
-          return 'api/service-image.ashx?v=' + encodeURIComponent(decodeURIComponent(desdeApi[1]));
+        .servicio-card-media {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #1a1a1c;
+            border-bottom: 1px solid rgba(237, 28, 46, .25);
         }
 
-        var sinQuery = referencia.split('?')[0];
-        var nombreArchivo = sinQuery.split(/[\\/]/).pop();
-        if (!nombreArchivo) {
-          if (nombre.indexOf('hot pilates') >= 0) return 'img/servicio-clases.png';
-          return '';
+        .servicio-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            cursor: pointer;
         }
 
-        return 'api/service-image.ashx?v=' + encodeURIComponent(nombreArchivo);
-      }
-
-      function abrirModal(titulo, html, disparador) {
-        if (!modal) return;
-        focoPrevio = disparador || document.activeElement;
-        document.getElementById('servicio-detalle-titulo').textContent = titulo;
-        modalContenido.innerHTML = html;
-        modal.hidden = false;
-        if (modalCerrar) modalCerrar.focus();
-      }
-
-      function cerrarModal() {
-        if (!modal) return;
-        modal.hidden = true;
-        modalContenido.innerHTML = '';
-        if (focoPrevio && typeof focoPrevio.focus === 'function') focoPrevio.focus();
-      }
-
-      function crearCard(servicio) {
-        var card = document.createElement('article');
-        var imagenUrl = obtenerImagen(servicio);
-        var nombreServicio = normalizar(servicio && servicio.nombre ? servicio.nombre : '');
-        card.className = 'tarjeta servicio-card-v2';
-        if (nombreServicio.indexOf('hot pilates') >= 0) card.setAttribute('data-servicio-clave', 'hot-pilates');
-        card.innerHTML =
-          '<div class="servicio-card-media">' +
-            '<img class="servicio-card-img" alt="' + (servicio.nombre || 'Servicio') + '" role="button" tabindex="0" src="' + (imagenUrl || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==') + '">' +
-            '<div class="servicio-card-media-fallback" aria-hidden="true">Imagen no disponible</div>' +
-          '</div>' +
-          '<div class="servicio-card-contenido">' +
-            '<span class="chip-categoria">' + (servicio.categoria || 'Servicio') + '</span>' +
-            '<button type="button" class="servicio-card-titulo">' + (servicio.nombre || 'Servicio') + '</button>' +
-            '<p class="servicio-card-descripcion">' + (servicio.descripcion || '') + '</p>' +
-            '<div class="servicio-card-acciones">' +
-              '<a class="boton boton-principal" href="reservas.html?servicio=' + encodeURIComponent(servicio.idProducto) + '">Reservar</a>' +
-              '<button type="button" class="boton boton-secundario">Ver detalle</button>' +
-            '</div>' +
-          '</div>';
-
-        var media = card.querySelector('.servicio-card-media');
-        var imagen = card.querySelector('.servicio-card-img');
-        var titulo = card.querySelector('.servicio-card-titulo');
-        var ver = card.querySelector('.boton-secundario');
-
-        function mostrarFallbackImagen() {
-          if (media) media.classList.add('servicio-card-media--sin-imagen');
+        .servicio-card-v2[data-servicio-clave="hot-pilates"]
+        .servicio-card-img {
+            object-position: center 32%;
         }
 
-        if (imagen) {
-          if (!imagenUrl) {
-            mostrarFallbackImagen();
-          } else {
-            imagen.addEventListener('error', mostrarFallbackImagen);
-          }
+        .servicio-card-media-fallback {
+            display: none;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            color: #ddd;
+            text-align: center;
         }
 
-        function abrirDetalle(disparador) {
-          abrirModal(
-            servicio.nombre || 'Detalle del servicio',
-            '<p><strong>Categoría:</strong> ' + (servicio.categoria || 'N/D') + '</p>' +
-            '<p><strong>Precio:</strong> ' + formatearCRC(servicio.precio) + '</p>' +
-            '<p>' + (servicio.descripcion || '') + '</p>',
-            disparador
-          );
+        .servicio-card-media--sin-imagen .servicio-card-img {
+            display: none;
         }
 
-        if (imagen) {
-          imagen.addEventListener('click', function () { abrirDetalle(imagen); });
-          imagen.addEventListener('keydown', function (ev) {
-            if (ev.key === 'Enter' || ev.key === ' ') {
-              ev.preventDefault();
-              abrirDetalle(imagen);
+        .servicio-card-media--sin-imagen
+        .servicio-card-media-fallback {
+            display: flex;
+        }
+
+        .servicio-card-contenido {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            gap: .65rem;
+            padding: 1rem;
+            min-width: 0;
+        }
+
+        .chip-categoria {
+            display: inline-block;
+            width: fit-content;
+            padding: .2rem .65rem;
+            border-radius: 999px;
+            background: #29292d;
+            color: #ddd;
+            font-size: .78rem;
+        }
+
+        .servicio-card-titulo {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            text-align: left;
+            font: inherit;
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            cursor: pointer;
+            overflow-wrap: anywhere;
+        }
+
+            .servicio-card-titulo:hover {
+                color: #fff;
+                text-decoration: underline;
+                text-underline-offset: 3px;
             }
-          });
+
+        .servicio-card-descripcion {
+            margin: 0;
+            color: var(--texto-claro);
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
         }
 
-        if (titulo) {
-          titulo.addEventListener('click', function () { abrirDetalle(titulo); });
+        .servicio-card-acciones {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+            margin-top: auto;
         }
 
-        if (ver) {
-          ver.addEventListener('click', function () { abrirDetalle(ver); });
+        /* =========================================
+           KFITNESS TRAINING EXPERIENCE
+           PANEL LATERAL
+        ========================================= */
+
+        #servicio-detalle-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: block;
+            background: transparent !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            pointer-events: none;
+            visibility: visible;
+            opacity: 1;
         }
 
-        return card;
-      }
+            #servicio-detalle-modal[hidden] {
+                display: none !important;
+            }
 
-      function renderPaginacion(total, pagina, pageSize) {
-        if (!pagWrap || !pagSummary || !pagPageInfo || !pagPrev || !pagNext) return;
-        var totalPaginas = total > 0 ? Math.ceil(total / pageSize) : 1;
-        var actual = pagina;
-        if (actual < 1) actual = 1;
-        if (actual > totalPaginas) actual = totalPaginas;
-        var desde = total > 0 ? ((actual - 1) * pageSize) + 1 : 0;
-        var hasta = total > 0 ? Math.min(actual * pageSize, total) : 0;
-        pagSummary.textContent = 'Mostrando ' + String(desde) + '–' + String(hasta) + ' de ' + String(total);
-        pagPageInfo.textContent = 'Página ' + String(actual) + ' de ' + String(totalPaginas);
-        pagPrev.disabled = actual <= 1;
-        pagNext.disabled = actual >= totalPaginas;
-        pagWrap.hidden = total <= pageSize;
-      }
+            #servicio-detalle-modal .servicio-panel-premium {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                display: flex;
+                flex-direction: column;
+                width: min(490px, 100vw);
+                height: 100%;
+                max-height: none;
+                max-width: none;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                border-left: 2px solid #ed1c2e;
+                border-radius: 22px 0 0 22px;
+                background: #101013;
+                color: #fff;
+                box-shadow: -18px 0 55px rgba(0, 0, 0, .48);
+                transform: translateX(105%);
+                transition: transform .42s cubic-bezier(.2, .8, .2, 1);
+                pointer-events: auto;
+                overflow: hidden;
+            }
 
-      function render() {
-        var filtrados = estado.servicios.filter(coincideFiltro);
-        var total = filtrados.length;
-        var pageSize = estado.paginacion.pageSize;
-        var totalPaginas = total > 0 ? Math.ceil(total / pageSize) : 1;
-        if (estado.paginacion.pagina > totalPaginas) estado.paginacion.pagina = totalPaginas;
-        if (estado.paginacion.pagina < 1) estado.paginacion.pagina = 1;
+            #servicio-detalle-modal.is-open .servicio-panel-premium {
+                transform: translateX(0);
+            }
 
-        lista.innerHTML = '';
-        if (!filtrados.length) {
-          renderPaginacion(0, 1, pageSize);
-          estadoEl.textContent = 'No hay servicios para este filtro.';
-          return;
+        /* Encabezado */
+
+        .servicio-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 19px 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            background: #151518;
+            flex-shrink: 0;
         }
 
-        var inicio = (estado.paginacion.pagina - 1) * pageSize;
-        var fin = Math.min(inicio + pageSize, total);
-        var paginaItems = filtrados.slice(inicio, fin);
-        var frag = document.createDocumentFragment();
-        paginaItems.forEach(function (s) { frag.appendChild(crearCard(s)); });
-        lista.appendChild(frag);
+        .servicio-panel-marca {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-        renderPaginacion(total, estado.paginacion.pagina, pageSize);
-        estadoEl.textContent = 'Mostrando ' + paginaItems.length + ' de ' + total + ' servicio(s).';
-      }
+        .servicio-panel-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #ed1c2e;
+            color: white;
+            font-size: 23px;
+            font-weight: 900;
+        }
 
-      function cargarServicios() {
-        if (estado.cargando) return;
-        estado.cargando = true;
-        estadoEl.textContent = 'Cargando servicios...';
-        fetch('api/services.ashx', { credentials: 'same-origin' })
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            if (!data || !data.success || !Array.isArray(data.servicios)) throw new Error((data && data.message) || 'No fue posible cargar servicios.');
-            estado.servicios = data.servicios;
-            render();
-          })
-          .catch(function (err) {
-            estadoEl.textContent = err && err.message ? err.message : 'No fue posible cargar servicios.';
-          })
-          .finally(function () { estado.cargando = false; });
-      }
+        .servicio-panel-marca strong {
+            display: block;
+            color: #fff;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
 
-      botonesFiltro.forEach(function (btn) {
-        btn.addEventListener('click', function (ev) {
-          ev.preventDefault();
-          estado.filtro = btn.getAttribute('data-filtro') || 'todos';
-          estado.paginacion.pagina = 1;
-          botonesFiltro.forEach(function (b) { b.classList.toggle('activo', b === btn); });
-          render();
-        });
-      });
+        .servicio-panel-marca small {
+            display: block;
+            margin-top: 3px;
+            color: #aaaab0;
+            font-size: 10px;
+            letter-spacing: 1.6px;
+        }
 
-      if (pagPrev) {
-        pagPrev.addEventListener('click', function () {
-          if (estado.paginacion.pagina <= 1) return;
-          estado.paginacion.pagina -= 1;
-          render();
-        });
-      }
+        .servicio-panel-cerrar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            border: 1px solid #414147;
+            border-radius: 12px;
+            background: #242428;
+            color: white;
+            font-size: 27px;
+            cursor: pointer;
+            transition: background .25s, transform .25s;
+        }
 
-      if (pagNext) {
-        pagNext.addEventListener('click', function () {
-          estado.paginacion.pagina += 1;
-          render();
-        });
-      }
+            .servicio-panel-cerrar:hover {
+                background: #ed1c2e;
+                transform: rotate(90deg);
+            }
 
-      if (modalCerrar) modalCerrar.addEventListener('click', cerrarModal);
-      if (modal) modal.addEventListener('click', function (ev) { if (ev.target === modal) cerrarModal(); });
-      document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && modal && !modal.hidden) cerrarModal(); });
+        /* Contenido desplazable */
 
-      cargarServicios();
-    })();
-  </script>
-  <script src='js/site-info.js?v=20261112-5' defer></script>
+        .servicio-panel-contenido {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 20px 22px 28px;
+            scrollbar-color: #555 #171719;
+        }
+
+        /* Imagen protagonista */
+
+        .servicio-experience-imagen {
+            position: relative;
+            height: 235px;
+            overflow: hidden;
+            border-radius: 17px;
+            background: #202024;
+        }
+
+            .servicio-experience-imagen img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                animation: imagenExperience .65s ease both;
+                transition: transform .6s ease;
+            }
+
+            .servicio-experience-imagen:hover img {
+                transform: scale(1.05);
+            }
+
+            .servicio-experience-imagen::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient( to top, rgba(0, 0, 0, .75), transparent 65% );
+                pointer-events: none;
+            }
+
+            .servicio-experience-imagen span {
+                position: absolute;
+                left: 17px;
+                bottom: 16px;
+                z-index: 1;
+                padding: 8px 12px;
+                border-radius: 8px;
+                background: rgba(237, 28, 46, .94);
+                color: white;
+                font-size: 11px;
+                font-weight: 800;
+                letter-spacing: 1px;
+            }
+
+        /* Identificador */
+
+        .servicio-experience-indicador {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0 12px;
+        }
+
+            .servicio-experience-indicador span {
+                color: #ed1c2e;
+                font-size: 11px;
+                font-weight: 800;
+                letter-spacing: 1.5px;
+            }
+
+            .servicio-experience-indicador small {
+                color: #9999a0;
+                font-size: 12px;
+            }
+
+        /* Nombre y descripción */
+
+        #servicio-detalle-titulo {
+            margin: 0 0 12px;
+            color: #fff;
+            font-size: clamp(24px, 3vw, 31px);
+            font-weight: 850;
+            line-height: 1.18;
+            overflow-wrap: anywhere;
+        }
+
+        .servicio-experience-resumen {
+            margin: 0 0 22px;
+            color: #c4c4ca;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* Precio destacado */
+
+        .servicio-experience-precio {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 20px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(237, 28, 46, .35);
+            border-radius: 16px;
+            background: linear-gradient(125deg, #292024, #19191d);
+        }
+
+            .servicio-experience-precio small {
+                display: block;
+                margin-bottom: 7px;
+                color: #bbb;
+                font-size: 11px;
+                letter-spacing: 1px;
+            }
+
+            .servicio-experience-precio strong {
+                color: white;
+                font-size: 27px;
+                font-weight: 850;
+            }
+
+        .servicio-experience-precio-icono {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: #ed1c2e;
+            color: #fff;
+            font-size: 25px;
+        }
+
+        /* Información */
+
+        .servicio-experience-info {
+            padding: 22px;
+            margin-bottom: 18px;
+            border: 1px solid #343439;
+            border-radius: 16px;
+            background: #1b1b1f;
+        }
+
+            .servicio-experience-info h3 {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin: 0 0 16px;
+                color: white;
+                font-size: 17px;
+            }
+
+                .servicio-experience-info h3 span {
+                    color: #ed1c2e;
+                    font-size: 22px;
+                }
+
+            .servicio-experience-info p {
+                margin: 0;
+                color: #c4c4ca;
+                font-size: 14px;
+                line-height: 1.8;
+                overflow-wrap: anywhere;
+            }
+
+        .servicio-experience-categoria {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-top: 17px;
+            margin-top: 18px;
+            border-top: 1px solid #38383e;
+            color: #ddd;
+            font-size: 13px;
+        }
+
+            .servicio-experience-categoria span {
+                color: #ed1c2e;
+                font-size: 19px;
+            }
+
+        /* Pie fijo del panel */
+
+        .servicio-panel-footer {
+            flex-shrink: 0;
+            padding: 16px 22px 20px;
+            border-top: 1px solid #34343a;
+            background: #151518;
+        }
+
+        .servicio-panel-navegacion {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .servicio-panel-nav-btn {
+            padding: 9px 10px;
+            border: 1px solid #3a3a40;
+            border-radius: 9px;
+            background: #242428;
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+            .servicio-panel-nav-btn:hover:not(:disabled) {
+                background: #ed1c2e;
+            }
+
+            .servicio-panel-nav-btn:disabled {
+                opacity: .35;
+                cursor: not-allowed;
+            }
+
+        .servicio-panel-contador {
+            color: #bbb;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .servicio-panel-reservar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 16px 19px;
+            border-radius: 12px;
+            background: #ed1c2e;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 850;
+            letter-spacing: .6px;
+            transition: background .2s, transform .2s;
+        }
+
+            .servicio-panel-reservar:hover {
+                background: #c91526;
+                transform: translateY(-2px);
+                color: white;
+            }
+
+        /* Animaciones */
+
+        .servicio-panel-contenido > * {
+            animation: contenidoExperience .4s ease both;
+        }
+
+            .servicio-panel-contenido > *:nth-child(2) {
+                animation-delay: .06s;
+            }
+
+            .servicio-panel-contenido > *:nth-child(3) {
+                animation-delay: .1s;
+            }
+
+            .servicio-panel-contenido > *:nth-child(4) {
+                animation-delay: .14s;
+            }
+
+        @keyframes contenidoExperience {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes imagenExperience {
+            from {
+                opacity: .5;
+                transform: scale(1.08);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Adaptación a celulares */
+
+        @media (max-width: 600px) {
+            #servicio-detalle-modal .servicio-panel-premium {
+                width: 100vw;
+                border-radius: 0;
+            }
+
+            .servicio-panel-contenido {
+                padding: 16px;
+            }
+
+            .servicio-panel-header,
+            .servicio-panel-footer {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .servicio-experience-imagen {
+                height: 195px;
+            }
+
+            .servicio-experience-precio strong {
+                font-size: 23px;
+            }
+
+            .servicio-card-acciones .boton {
+                flex: 1 1 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #servicio-detalle-modal .servicio-panel-premium,
+            .servicio-panel-contenido > *,
+            .servicio-experience-imagen img {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="fondo-gimnasio-rojo">
+
+    <header class="site-header"
+            aria-label="Encabezado del sitio"></header>
+
+    <main>
+        <section class="seccion servicios-principal"
+                 aria-label="Listado y filtros de servicios">
+
+            <div class="contenedor">
+
+                <div class="pagina-intro-compacta">
+                    <h1 id="servicios-principal-titulo">
+                        Encontrá tu próximo entrenamiento
+                    </h1>
+                    <p>
+                        Explorá nuestros servicios y reservá tu
+                        próxima sesión en pocos pasos.
+                    </p>
+                </div>
+
+                <div class="filtros-servicios"
+                     role="group"
+                     aria-label="Filtros de servicios">
+
+                    <button class="boton boton-pequeno filtro activo"
+                            data-filtro="todos">
+                        Todos
+                    </button>
+
+                    <button class="boton boton-pequeno filtro"
+                            data-filtro="entrenamiento">
+                        Entrenamiento
+                    </button>
+
+                    <button class="boton boton-pequeno filtro"
+                            data-filtro="asesoria">
+                        Asesoría
+                    </button>
+
+                    <button class="boton boton-pequeno filtro"
+                            data-filtro="clases">
+                        Clases
+                    </button>
+                </div>
+
+                <p id="estado-servicios"
+                   class="detalle"
+                   aria-live="polite">
+                    Cargando servicios...
+                </p>
+
+                <div class="grid tarjetas-servicios"
+                     id="lista-servicios"
+                     data-servicios-render="inline">
+                </div>
+
+                <div class="pagination"
+                     id="servicios-pagination-wrap"
+                     hidden>
+
+                    <span id="servicios-pagination-summary">
+                        Mostrando 0–0 de 0
+                    </span>
+
+                    <div class="pagination-nav">
+
+                        <button type="button"
+                                class="boton boton-secundario boton-pequeno"
+                                id="servicios-pagination-prev">
+                            Anterior
+                        </button>
+
+                        <span id="servicios-pagination-pageinfo">
+                            Página 1 de 1
+                        </span>
+
+                        <button type="button"
+                                class="boton boton-secundario boton-pequeno"
+                                id="servicios-pagination-next">
+                            Siguiente
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer"
+            aria-label="Pie de página"></footer>
+
+    <!-- =========================================
+         KFITNESS TRAINING EXPERIENCE
+         PANEL LATERAL
+    ========================================= -->
+
+    <aside id="servicio-detalle-modal"
+           class="perfil-modal-overlay"
+           aria-label="Detalle del servicio"
+           hidden>
+
+        <div class="perfil-modal servicio-panel-premium">
+
+            <!-- Encabezado -->
+            <div class="servicio-panel-header">
+
+                <div class="servicio-panel-marca">
+
+                    <div class="servicio-panel-logo"
+                         aria-hidden="true">
+                        K
+                    </div>
+
+                    <div>
+                        <strong>KFITNESS</strong>
+                        <small>TRAINING EXPERIENCE</small>
+                    </div>
+                </div>
+
+                <button type="button"
+                        id="servicio-detalle-cerrar"
+                        class="servicio-panel-cerrar"
+                        aria-label="Cerrar detalle">
+                    &times;
+                </button>
+
+            </div>
+
+            <!-- Información del servicio -->
+            <div id="servicio-detalle-contenido"
+                 class="servicio-panel-contenido">
+            </div>
+
+            <!-- Navegación y reserva -->
+            <div class="servicio-panel-footer">
+
+                <div class="servicio-panel-navegacion">
+
+                    <button type="button"
+                            id="servicio-anterior"
+                            class="servicio-panel-nav-btn">
+                        &#8592; Anterior
+                    </button>
+
+                    <span id="servicio-panel-contador"
+                          class="servicio-panel-contador">
+                        01 / 01
+                    </span>
+
+                    <button type="button"
+                            id="servicio-siguiente"
+                            class="servicio-panel-nav-btn">
+                        Siguiente &#8594;
+                    </button>
+
+                </div>
+
+                <a id="servicio-panel-reservar"
+                   class="servicio-panel-reservar"
+                   href="reservas.html">
+                    <span>RESERVAR ESTE SERVICIO</span>
+                    <span aria-hidden="true">&#8594;</span>
+                </a>
+
+            </div>
+
+        </div>
+    </aside>
+
+    <script src="js/app.js?v=20261112-5" defer></script>
+
+    <script>
+        (function () {
+            'use strict';
+
+            /* =====================================
+               ESTADO Y ELEMENTOS
+            ===================================== */
+
+            var estado = {
+                servicios: [],
+                filtro: 'todos',
+                cargando: false,
+                paginacion: {
+                    pagina: 1,
+                    pageSize: 6
+                }
+            };
+
+            var lista = document.getElementById('lista-servicios');
+            var estadoEl = document.getElementById('estado-servicios');
+
+            var botonesFiltro = Array.prototype.slice.call(
+                document.querySelectorAll('.filtros-servicios .filtro')
+            );
+
+            var pagWrap = document.getElementById(
+                'servicios-pagination-wrap'
+            );
+
+            var pagSummary = document.getElementById(
+                'servicios-pagination-summary'
+            );
+
+            var pagPageInfo = document.getElementById(
+                'servicios-pagination-pageinfo'
+            );
+
+            var pagPrev = document.getElementById(
+                'servicios-pagination-prev'
+            );
+
+            var pagNext = document.getElementById(
+                'servicios-pagination-next'
+            );
+
+            var modal = document.getElementById(
+                'servicio-detalle-modal'
+            );
+
+            var modalContenido = document.getElementById(
+                'servicio-detalle-contenido'
+            );
+
+            var modalCerrar = document.getElementById(
+                'servicio-detalle-cerrar'
+            );
+
+            var navAnterior = document.getElementById(
+                'servicio-anterior'
+            );
+
+            var navSiguiente = document.getElementById(
+                'servicio-siguiente'
+            );
+
+            var contador = document.getElementById(
+                'servicio-panel-contador'
+            );
+
+            var botonReservar = document.getElementById(
+                'servicio-panel-reservar'
+            );
+
+            var focoPrevio = null;
+            var indiceActual = -1;
+            var serviciosNavegacion = [];
+            var cierrePendiente = null;
+
+            if (!lista || !estadoEl) return;
+
+            /* =====================================
+               FUNCIONES GENERALES
+            ===================================== */
+
+            function formatearCRC(valor) {
+                try {
+                    return new Intl.NumberFormat('es-CR', {
+                        style: 'currency',
+                        currency: 'CRC',
+                        maximumFractionDigits: 0
+                    }).format(Number(valor || 0));
+                } catch (e) {
+                    return '₡ ' + Number(valor || 0).toFixed(0);
+                }
+            }
+
+            function normalizar(texto) {
+                return String(texto || '')
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .trim();
+            }
+
+            function escaparHTML(valor) {
+                return String(valor == null ? '' : valor)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function coincideFiltro(servicio) {
+                if (estado.filtro === 'todos') return true;
+
+                return normalizar(servicio.categoria)
+                    .indexOf(estado.filtro) >= 0;
+            }
+
+            /* =====================================
+               IMÁGENES LOCALES
+               SIN MODIFICAR LA BASE DE DATOS
+            ===================================== */
+
+            function obtenerImagenLocal(servicio) {
+                var nombre = normalizar(servicio.nombre);
+                var categoria = normalizar(servicio.categoria);
+
+                /*
+                 * Primero identificamos el servicio
+                 * por su nombre, cuando sea posible.
+                 */
+
+                if (nombre.indexOf('pilates') >= 0 ||
+                    nombre.indexOf('yoga') >= 0 ||
+                    nombre.indexOf('clase') >= 0) {
+                    return 'img/servicio-clases.png';
+                }
+
+                if (nombre.indexOf('asesor') >= 0 ||
+                    nombre.indexOf('nutric') >= 0) {
+                    return 'img/servicio-asesoria.png';
+                }
+
+                if (nombre.indexOf('bienestar') >= 0 ||
+                    nombre.indexOf('salud') >= 0) {
+                    return 'img/servicio-bienestar.png';
+                }
+
+                if (nombre.indexOf('seguimiento') >= 0 ||
+                    nombre.indexOf('progreso') >= 0) {
+                    return 'img/servicio-seguimiento.png';
+                }
+
+                if (nombre.indexOf('plan') >= 0) {
+                    return 'img/servicio-planes.png';
+                }
+
+                /*
+                 * Después usamos la categoría.
+                 */
+
+                if (categoria.indexOf('clase') >= 0) {
+                    return 'img/servicio-clases.png';
+                }
+
+                if (categoria.indexOf('asesor') >= 0) {
+                    return 'img/servicio-asesoria.png';
+                }
+
+                if (categoria.indexOf('bienestar') >= 0) {
+                    return 'img/servicio-bienestar.png';
+                }
+
+                if (categoria.indexOf('seguimiento') >= 0) {
+                    return 'img/servicio-seguimiento.png';
+                }
+
+                if (categoria.indexOf('plan') >= 0) {
+                    return 'img/servicio-planes.png';
+                }
+
+                /*
+                 * Imagen de prueba para los demás.
+                 */
+
+                return 'img/servicio-entrenamiento.png';
+            }
+
+            /* =====================================
+               PANEL DE DETALLE
+            ===================================== */
+
+            function obtenerServiciosNavegacion() {
+                return estado.servicios.filter(coincideFiltro);
+            }
+
+            function mostrarDetalle(servicio) {
+                if (!servicio || !modalContenido) return;
+
+                var imagen = obtenerImagenLocal(servicio);
+
+                var nombre = escaparHTML(
+                    servicio.nombre || 'Detalle del servicio'
+                );
+
+                var categoria = escaparHTML(
+                    servicio.categoria || 'Servicio'
+                );
+
+                var descripcion = escaparHTML(
+                    servicio.descripcion ||
+                    'Sin descripción disponible.'
+                );
+
+                var precio = formatearCRC(servicio.precio);
+
+                var posicion = indiceActual + 1;
+                var total = serviciosNavegacion.length;
+
+                /*
+                 * Creamos el contenido dinámico
+                 * del panel.
+                 */
+
+                modalContenido.innerHTML =
+                    '<div class="servicio-experience-imagen">' +
+                    '<img src="' + imagen + '"' +
+                    ' alt="' + nombre + '">' +
+                    '<span>KFITNESS EXPERIENCE</span>' +
+                    '</div>' +
+
+                    '<div class="servicio-experience-indicador">' +
+                    '<span>● SERVICIO SELECCIONADO</span>' +
+                    '<small>' +
+                    String(posicion).padStart(2, '0') +
+                    ' / ' +
+                    String(total).padStart(2, '0') +
+                    '</small>' +
+                    '</div>' +
+
+                    '<h2 id="servicio-detalle-titulo">' +
+                    nombre +
+                    '</h2>' +
+
+                    '<p class="servicio-experience-resumen">' +
+                    'Conocé este servicio y descubrí si ' +
+                    'se ajusta a tus objetivos.' +
+                    '</p>' +
+
+                    '<div class="servicio-experience-precio">' +
+                    '<div>' +
+                    '<small>PRECIO DEL SERVICIO</small>' +
+                    '<strong>' + precio + '</strong>' +
+                    '</div>' +
+                    '<div class="servicio-experience-precio-icono"' +
+                    ' aria-hidden="true">₡</div>' +
+                    '</div>' +
+
+                    '<div class="servicio-experience-info">' +
+                    '<h3>' +
+                    '<span aria-hidden="true">◎</span>' +
+                    ' ACERCA DEL SERVICIO' +
+                    '</h3>' +
+                    '<p>' + descripcion + '</p>' +
+
+                    '<div class="servicio-experience-categoria">' +
+                    '<span aria-hidden="true">◆</span>' +
+                    '<strong>Categoría:</strong> ' +
+                    categoria +
+                    '</div>' +
+                    '</div>';
+
+                /*
+                 * Actualizamos el contador
+                 * y los botones de navegación.
+                 */
+
+                if (contador) {
+                    contador.textContent =
+                        String(posicion).padStart(2, '0') +
+                        ' / ' +
+                        String(total).padStart(2, '0');
+                }
+
+                if (navAnterior) {
+                    navAnterior.disabled = indiceActual <= 0;
+                }
+
+                if (navSiguiente) {
+                    navSiguiente.disabled =
+                        indiceActual >= total - 1;
+                }
+
+                /*
+                 * La reserva utiliza el ID real
+                 * del servicio seleccionado.
+                 */
+
+                if (botonReservar) {
+                    botonReservar.href =
+                        'reservas.html?servicio=' +
+                        encodeURIComponent(servicio.idProducto);
+                }
+
+                modalContenido.scrollTop = 0;
+            }
+
+            function abrirDetalle(servicio, disparador) {
+                if (!modal || !servicio) return;
+
+                if (cierrePendiente !== null) {
+                    clearTimeout(cierrePendiente);
+                    cierrePendiente = null;
+                }
+
+                serviciosNavegacion =
+                    obtenerServiciosNavegacion();
+
+                indiceActual = serviciosNavegacion.findIndex(
+                    function (item) {
+                        return String(item.idProducto) ===
+                            String(servicio.idProducto);
+                    }
+                );
+
+                if (indiceActual < 0) {
+                    serviciosNavegacion = [servicio];
+                    indiceActual = 0;
+                }
+
+                focoPrevio = disparador || document.activeElement;
+
+                mostrarDetalle(servicio);
+
+                modal.hidden = false;
+
+                /*
+                 * Activamos la animación lateral.
+                 */
+
+                requestAnimationFrame(function () {
+                    modal.classList.add('is-open');
+                });
+
+                if (modalCerrar) {
+                    modalCerrar.focus();
+                }
+            }
+
+            function cerrarModal() {
+                if (!modal || modal.hidden) return;
+
+                modal.classList.remove('is-open');
+
+                /*
+                 * Esperamos la animación de salida
+                 * antes de ocultar el panel.
+                 */
+
+                cierrePendiente = setTimeout(function () {
+                    modal.hidden = true;
+                    modalContenido.innerHTML = '';
+                    cierrePendiente = null;
+                }, 420);
+
+                if (focoPrevio &&
+                    typeof focoPrevio.focus === 'function') {
+                    focoPrevio.focus();
+                }
+            }
+
+            function navegarServicio(direccion) {
+                var nuevoIndice = indiceActual + direccion;
+
+                if (nuevoIndice < 0 ||
+                    nuevoIndice >= serviciosNavegacion.length) {
+                    return;
+                }
+
+                indiceActual = nuevoIndice;
+
+                mostrarDetalle(
+                    serviciosNavegacion[indiceActual]
+                );
+            }
+
+            /* =====================================
+               TARJETAS DEL CATÁLOGO
+            ===================================== */
+
+            function crearCard(servicio) {
+                var card = document.createElement('article');
+
+                var imagenUrl = obtenerImagenLocal(servicio);
+
+                var nombre = escaparHTML(
+                    servicio.nombre || 'Servicio'
+                );
+
+                var categoria = escaparHTML(
+                    servicio.categoria || 'Servicio'
+                );
+
+                var descripcion = escaparHTML(
+                    servicio.descripcion || ''
+                );
+
+                var nombreNormalizado = normalizar(
+                    servicio.nombre || ''
+                );
+
+                card.className = 'tarjeta servicio-card-v2';
+
+                if (nombreNormalizado.indexOf('hot pilates') >= 0) {
+                    card.setAttribute(
+                        'data-servicio-clave',
+                        'hot-pilates'
+                    );
+                }
+
+                card.innerHTML =
+                    '<div class="servicio-card-media">' +
+                    '<img class="servicio-card-img"' +
+                    ' alt="' + nombre + '"' +
+                    ' role="button"' +
+                    ' tabindex="0"' +
+                    ' src="' + imagenUrl + '">' +
+
+                    '<div class="servicio-card-media-fallback"' +
+                    ' aria-hidden="true">' +
+                    'Imagen no disponible' +
+                    '</div>' +
+                    '</div>' +
+
+                    '<div class="servicio-card-contenido">' +
+
+                    '<span class="chip-categoria">' +
+                    categoria +
+                    '</span>' +
+
+                    '<button type="button"' +
+                    ' class="servicio-card-titulo">' +
+                    nombre +
+                    '</button>' +
+
+                    '<p class="servicio-card-descripcion">' +
+                    descripcion +
+                    '</p>' +
+
+                    '<div class="servicio-card-acciones">' +
+
+                    '<a class="boton boton-principal"' +
+                    ' href="reservas.html?servicio=' +
+                    encodeURIComponent(servicio.idProducto) +
+                    '">' +
+                    'Reservar' +
+                    '</a>' +
+
+                    '<button type="button"' +
+                    ' class="boton boton-secundario">' +
+                    'Ver detalle' +
+                    '</button>' +
+
+                    '</div>' +
+
+                    '</div>';
+
+                var media = card.querySelector(
+                    '.servicio-card-media'
+                );
+
+                var imagen = card.querySelector(
+                    '.servicio-card-img'
+                );
+
+                var titulo = card.querySelector(
+                    '.servicio-card-titulo'
+                );
+
+                var ver = card.querySelector(
+                    '.boton-secundario'
+                );
+
+                function mostrarFallbackImagen() {
+                    if (media) {
+                        media.classList.add(
+                            'servicio-card-media--sin-imagen'
+                        );
+                    }
+                }
+
+                if (imagen) {
+                    imagen.addEventListener(
+                        'error',
+                        mostrarFallbackImagen
+                    );
+
+                    imagen.addEventListener('click', function () {
+                        abrirDetalle(servicio, imagen);
+                    });
+
+                    imagen.addEventListener('keydown', function (ev) {
+                        if (ev.key === 'Enter' || ev.key === ' ') {
+                            ev.preventDefault();
+                            abrirDetalle(servicio, imagen);
+                        }
+                    });
+                }
+
+                if (titulo) {
+                    titulo.addEventListener('click', function () {
+                        abrirDetalle(servicio, titulo);
+                    });
+                }
+
+                if (ver) {
+                    ver.addEventListener('click', function () {
+                        abrirDetalle(servicio, ver);
+                    });
+                }
+
+                return card;
+            }
+
+            /* =====================================
+               PAGINACIÓN
+            ===================================== */
+
+            function renderPaginacion(total, pagina, pageSize) {
+                if (!pagWrap ||
+                    !pagSummary ||
+                    !pagPageInfo ||
+                    !pagPrev ||
+                    !pagNext) {
+                    return;
+                }
+
+                var totalPaginas = total > 0
+                    ? Math.ceil(total / pageSize)
+                    : 1;
+
+                var actual = Math.max(
+                    1,
+                    Math.min(pagina, totalPaginas)
+                );
+
+                var desde = total > 0
+                    ? ((actual - 1) * pageSize) + 1
+                    : 0;
+
+                var hasta = total > 0
+                    ? Math.min(actual * pageSize, total)
+                    : 0;
+
+                pagSummary.textContent =
+                    'Mostrando ' + desde +
+                    '–' + hasta +
+                    ' de ' + total;
+
+                pagPageInfo.textContent =
+                    'Página ' + actual +
+                    ' de ' + totalPaginas;
+
+                pagPrev.disabled = actual <= 1;
+                pagNext.disabled = actual >= totalPaginas;
+
+                pagWrap.hidden = total <= pageSize;
+            }
+
+            /* =====================================
+               RENDERIZADO DEL CATÁLOGO
+            ===================================== */
+
+            function render() {
+                var filtrados = estado.servicios.filter(
+                    coincideFiltro
+                );
+
+                var total = filtrados.length;
+                var pageSize = estado.paginacion.pageSize;
+
+                var totalPaginas = total > 0
+                    ? Math.ceil(total / pageSize)
+                    : 1;
+
+                if (estado.paginacion.pagina > totalPaginas) {
+                    estado.paginacion.pagina = totalPaginas;
+                }
+
+                if (estado.paginacion.pagina < 1) {
+                    estado.paginacion.pagina = 1;
+                }
+
+                lista.innerHTML = '';
+
+                if (!filtrados.length) {
+                    renderPaginacion(0, 1, pageSize);
+
+                    estadoEl.textContent =
+                        'No hay servicios para este filtro.';
+
+                    return;
+                }
+
+                var inicio =
+                    (estado.paginacion.pagina - 1) * pageSize;
+
+                var fin = Math.min(
+                    inicio + pageSize,
+                    total
+                );
+
+                var paginaItems = filtrados.slice(
+                    inicio,
+                    fin
+                );
+
+                var fragmento = document.createDocumentFragment();
+
+                paginaItems.forEach(function (servicio) {
+                    fragmento.appendChild(
+                        crearCard(servicio)
+                    );
+                });
+
+                lista.appendChild(fragmento);
+
+                renderPaginacion(
+                    total,
+                    estado.paginacion.pagina,
+                    pageSize
+                );
+
+                estadoEl.textContent =
+                    'Mostrando ' +
+                    paginaItems.length +
+                    ' de ' +
+                    total +
+                    ' servicio(s).';
+            }
+
+            /* =====================================
+               CARGA DE SERVICIOS
+            ===================================== */
+
+            function cargarServicios() {
+                if (estado.cargando) return;
+
+                estado.cargando = true;
+
+                estadoEl.textContent =
+                    'Cargando servicios...';
+
+                fetch('api/services.ashx', {
+                    credentials: 'same-origin'
+                })
+                    .then(function (respuesta) {
+                        if (!respuesta.ok) {
+                            throw new Error(
+                                'No fue posible cargar servicios.'
+                            );
+                        }
+
+                        return respuesta.json();
+                    })
+                    .then(function (data) {
+                        if (!data ||
+                            !data.success ||
+                            !Array.isArray(data.servicios)) {
+
+                            throw new Error(
+                                (data && data.message) ||
+                                'No fue posible cargar servicios.'
+                            );
+                        }
+
+                        estado.servicios = data.servicios;
+
+                        render();
+                    })
+                    .catch(function (error) {
+                        estadoEl.textContent =
+                            error && error.message
+                                ? error.message
+                                : 'No fue posible cargar servicios.';
+                    })
+                    .finally(function () {
+                        estado.cargando = false;
+                    });
+            }
+
+            /* =====================================
+               EVENTOS DE LOS FILTROS
+            ===================================== */
+
+            botonesFiltro.forEach(function (btn) {
+                btn.addEventListener('click', function (ev) {
+                    ev.preventDefault();
+
+                    estado.filtro =
+                        btn.getAttribute('data-filtro') ||
+                        'todos';
+
+                    estado.paginacion.pagina = 1;
+
+                    botonesFiltro.forEach(function (boton) {
+                        boton.classList.toggle(
+                            'activo',
+                            boton === btn
+                        );
+                    });
+
+                    render();
+                });
+            });
+
+            /* =====================================
+               EVENTOS DE PAGINACIÓN
+            ===================================== */
+
+            if (pagPrev) {
+                pagPrev.addEventListener('click', function () {
+                    if (estado.paginacion.pagina <= 1) return;
+
+                    estado.paginacion.pagina -= 1;
+                    render();
+                });
+            }
+
+            if (pagNext) {
+                pagNext.addEventListener('click', function () {
+                    estado.paginacion.pagina += 1;
+                    render();
+                });
+            }
+
+            /* =====================================
+               EVENTOS DEL PANEL LATERAL
+            ===================================== */
+
+            if (modalCerrar) {
+                modalCerrar.addEventListener(
+                    'click',
+                    cerrarModal
+                );
+            }
+
+            if (navAnterior) {
+                navAnterior.addEventListener('click', function () {
+                    navegarServicio(-1);
+                });
+            }
+
+            if (navSiguiente) {
+                navSiguiente.addEventListener('click', function () {
+                    navegarServicio(1);
+                });
+            }
+
+            document.addEventListener('keydown', function (ev) {
+                if (ev.key === 'Escape' &&
+                    modal &&
+                    !modal.hidden) {
+                    cerrarModal();
+                }
+            });
+
+            /* =====================================
+               INICIALIZACIÓN
+            ===================================== */
+
+            cargarServicios();
+
+        })();
+    </script>
+
+    <script src="js/site-info.js?v=20261112-5" defer></script>
+
 </body>
 </html>
