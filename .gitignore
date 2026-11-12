@@ -35,3 +35,8 @@ App_Data/*.ldf
 /web.config
 *.publishsettings
 *.pubxml.user
+# Perfiles privados de publicación
+*.pubxml
+*.pubxml.user
+*.publishsettings
+*.publishproj
