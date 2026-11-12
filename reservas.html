@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>KFitness - Reservas</title>
+  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/formularios.css'>
+  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
+  <style>
+    .reservas-principal .v2-reservas-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: clamp(.85rem, 2vw, 1.5rem); align-items: start; }
+    .v2-reservas-layout > .tarjeta { width: 100%; max-width: none; min-width: 0; margin: 0; }
+    .v2-cal-day.is-empty { visibility: hidden; }
+    #reserva-horas-pagination-wrap[hidden] { display: none; }
+    .v2-calendario-toolbar { display: flex; align-items: center; justify-content: space-between; margin: .45rem 0 .85rem; }
+    .v2-calendario-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .55rem; }
+    .v2-cal-head { text-align: center; font-size: .92rem; color: #b8b8b8; font-weight: 600; }
+    .v2-cal-day { background: #171717; border: 1px solid #2f2f2f; color: #f1f1f1; border-radius: 10px; min-height: 86px; display: grid; place-items: center; font-size: .9rem; }
+    .v2-cal-day .num { font-size: 1.25rem; font-weight: 700; }
+    .v2-cal-day.is-available { border-color: #2f8f5b; }
+    .v2-cal-day.is-full, .v2-cal-day.is-none { opacity: .8; }
+    .v2-cal-day.is-selected { border-color: #ff4d4f; box-shadow: 0 0 0 1px #ff4d4f inset; }
+    .v2-horas-panel { margin-top: .9rem; }
+    .v2-hour-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: .4rem; background: #171717; border: 1px solid #2f2f2f; color: #f3f3f3; border-radius: 8px; padding: .55rem .7rem; }
+    .v2-hour-btn.is-selected { border-color: #ff4d4f; box-shadow: 0 0 0 1px #ff4d4f inset; }
+    .v2-aside { align-self: start; }
+    .v2-servicio-media { width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; background: #171717; border: 1px solid #2f2f2f; margin-bottom: .8rem; }
+    .v2-servicio-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .v2-servicio-detalle h2 { margin-bottom: .4rem; }
+    .v2-servicio-descripcion { color: #c8c8c8; margin-bottom: .7rem; }
+    .v2-resumen-grid { display: grid; gap: .35rem; margin-bottom: .8rem; }
+    .v2-resumen-grid p { margin: 0; }
+    .v2-resumen-vacio { color: #aaaaaa; }
+    .v2-reservas-link { width: 100%; margin-top: .4rem; text-align: center; }
+    .v2-modal { max-height: 86vh; display: flex; flex-direction: column; }
+    .v2-modal-contenido { overflow: auto; max-height: 60vh; }
+    .v2-second-list { display: grid; gap: .4rem; }
+    .v2-second-btn { text-align: left; background: #171717; border: 1px solid #2f2f2f; color: #fff; border-radius: 8px; padding: .55rem; }
+    .v2-mes-actual { margin: 0; font-size: 1.24rem; }
+    #reserva-mes-anterior, #reserva-mes-siguiente { min-width: 42px; min-height: 42px; font-size: 1rem; }
+    .v2-hour-btn { padding: .68rem .8rem; font-size: .96rem; }
+
+    @media (max-width: 960px) {
+      .reservas-principal .v2-reservas-layout { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .v2-calendario-grid { gap: .2rem; }
+      .v2-cal-day { min-height: 58px; min-width: 0; padding: .15rem; }
+      .v2-cal-day .num { font-size: 1.08rem; }
+      .v2-cal-day small { font-size: .6rem; overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+  <header class='site-header' aria-label='Encabezado del sitio'></header>
+  <main>
+    <section class='seccion reservas-principal' aria-labelledby='reservas-titulo'>
+      <div class='contenedor reservas-contenido v2-reservas-layout'>
+        <div class='tarjeta formulario-tarjeta'>
+          <h1 id='reservas-titulo'>Agendá tu entrenamiento o cita</h1>
+
+          <div class='formulario'>
+            <label for='reserva-servicio'>Servicio</label>
+            <select id='reserva-servicio' name='servicio' required>
+              <option value=''>Seleccioná un servicio</option>
+            </select>
+
+            <div class='v2-calendario-toolbar'>
+              <button type='button' id='reserva-mes-anterior' class='boton boton-secundario boton-pequeno' aria-label='Mes anterior'>◀</button>
+              <h2 id='reserva-mes-actual' class='v2-mes-actual'>Mes</h2>
+              <button type='button' id='reserva-mes-siguiente' class='boton boton-secundario boton-pequeno' aria-label='Mes siguiente'>▶</button>
+            </div>
+
+            <div class='v2-calendario-grid' id='reserva-calendario' role='grid' aria-label='Calendario de fechas disponibles'></div>
+
+            <p id='reserva-disponibilidad' class='mensaje-formulario' aria-live='polite'></p>
+
+            <div id='reserva-horas-panel' class='v2-horas-panel'>
+              <h3>Horas disponibles</h3>
+              <div id='reserva-horas-lista' class='v2-horas-lista'></div>
+              <div class='pagination' id='reserva-horas-pagination-wrap' hidden>
+                <span id='reserva-horas-pagination-summary'>Mostrando 0–0 de 0</span>
+                <div class='pagination-nav'>
+                  <button type='button' class='boton boton-secundario boton-pequeno' id='reserva-horas-pagination-prev'>Anterior</button>
+                  <span id='reserva-horas-pagination-pageinfo'>Página 1 de 1</span>
+                  <button type='button' class='boton boton-secundario boton-pequeno' id='reserva-horas-pagination-next'>Siguiente</button>
+                </div>
+              </div>
+            </div>
+
+            <label for='reserva-observaciones'>Observaciones</label>
+            <textarea id='reserva-observaciones' name='observaciones' rows='3' maxlength='500'></textarea>
+
+            <div class='v2-acciones-reserva'>
+              <button type='button' class='boton boton-principal' id='reserva-continuar' disabled>Continuar al carrito</button>
+              <span id='reserva-mensaje' class='mensaje-formulario' aria-live='polite'></span>
+            </div>
+          </div>
+        </div>
+
+        <aside class='tarjeta v2-aside'>
+          <div class='v2-servicio-media'>
+            <img id='reserva-servicio-imagen' alt='Imagen del entrenamiento seleccionado' src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='>
+          </div>
+          <div class='v2-servicio-detalle'>
+            <h2 id='reserva-detalle-titulo'>Seleccioná un entrenamiento</h2>
+            <p id='reserva-detalle-descripcion' class='v2-servicio-descripcion'>Elegí un servicio para ver su detalle y disponibilidad.</p>
+            <div id='reserva-detalle-resumen' class='v2-resumen-grid'>
+              <p class='v2-resumen-vacio'>Aún no hay una sesión seleccionada.</p>
+            </div>
+            <a class='boton boton-secundario v2-reservas-link' id='reserva-ver-mis-reservas' href='perfil.html?seccion=perfil-reservas&filtro=proximas#perfil-reservas'>Ver mis reservas</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <div id='reserva-modal-overlay' class='perfil-modal-overlay' hidden>
+      <div class='perfil-modal v2-modal' role='dialog' aria-modal='true' aria-labelledby='reserva-modal-titulo'>
+        <div class='perfil-modal-header'>
+          <h2 id='reserva-modal-titulo'>Detalle</h2>
+        </div>
+        <div id='reserva-modal-contenido' class='v2-modal-contenido'></div>
+        <div id='reserva-modal-acciones' class='perfil-modal-actions v2-modal-acciones'></div>
+      </div>
+    </div>
+  </main>
+  <footer class='site-footer' aria-label='Pie de página'></footer>
+  <script src='js/carrito-store.js?v=20261111-3' defer></script>
+  <script src='js/app.js?v=20261112-5' defer></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var state = {
+        servicios: [],
+        promociones: [],
+        horariosMes: [],
+        horariosDia: [],
+        selectedServiceId: null,
+        selectedDate: null,
+        selectedSession: null,
+        selectedSecondSession: null,
+        selectedPromo: null,
+        currentMonth: null,
+        requestCounter: 0,
+        submitLock: false,
+        modalOpen: false,
+        triggerFocus: null,
+        preselectedPromotionId: null,
+        horasPaginacion: {
+          pagina: 1,
+          pageSize: 10
+        },
+        segundaSesionPaginacion: {
+          pagina: 1,
+          pageSize: 10
+        }
+      };
+
+      var el = {
+        servicio: document.getElementById('reserva-servicio'),
+        mesActual: document.getElementById('reserva-mes-actual'),
+        btnMesPrev: document.getElementById('reserva-mes-anterior'),
+        btnMesNext: document.getElementById('reserva-mes-siguiente'),
+        calendario: document.getElementById('reserva-calendario'),
+        disponibilidad: document.getElementById('reserva-disponibilidad'),
+        horasLista: document.getElementById('reserva-horas-lista'),
+        horasPaginationWrap: document.getElementById('reserva-horas-pagination-wrap'),
+        horasPaginationSummary: document.getElementById('reserva-horas-pagination-summary'),
+        horasPaginationPageInfo: document.getElementById('reserva-horas-pagination-pageinfo'),
+        horasPaginationPrev: document.getElementById('reserva-horas-pagination-prev'),
+        horasPaginationNext: document.getElementById('reserva-horas-pagination-next'),
+        observaciones: document.getElementById('reserva-observaciones'),
+        btnContinuar: document.getElementById('reserva-continuar'),
+        mensaje: document.getElementById('reserva-mensaje'),
+        servicioImagen: document.getElementById('reserva-servicio-imagen'),
+        detalleTitulo: document.getElementById('reserva-detalle-titulo'),
+        detalleDescripcion: document.getElementById('reserva-detalle-descripcion'),
+        detalleResumen: document.getElementById('reserva-detalle-resumen'),
+        modal: document.getElementById('reserva-modal-overlay'),
+        modalTitulo: document.getElementById('reserva-modal-titulo'),
+        modalContenido: document.getElementById('reserva-modal-contenido'),
+        modalAcciones: document.getElementById('reserva-modal-acciones')
+      };
+
+      if (!el.servicio || !el.calendario) return;
+
+      function fmtCRC(v) {
+        try { return new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'CRC', maximumFractionDigits: 0 }).format(Number(v || 0)); }
+        catch (e) { return '₡ ' + Number(v || 0).toFixed(0); }
+      }
+
+      function toISODate(d) {
+        var y = d.getFullYear();
+        var m = String(d.getMonth() + 1).padStart(2, '0');
+        var day = String(d.getDate()).padStart(2, '0');
+        return y + '-' + m + '-' + day;
+      }
+
+      function getCostaRicaNowParts() {
+        try {
+          var fmt = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'America/Costa_Rica',
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+            hourCycle: 'h23'
+          });
+          var parts = fmt.formatToParts(new Date());
+          var map = {};
+          parts.forEach(function (p) { if (p && p.type) map[p.type] = p.value; });
+          var y = Number(map.year || 0);
+          var m = Number(map.month || 0);
+          var d = Number(map.day || 0);
+          var hh = Number(map.hour || 0);
+          var mm = Number(map.minute || 0);
+          var ss = Number(map.second || 0);
+          return {
+            year: y,
+            month: m,
+            day: d,
+            hour: hh,
+            minute: mm,
+            second: ss,
+            isoDate: String(y).padStart(4, '0') + '-' + String(m).padStart(2, '0') + '-' + String(d).padStart(2, '0'),
+            minuteOfDay: (hh * 60) + mm
+          };
+        } catch (_) {
+          var now = new Date();
+          return {
+            year: now.getFullYear(),
+            month: now.getMonth() + 1,
+            day: now.getDate(),
+            hour: now.getHours(),
+            minute: now.getMinutes(),
+            second: now.getSeconds(),
+            isoDate: toISODate(now),
+            minuteOfDay: (now.getHours() * 60) + now.getMinutes()
+          };
+        }
+      }
+
+      function getMinuteOfDay(hhmm) {
+        var p = String(hhmm || '').split(':');
+        if (p.length < 2) return -1;
+        var h = Number(p[0]);
+        var m = Number(p[1]);
+        if (!Number.isFinite(h) || !Number.isFinite(m)) return -1;
+        return (h * 60) + m;
+      }
+
+      function filtrarHorariosVigentes(isoDate, horarios) {
+        var lista = Array.isArray(horarios) ? horarios : [];
+        var crNow = getCostaRicaNowParts();
+        if (!isoDate || isoDate < crNow.isoDate) return [];
+        if (isoDate > crNow.isoDate) return lista.slice();
+        return lista.filter(function (h) {
+          return getMinuteOfDay(h && h.horaInicio) > crNow.minuteOfDay;
+        });
+      }
+
+      function fmtDate(iso) {
+        if (!iso) return 'N/D';
+        var parts = iso.split('-');
+        if (parts.length !== 3) return iso;
+        return parts[2] + '/' + parts[1] + '/' + parts[0];
+      }
+
+      function fmtDateLong(iso) {
+        try {
+          var d = new Date(iso + 'T00:00:00');
+          return d.toLocaleDateString('es-CR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        } catch (e) { return fmtDate(iso); }
+      }
+
+      function escapeHtml(value) {
+        return String(value == null ? '' : value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function getServiceImageUrl(service) {
+        if (!service || !service.imagenPrincipal) return '';
+        var referencia = String(service.imagenPrincipal || '').trim();
+        if (!referencia) return '';
+        if (/^https?:\/\//i.test(referencia)) return referencia;
+
+        var desdeApi = referencia.match(/[?&]v=([^&]+)/i);
+        if (/service-image\.ashx/i.test(referencia) && desdeApi && desdeApi[1]) {
+          return 'api/service-image.ashx?v=' + encodeURIComponent(decodeURIComponent(desdeApi[1]));
+        }
+
+        var sinQuery = referencia.split('?')[0];
+        var nombreArchivo = sinQuery.split(/[\\/]/).pop();
+        if (!nombreArchivo) return '';
+        return 'api/service-image.ashx?v=' + encodeURIComponent(nombreArchivo);
+      }
+
+      function fetchJson(url, options) {
+        return fetch(url, options || { credentials: 'same-origin' }).then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (data) {
+            if (!r.ok || data.success !== true) {
+              var err = new Error((data && data.message) || 'Error en la solicitud.');
+              err.code = data && data.code;
+              err.data = data;
+              throw err;
+            }
+            return data;
+          });
+        });
+      }
+
+      function openModal(title, contentHtml, buttons, trigger) {
+        state.triggerFocus = trigger || document.activeElement;
+        el.modalTitulo.textContent = title;
+        el.modalContenido.innerHTML = contentHtml;
+        el.modalAcciones.innerHTML = '';
+        (buttons || []).forEach(function (b) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = b.className || 'boton boton-secundario';
+          btn.textContent = b.text;
+          btn.disabled = !!b.disabled;
+          btn.addEventListener('click', function () { b.onClick && b.onClick(btn); });
+          el.modalAcciones.appendChild(btn);
+          if (b.primary) setTimeout(function () { btn.focus(); }, 0);
+        });
+        el.modal.hidden = false;
+        state.modalOpen = true;
+      }
+
+      function closeModal() {
+        el.modal.hidden = true;
+        el.modalContenido.innerHTML = '';
+        el.modalAcciones.innerHTML = '';
+        state.modalOpen = false;
+        if (state.triggerFocus && typeof state.triggerFocus.focus === 'function') state.triggerFocus.focus();
+      }
+
+      function getServiceById(id) {
+        id = Number(id || 0);
+        return state.servicios.find(function (s) { return Number(s.idProducto) === id; }) || null;
+      }
+
+      function getPromosForService(idProducto) {
+        var todayIso = getCostaRicaNowParts().isoDate;
+        return state.promociones.filter(function (p) {
+          return Number(p.idProducto) === Number(idProducto)
+            && !!p.permiteReservar
+            && (!p.fechaInicio || p.fechaInicio <= todayIso)
+            && (!p.fechaFin || p.fechaFin >= todayIso);
+        });
+      }
+
+      function getSessionDurationText(session) {
+        if (!session) return 'N/D';
+        var duracion = Number(session.duracionMinutos || 0);
+        if (duracion > 0) return String(duracion) + ' min';
+
+        var hi = String(session.horaInicio || '').split(':');
+        var hf = String(session.horaFin || '').split(':');
+        if (hi.length < 2 || hf.length < 2) return 'N/D';
+        var ini = (Number(hi[0]) * 60) + Number(hi[1]);
+        var fin = (Number(hf[0]) * 60) + Number(hf[1]);
+        if (!Number.isFinite(ini) || !Number.isFinite(fin) || fin <= ini) return 'N/D';
+        return String(fin - ini) + ' min';
+      }
+
+      function renderServiceDetailCard() {
+        if (!el.detalleTitulo || !el.detalleDescripcion || !el.detalleResumen) return;
+
+        var service = getServiceById(state.selectedServiceId);
+        var promo = state.selectedPromo;
+        var session = state.selectedSession;
+
+        if (!service) {
+          el.detalleTitulo.textContent = 'Seleccioná un entrenamiento';
+          el.detalleDescripcion.textContent = 'Elegí un servicio para ver su detalle y disponibilidad.';
+          el.detalleResumen.innerHTML = '<p class="v2-resumen-vacio">Aún no hay una sesión seleccionada.</p>';
+          if (el.servicioImagen) {
+            el.servicioImagen.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+          }
+          return;
+        }
+
+        el.detalleTitulo.textContent = service.nombre || 'Entrenamiento';
+        el.detalleDescripcion.textContent = service.descripcion || 'Sin descripción disponible.';
+
+        if (el.servicioImagen) {
+          var imageUrl = getServiceImageUrl(service);
+          el.servicioImagen.src = imageUrl || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+          el.servicioImagen.alt = 'Imagen de ' + (service.nombre || 'entrenamiento');
+        }
+
+        var total = Number(service.precio || 0);
+        var promoText = 'Sin promoción';
+        if (promo) {
+          var tipo = String(promo.tipoPromocion || '').toUpperCase();
+          promoText = (promo.nombre || 'Promoción') + (promo.beneficio ? (' · ' + promo.beneficio) : '');
+          if (tipo === 'DOS_POR_UNO') {
+            total *= Number(promo.cantidadCompra || 1);
+          } else if (tipo === 'PORCENTAJE') {
+            total *= 1 - Number(promo.porcentajeDescuento || 0) / 100;
+          }
+        }
+
+        var html = '' +
+          '<p><strong>Precio:</strong> ' + fmtCRC(service.precio) + '</p>' +
+          '<p><strong>Promoción:</strong> ' + escapeHtml(promoText) + '</p>';
+
+        if (session) {
+          html += '' +
+            '<p><strong>Fecha:</strong> ' + escapeHtml(fmtDateLong(session.fecha || state.selectedDate)) + '</p>' +
+            '<p><strong>Hora:</strong> ' + escapeHtml(String(session.horaInicio || '')) + ' - ' + escapeHtml(String(session.horaFin || '')) + '</p>' +
+            '<p><strong>Instructor:</strong> ' + escapeHtml(String(session.instructor || 'Por confirmar')) + '</p>' +
+            '<p><strong>Duración:</strong> ' + escapeHtml(getSessionDurationText(session)) + '</p>' +
+            '<p><strong>Cupos disponibles:</strong> ' + String(Number(session.cuposRestantes || 0)) + '</p>';
+          if (state.selectedSecondSession) {
+            html += '<p><strong>2x1 sesión adicional:</strong> ' + escapeHtml(fmtDate(state.selectedSecondSession.fecha)) + ' ' +
+              escapeHtml(String(state.selectedSecondSession.horaInicio || '')) + ' - ' + escapeHtml(String(state.selectedSecondSession.horaFin || '')) + '</p>';
+          }
+        } else {
+          html += '<p class="v2-resumen-vacio">Seleccioná fecha y hora para completar la cita.</p>';
+        }
+
+        html += '<p><strong>Total estimado:</strong> ' + fmtCRC(total) + '</p>';
+        el.detalleResumen.innerHTML = html;
+      }
+
+      function loadBaseData() {
+        Promise.all([
+          fetchJson('api/services.ashx', { credentials: 'same-origin' }),
+          fetchJson('api/promotions.ashx', { credentials: 'same-origin' }).catch(function () { return {}; })
+        ]).then(function (all) {
+          state.servicios = Array.isArray(all[0].servicios) ? all[0].servicios : [];
+          state.promociones = Array.isArray(all[1].promociones) ? all[1].promociones : [];
+
+          renderServices();
+
+          var params = new URLSearchParams(window.location.search);
+          var paramId = Number(params.get('servicio') || 0);
+          var promoId = Number(params.get('idPromocion') || 0);
+          state.preselectedPromotionId = promoId > 0 ? promoId : null;
+          state.selectedPromo = getPromosForService(paramId).find(function (p) { return Number(p.idPromocion) === promoId; }) || null;
+
+          if (paramId > 0 && state.servicios.some(function (s) { return Number(s.idProducto) === paramId; })) {
+            el.servicio.value = String(paramId);
+            state.selectedServiceId = paramId;
+          }
+
+          var crNow = getCostaRicaNowParts();
+          state.currentMonth = new Date(crNow.year, crNow.month - 1, 1);
+          renderServiceDetailCard();
+          if (state.selectedServiceId) loadMonth();
+        }).catch(function (err) {
+          setMessage(err.message || 'No fue posible cargar datos.', true);
+        });
+      }
+
+      function renderServices() {
+        el.servicio.innerHTML = '<option value="">Seleccioná un servicio</option>';
+        state.servicios.forEach(function (s) {
+          var op = document.createElement('option');
+          op.value = s.idProducto;
+          op.textContent = s.nombre + ' · ' + fmtCRC(s.precio);
+          el.servicio.appendChild(op);
+        });
+      }
+
+      function setMessage(msg, error) {
+        el.mensaje.textContent = msg || '';
+        el.mensaje.style.color = error ? '#f87f7f' : '#8fe3ae';
+      }
+
+      function renderPaginacion(base, total, paginacion) {
+        var wrap = base.wrap;
+        var summary = base.summary;
+        var pageInfo = base.pageInfo;
+        var prev = base.prev;
+        var next = base.next;
+        if (!wrap || !summary || !pageInfo || !prev || !next || !paginacion) return;
+
+        var pageSize = Number(paginacion.pageSize || 10);
+        var totalPaginas = total > 0 ? Math.ceil(total / pageSize) : 1;
+        if (paginacion.pagina < 1) paginacion.pagina = 1;
+        if (paginacion.pagina > totalPaginas) paginacion.pagina = totalPaginas;
+
+        var desde = total > 0 ? ((paginacion.pagina - 1) * pageSize) + 1 : 0;
+        var hasta = total > 0 ? Math.min(paginacion.pagina * pageSize, total) : 0;
+        summary.textContent = 'Mostrando ' + String(desde) + '–' + String(hasta) + ' de ' + String(total);
+        pageInfo.textContent = 'Página ' + String(paginacion.pagina) + ' de ' + String(totalPaginas);
+        prev.disabled = paginacion.pagina <= 1;
+        next.disabled = paginacion.pagina >= totalPaginas;
+        wrap.hidden = total <= pageSize;
+      }
+
+      function renderCalendar() {
+        var month = state.currentMonth;
+        var monthLabel = month.toLocaleDateString('es-CR', { month: 'long', year: 'numeric' });
+        el.mesActual.textContent = monthLabel.charAt(0).toUpperCase() + monthLabel.slice(1);
+
+        var crNow = getCostaRicaNowParts();
+        var isCurrentMonth = (month.getFullYear() === crNow.year) && ((month.getMonth() + 1) === crNow.month);
+        if (el.btnMesPrev) el.btnMesPrev.disabled = isCurrentMonth;
+
+        var first = new Date(month.getFullYear(), month.getMonth(), 1);
+        var last = new Date(month.getFullYear(), month.getMonth() + 1, 0);
+        var startDay = (first.getDay() + 6) % 7;
+        var days = last.getDate();
+
+        var mapByDate = {};
+        state.horariosMes.forEach(function (h) {
+          if (!mapByDate[h.fecha]) mapByDate[h.fecha] = [];
+          mapByDate[h.fecha].push(h);
+        });
+
+        el.calendario.innerHTML = '';
+
+        ['L', 'K', 'M', 'J', 'V', 'S', 'D'].forEach(function (d) {
+          var h = document.createElement('div');
+          h.className = 'v2-cal-head';
+          h.textContent = d;
+          el.calendario.appendChild(h);
+        });
+
+        for (var i = 0; i < startDay; i++) {
+          var empty = document.createElement('div');
+          empty.className = 'v2-cal-day is-empty';
+          el.calendario.appendChild(empty);
+        }
+
+        for (var d = 1; d <= days; d++) {
+          var date = new Date(month.getFullYear(), month.getMonth(), d);
+          var iso = toISODate(date);
+
+          if (iso < crNow.isoDate) {
+            var pastEmpty = document.createElement('div');
+            pastEmpty.className = 'v2-cal-day is-empty';
+            el.calendario.appendChild(pastEmpty);
+            continue;
+          }
+
+          var horariosDia = filtrarHorariosVigentes(iso, mapByDate[iso] || []);
+          var disponibles = horariosDia.filter(function (x) { return Number(x.cuposRestantes || 0) > 0 && !x.completo; }).length;
+
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'v2-cal-day';
+          btn.setAttribute('data-date', iso);
+          btn.disabled = disponibles === 0;
+          if (state.selectedDate === iso) btn.classList.add('is-selected');
+
+          if (!horariosDia.length) {
+            btn.classList.add('is-none');
+            btn.setAttribute('aria-label', 'Día ' + d + ' sin horarios');
+          } else if (disponibles === 0) {
+            btn.classList.add('is-full');
+            btn.setAttribute('aria-label', 'Día ' + d + ' sin cupo');
+          } else {
+            btn.classList.add('is-available');
+            btn.setAttribute('aria-label', 'Día ' + d + ' con ' + disponibles + ' cupos');
+          }
+
+          btn.innerHTML = '<span class="num">' + d + '</span><small>' + (horariosDia.length ? (disponibles > 0 ? 'Disponible' : 'Sin cupo') : 'Sin horarios') + '</small>';
+          btn.addEventListener('click', function () {
+            onSelectDate(this.getAttribute('data-date'));
+          });
+
+          el.calendario.appendChild(btn);
+        }
+      }
+
+      function onSelectDate(iso) {
+        state.selectedDate = iso;
+        state.selectedSession = null;
+        state.selectedSecondSession = null;
+        state.horasPaginacion.pagina = 1;
+        el.btnContinuar.disabled = true;
+        setMessage('', false);
+        renderCalendar();
+        renderServiceDetailCard();
+        loadDay(iso);
+      }
+
+      function loadMonth() {
+        if (!state.selectedServiceId) return;
+        el.btnContinuar.disabled = true;
+        state.selectedDate = null;
+        state.selectedSession = null;
+        state.selectedSecondSession = null;
+        state.horasPaginacion.pagina = 1;
+        renderServiceDetailCard();
+        el.horasLista.innerHTML = '';
+        renderPaginacion({ wrap: el.horasPaginationWrap, summary: el.horasPaginationSummary, pageInfo: el.horasPaginationPageInfo, prev: el.horasPaginationPrev, next: el.horasPaginationNext }, 0, state.horasPaginacion);
+        el.disponibilidad.textContent = 'Cargando agenda del mes...';
+
+        var requestId = ++state.requestCounter;
+        var from = new Date(state.currentMonth.getFullYear(), state.currentMonth.getMonth(), 1);
+        var to = new Date(state.currentMonth.getFullYear(), state.currentMonth.getMonth() + 1, 0);
+
+        var dias = [];
+        var hoy = getCostaRicaNowParts().isoDate;
+        for (var d = new Date(from); d <= to; d.setDate(d.getDate() + 1)) {
+          var iso = toISODate(d);
+          if (iso >= hoy) dias.push(iso);
+        }
+
+        Promise.all(dias.map(function (iso) {
+          return fetchJson('api/schedules.ashx?idProducto=' + encodeURIComponent(state.selectedServiceId) + '&fecha=' + encodeURIComponent(iso), { credentials: 'same-origin' })
+            .then(function (data) { return Array.isArray(data.horarios) ? data.horarios : []; });
+        }))
+          .then(function (chunks) {
+            if (requestId !== state.requestCounter) return;
+            state.horariosMes = chunks.reduce(function (acc, arr) { return acc.concat(arr); }, []);
+            renderCalendar();
+            el.disponibilidad.textContent = 'Elegí una fecha para ver horas disponibles.';
+          })
+          .catch(function () {
+            if (requestId !== state.requestCounter) return;
+            el.disponibilidad.textContent = 'No fue posible cargar la agenda.';
+          });
+      }
+
+      function loadDay(isoDate) {
+        if (!state.selectedServiceId || !isoDate) return;
+        var requestId = ++state.requestCounter;
+        state.horasPaginacion.pagina = 1;
+        el.disponibilidad.textContent = 'Cargando horarios del día...';
+        el.horasLista.innerHTML = '';
+        renderPaginacion({ wrap: el.horasPaginationWrap, summary: el.horasPaginationSummary, pageInfo: el.horasPaginationPageInfo, prev: el.horasPaginationPrev, next: el.horasPaginationNext }, 0, state.horasPaginacion);
+
+        fetchJson('api/schedules.ashx?idProducto=' + encodeURIComponent(state.selectedServiceId) + '&fecha=' + encodeURIComponent(isoDate), { credentials: 'same-origin' })
+          .then(function (data) {
+            if (requestId !== state.requestCounter) return;
+            if (state.selectedDate !== isoDate) return;
+            state.horariosDia = Array.isArray(data.horarios) ? data.horarios : [];
+            renderHours();
+          })
+          .catch(function (err) {
+            if (requestId !== state.requestCounter) return;
+            el.disponibilidad.textContent = err.message || 'No fue posible cargar horarios.';
+          });
+      }
+
+      function renderHours() {
+        el.horasLista.innerHTML = '';
+        var disponibles = filtrarHorariosVigentes(state.selectedDate, state.horariosDia).filter(function (h) { return Number(h.cuposRestantes || 0) > 0 && !h.completo; });
+
+        var pagBase = { wrap: el.horasPaginationWrap, summary: el.horasPaginationSummary, pageInfo: el.horasPaginationPageInfo, prev: el.horasPaginationPrev, next: el.horasPaginationNext };
+
+        if (!disponibles.length) {
+          renderPaginacion(pagBase, 0, state.horasPaginacion);
+          el.disponibilidad.textContent = 'No hay horarios disponibles para esta fecha.';
+          el.btnContinuar.disabled = true;
+          return;
+        }
+
+        var total = disponibles.length;
+        var pageSize = Number(state.horasPaginacion.pageSize || 10);
+        var totalPaginas = total > 0 ? Math.ceil(total / pageSize) : 1;
+        if (state.horasPaginacion.pagina > totalPaginas) state.horasPaginacion.pagina = totalPaginas;
+        if (state.horasPaginacion.pagina < 1) state.horasPaginacion.pagina = 1;
+
+        var inicio = (state.horasPaginacion.pagina - 1) * pageSize;
+        var fin = Math.min(inicio + pageSize, total);
+        var paginaItems = disponibles.slice(inicio, fin);
+
+        el.disponibilidad.textContent = 'Fecha seleccionada: ' + fmtDateLong(state.selectedDate);
+        var frag = document.createDocumentFragment();
+        paginaItems.forEach(function (h) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'v2-hour-btn' + (state.selectedSession && Number(state.selectedSession.idHorarioServicio) === Number(h.idHorarioServicio) ? ' is-selected' : '');
+          b.innerHTML = '<strong>' + h.horaInicio + ' - ' + h.horaFin + '</strong><span>Cupos: ' + h.cuposRestantes + '</span>';
+          b.addEventListener('click', function () {
+            state.selectedSession = h;
+            state.selectedSecondSession = null;
+            renderHours();
+            renderServiceDetailCard();
+            el.btnContinuar.disabled = false;
+            setMessage('', false);
+          });
+          frag.appendChild(b);
+        });
+        el.horasLista.appendChild(frag);
+        renderPaginacion(pagBase, total, state.horasPaginacion);
+        el.btnContinuar.disabled = !state.selectedSession;
+        renderServiceDetailCard();
+      }
+
+      function getCartStore() {
+        if (!window.KFCarritoStore || typeof window.KFCarritoStore.add !== 'function') {
+          throw new Error('No fue posible abrir el carrito en este momento.');
+        }
+        return window.KFCarritoStore;
+      }
+
+      function buildCartItem() {
+        var service = getServiceById(state.selectedServiceId);
+        if (!service || !state.selectedSession) {
+          throw new Error('Debes seleccionar una sesión válida para continuar.');
+        }
+
+        var tipoPromo = state.selectedPromo ? String(state.selectedPromo.tipoPromocion || '').toUpperCase() : '';
+        var precioServicio = Number(service.precio || 0);
+        var observacionesTexto = el.observaciones ? String(el.observaciones.value || '').trim() : '';
+
+        if (tipoPromo === 'DOS_POR_UNO') {
+          if (!state.selectedSecondSession) {
+            throw new Error('La promoción 2x1 requiere seleccionar la segunda sesión.');
+          }
+
+          var compra = Number(state.selectedPromo.cantidadCompra || 1);
+          var entrega = Number(state.selectedPromo.cantidadEntrega || 2);
+          var subtotal2x1 = precioServicio * entrega;
+          var total2x1 = precioServicio * compra;
+
+          return {
+            tipo: 'PROMOCION',
+            idProducto: Number(service.idProducto || 0),
+            servicio: service.nombre || '',
+            idPromocion: Number(state.selectedPromo.idPromocion || 0),
+            nombrePromocion: state.selectedPromo.nombre || 'Promoción 2x1',
+            tipoPromocion: tipoPromo,
+            porcentajeDescuento: 0,
+            cantidadCompra: compra,
+            cantidadEntrega: entrega,
+            precioUnitario: precioServicio,
+            subtotal: subtotal2x1,
+            descuento: Math.max(0, subtotal2x1 - total2x1),
+            total: total2x1,
+            observaciones: observacionesTexto,
+            sesiones: [
+              {
+                idHorarioServicio: Number(state.selectedSession.idHorarioServicio || 0),
+                fecha: state.selectedSession.fecha,
+                horaInicio: state.selectedSession.horaInicio,
+                horaFin: state.selectedSession.horaFin,
+                instructor: state.selectedSession.instructor || '',
+                precioServicio: precioServicio
+              },
+              {
+                idHorarioServicio: Number(state.selectedSecondSession.idHorarioServicio || 0),
+                fecha: state.selectedSecondSession.fecha,
+                horaInicio: state.selectedSecondSession.horaInicio,
+                horaFin: state.selectedSecondSession.horaFin,
+                instructor: state.selectedSecondSession.instructor || '',
+                precioServicio: precioServicio
+              }
+            ]
+          };
+        }
+
+        var porcentaje = tipoPromo === 'PORCENTAJE' ? Number(state.selectedPromo.porcentajeDescuento || 0) : 0;
+        var total = Math.round(precioServicio * (1 - porcentaje / 100) * 100) / 100;
+        return {
+          tipo: tipoPromo ? 'PROMOCION' : 'REGULAR',
+          idProducto: Number(service.idProducto || 0),
+          servicio: service.nombre || '',
+          idPromocion: tipoPromo ? Number(state.selectedPromo.idPromocion) : null,
+          nombrePromocion: tipoPromo ? state.selectedPromo.nombre : '',
+          tipoPromocion: tipoPromo,
+          porcentajeDescuento: porcentaje,
+          precioUnitario: precioServicio,
+          subtotal: precioServicio,
+          descuento: precioServicio - total,
+          total: total,
+          observaciones: observacionesTexto,
+          sesiones: [
+            {
+              idHorarioServicio: Number(state.selectedSession.idHorarioServicio || 0),
+              fecha: state.selectedSession.fecha,
+              horaInicio: state.selectedSession.horaInicio,
+              horaFin: state.selectedSession.horaFin,
+              instructor: state.selectedSession.instructor || '',
+              precioServicio: precioServicio
+            }
+          ]
+        };
+      }
+
+      function buildSummaryHtml() {
+        var service = getServiceById(state.selectedServiceId);
+        var item = null;
+        try { item = buildCartItem(); } catch (_) { }
+        var promoText = state.selectedPromo ? (state.selectedPromo.nombre + ' · ' + state.selectedPromo.beneficio) : 'Sin promoción';
+        var precio = item ? fmtCRC(item.total) : (service ? fmtCRC(service.precio) : 'N/D');
+        return '' +
+          '<div class="v2-summary">' +
+          '<p><strong>Servicio:</strong> ' + (service ? service.nombre : 'N/D') + '</p>' +
+          '<p><strong>Fecha:</strong> ' + fmtDate(state.selectedSession.fecha) + '</p>' +
+          '<p><strong>Hora:</strong> ' + state.selectedSession.horaInicio + ' - ' + state.selectedSession.horaFin + '</p>' +
+          '<p><strong>Total estimado:</strong> ' + precio + '</p>' +
+          '<p><strong>Promoción:</strong> ' + promoText + '</p>' +
+          (item ? '<p><strong>Descuento:</strong> ' + fmtCRC(item.descuento || 0) + '</p>' : '') +
+          (state.selectedSecondSession ? '<p><strong>Sesión adicional 2x1:</strong> ' + fmtDate(state.selectedSecondSession.fecha) + ' ' + state.selectedSecondSession.horaInicio + ' - ' + state.selectedSecondSession.horaFin + '</p>' : '') +
+          '</div>';
+      }
+
+      function chooseSecondSessionIfNeeded(trigger) {
+        var promos = getPromosForService(state.selectedServiceId);
+        state.selectedPromo = promos.find(function (p) {
+          return Number(p.idPromocion) === Number(state.preselectedPromotionId);
+        }) || null;
+        if (state.preselectedPromotionId && !state.selectedPromo) {
+          setMessage('La promoción ya no está disponible. Volvé a seleccionar el servicio para reservar sin promoción.', true);
+          return;
+        }
+        if (!state.selectedPromo || String(state.selectedPromo.tipoPromocion || '').toUpperCase() !== 'DOS_POR_UNO') {
+          confirmReservation(trigger);
+          return;
+        }
+
+        var disponibles = state.horariosMes.filter(function (h) {
+          return Number(h.cuposRestantes || 0) > 0
+            && !h.completo
+            && filtrarHorariosVigentes(h.fecha, [h]).length > 0
+            && Number(h.idHorarioServicio) !== Number(state.selectedSession.idHorarioServicio);
+        });
+
+        if (!disponibles.length) {
+          setMessage('La promoción 2x1 requiere otra sesión disponible.', true);
+          return;
+        }
+
+        state.segundaSesionPaginacion.pagina = 1;
+
+        function renderSelector2x1() {
+          var total = disponibles.length;
+          var pageSize = Number(state.segundaSesionPaginacion.pageSize || 10);
+          var totalPaginas = total > 0 ? Math.ceil(total / pageSize) : 1;
+          if (state.segundaSesionPaginacion.pagina < 1) state.segundaSesionPaginacion.pagina = 1;
+          if (state.segundaSesionPaginacion.pagina > totalPaginas) state.segundaSesionPaginacion.pagina = totalPaginas;
+
+          var inicio = (state.segundaSesionPaginacion.pagina - 1) * pageSize;
+          var fin = Math.min(inicio + pageSize, total);
+          var paginaItems = disponibles.slice(inicio, fin);
+
+          var html = '<p>Seleccioná la segunda sesión para aplicar la promoción 2x1.</p><div class="v2-second-list">';
+          paginaItems.forEach(function (h) {
+            html += '<button type="button" class="v2-second-btn" data-id="' + h.idHorarioServicio + '">' +
+              fmtDate(h.fecha) + ' · ' + h.horaInicio + ' - ' + h.horaFin + ' · Cupos: ' + h.cuposRestantes +
+              '</button>';
+          });
+          html += '</div>';
+
+          if (total > pageSize) {
+            html += '<div class="pagination">' +
+              '<span>Mostrando ' + String(inicio + 1) + '–' + String(fin) + ' de ' + String(total) + '</span>' +
+              '<div class="pagination-nav">' +
+              '<button type="button" class="boton boton-secundario boton-pequeno" data-2x1-prev ' + (state.segundaSesionPaginacion.pagina <= 1 ? 'disabled' : '') + '>Anterior</button>' +
+              '<span>Página ' + String(state.segundaSesionPaginacion.pagina) + ' de ' + String(totalPaginas) + '</span>' +
+              '<button type="button" class="boton boton-secundario boton-pequeno" data-2x1-next ' + (state.segundaSesionPaginacion.pagina >= totalPaginas ? 'disabled' : '') + '>Siguiente</button>' +
+              '</div></div>';
+          }
+
+          el.modalContenido.innerHTML = html;
+
+          Array.prototype.forEach.call(el.modalContenido.querySelectorAll('.v2-second-btn'), function (btn) {
+            btn.addEventListener('click', function () {
+              var id = Number(btn.getAttribute('data-id') || 0);
+              state.selectedSecondSession = disponibles.find(function (x) { return Number(x.idHorarioServicio) === id; }) || null;
+              closeModal();
+              showSummaryModal(trigger);
+            });
+          });
+
+          var prevBtn = el.modalContenido.querySelector('[data-2x1-prev]');
+          var nextBtn = el.modalContenido.querySelector('[data-2x1-next]');
+          if (prevBtn) {
+            prevBtn.addEventListener('click', function () {
+              if (state.segundaSesionPaginacion.pagina <= 1) return;
+              state.segundaSesionPaginacion.pagina -= 1;
+              renderSelector2x1();
+            });
+          }
+          if (nextBtn) {
+            nextBtn.addEventListener('click', function () {
+              state.segundaSesionPaginacion.pagina += 1;
+              renderSelector2x1();
+            });
+          }
+        }
+
+        openModal('Promoción 2x1', '', [
+          { text: 'Volver', className: 'boton boton-secundario', primary: true, onClick: closeModal }
+        ], trigger);
+
+        renderSelector2x1();
+      }
+
+      function showSummaryModal(trigger) {
+        openModal('Revisá tu selección', buildSummaryHtml(), [
+          { text: 'Volver', className: 'boton boton-secundario', onClick: closeModal },
+          { text: 'Agregar al carrito', className: 'boton boton-principal', primary: true, onClick: function (btn) { confirmReservation(btn); } }
+        ], trigger);
+      }
+
+      function validarCitaServidor(idHorarioServicio) {
+        return fetchJson('api/schedules.ashx?validateCart=1&idHorarioServicio=' + encodeURIComponent(String(idHorarioServicio || '0')), { credentials: 'same-origin' });
+      }
+
+      function validarItemEnServidor(item) {
+        var sesiones = (item && Array.isArray(item.sesiones)) ? item.sesiones : [];
+        if (!sesiones.length) {
+          return Promise.reject(new Error('No hay sesiones para validar.'));
+        }
+
+        return Promise.all(sesiones.map(function (s) {
+          return validarCitaServidor(Number(s && s.idHorarioServicio || 0));
+        }));
+      }
+
+      function confirmReservation(btn) {
+        if (state.submitLock) return;
+        state.submitLock = true;
+        if (btn) {
+          btn.disabled = true;
+          var etiquetaAnterior = btn.textContent;
+          btn.textContent = 'Guardando...';
+        }
+
+        var item;
+        try {
+          item = buildCartItem();
+        } catch (errBuild) {
+          state.submitLock = false;
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = etiquetaAnterior;
+          }
+          setMessage((errBuild && errBuild.message) || 'No fue posible preparar la cita para carrito.', true);
+          return;
+        }
+
+        validarItemEnServidor(item)
+          .then(function () {
+            var result = getCartStore().add(item);
+            if (!result || !result.success) {
+              throw new Error((result && result.message) || 'No fue posible agregar la sesión al carrito.');
+            }
+
+            closeModal();
+            setMessage('Cita guardada. Redirigiendo al carrito...', false);
+            window.location.assign(new URL('carrito.html', window.location.href).href);
+          })
+          .catch(function (err) {
+            if (state.modalOpen) closeModal();
+            setMessage((err && err.message) || 'No fue posible agregar la sesión al carrito.', true);
+            if (state.selectedSession) {
+              renderHours();
+            }
+            renderServiceDetailCard();
+          })
+          .finally(function () {
+            state.submitLock = false;
+            if (btn) {
+              btn.disabled = btn === el.btnContinuar && !state.selectedSession;
+              btn.textContent = etiquetaAnterior;
+            }
+          });
+      }
+
+      el.servicio.addEventListener('change', function () {
+        var value = Number(el.servicio.value || 0);
+        state.selectedServiceId = value > 0 ? value : null;
+        state.preselectedPromotionId = null;
+        state.selectedPromo = null;
+        state.requestCounter += 1;
+        state.horariosMes = [];
+        state.horariosDia = [];
+        el.calendario.innerHTML = '';
+        state.selectedSession = null;
+        state.selectedSecondSession = null;
+        state.horasPaginacion.pagina = 1;
+        el.btnContinuar.disabled = true;
+        setMessage('', false);
+        renderServiceDetailCard();
+        if (!state.selectedServiceId) {
+          el.disponibilidad.textContent = 'Seleccioná un servicio para continuar.';
+          el.calendario.innerHTML = '';
+          el.horasLista.innerHTML = '';
+          renderPaginacion({ wrap: el.horasPaginationWrap, summary: el.horasPaginationSummary, pageInfo: el.horasPaginationPageInfo, prev: el.horasPaginationPrev, next: el.horasPaginationNext }, 0, state.horasPaginacion);
+          return;
+        }
+        loadMonth();
+      });
+
+      el.btnMesPrev.addEventListener('click', function () {
+        if (!state.currentMonth || !state.selectedServiceId) return;
+        var crNow = getCostaRicaNowParts();
+        var esMesActual = state.currentMonth.getFullYear() === crNow.year && (state.currentMonth.getMonth() + 1) === crNow.month;
+        if (esMesActual) return;
+        state.currentMonth = new Date(state.currentMonth.getFullYear(), state.currentMonth.getMonth() - 1, 1);
+        loadMonth();
+      });
+
+      el.btnMesNext.addEventListener('click', function () {
+        if (!state.currentMonth || !state.selectedServiceId) return;
+        state.currentMonth = new Date(state.currentMonth.getFullYear(), state.currentMonth.getMonth() + 1, 1);
+        loadMonth();
+      });
+
+      el.btnContinuar.addEventListener('click', function () {
+        if (!state.selectedSession) {
+          setMessage('Seleccioná una sesión antes de continuar.', true);
+          return;
+        }
+        chooseSecondSessionIfNeeded(el.btnContinuar);
+      });
+
+      if (el.horasPaginationPrev) {
+        el.horasPaginationPrev.addEventListener('click', function () {
+          if (state.horasPaginacion.pagina <= 1) return;
+          state.horasPaginacion.pagina -= 1;
+          renderHours();
+        });
+      }
+
+      if (el.horasPaginationNext) {
+        el.horasPaginationNext.addEventListener('click', function () {
+          state.horasPaginacion.pagina += 1;
+          renderHours();
+        });
+      }
+
+      el.modal.addEventListener('click', function (ev) {
+        if (ev.target === el.modal) closeModal();
+      });
+
+      document.addEventListener('keydown', function (ev) {
+        if (ev.key === 'Escape' && state.modalOpen) closeModal();
+      });
+
+      loadBaseData();
+    })();
+  </script>
+  <script src='js/site-info.js?v=20261112-5' defer></script>
+</body>
+</html>

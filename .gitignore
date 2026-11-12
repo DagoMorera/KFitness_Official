@@ -1,0 +1,37 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+bin/
+obj/
+Debug/
+Release/
+*.log
+*.tmp
+*.cache
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+__MACOSX/
+._*
+
+# Temporales
+*.bak
+*.swp
+Thumbs.db
+
+# Datos privados locales
+App_Data/ProfilePhotos/
+App_Data/secrets.local.config
+
+App_Data/RoutineMedia/
+App_Data/*.mdf
+App_Data/*.ldf
+# Configuración privada del servidor
+/web.config
+*.publishsettings
+*.pubxml.user

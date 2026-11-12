@@ -1,0 +1,40 @@
+.kr {--kr-border:#30343b;--kr-muted:#b4b8c1;--kr-red:#ed1536;color:#f3f4f6;font-family:inherit;min-width:0;width:100%;}
+.kr *, .kr *::before,.kr *::after {box-sizing:border-box;}
+.kr [hidden] {display:none!important;}
+.kr h2 {font-size:clamp(1.6rem,2.5vw,2.25rem);margin:6px 0 12px;line-height:1.15;}
+.kr h3 {font-size:1.15rem;margin:0 0 12px;}.kr h4 {margin:20px 0 8px;}
+.kr p {color:var(--kr-muted);line-height:1.6;margin:8px 0;}.kr .kr-lines {white-space:pre-line;overflow-wrap:anywhere;}
+.kr button,.kr .kr-button {display:inline-flex;align-items:center;justify-content:center;border:1px solid #464a52;background:#202227;color:#fff;padding:11px 16px;border-radius:10px;font:inherit;cursor:pointer;text-decoration:none;gap:6px;}
+.kr button:hover,.kr .kr-button:hover {border-color:#f5526a;background:#2b242a;}.kr button:disabled {opacity:.55;cursor:wait;}
+.kr button:focus-visible,.kr a:focus-visible,.kr input:focus-visible,.kr select:focus-visible,.kr textarea:focus-visible {outline:2px solid #ff7185;outline-offset:3px;}
+.kr .kr-primary,.kr [aria-selected=true] {background:linear-gradient(120deg,#ee183b,#b90c27);border-color:#f94360;}
+.kr [aria-pressed=true] {background:#17382a;border-color:#36845e;}
+.kr input,.kr select,.kr textarea {width:100%;min-width:0;display:block;background:#111317;border:1px solid #3b3f47;border-radius:9px;color:#fff;padding:12px;font:inherit;}
+.kr textarea {min-height:100px;resize:vertical;}.kr label {display:block;font-size:.9rem;font-weight:600;}.kr label>input,.kr label>select,.kr label>textarea {margin-top:8px;}
+.kr .kr-eyebrow {font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#f97084;}
+.kr .kr-plan-head {display:flex;gap:24px;align-items:center;padding:24px 0;}.kr .kr-cover {width:180px;flex-shrink:0;}.kr img {display:block;width:100%;height:100%;object-fit:cover;border-radius:12px;}.kr .kr-cover img {height:130px;}
+.kr .kr-chip {display:inline-block;border:1px solid var(--kr-border);border-radius:30px;padding:7px 12px;font-size:.85rem;color:#ddd;}
+.kr .kr-tabs {display:flex;gap:10px;overflow-x:auto;padding:16px 0;margin-bottom:16px;border-bottom:1px solid var(--kr-border);}.kr .kr-tabs button {white-space:nowrap;}
+.kr .kr-training {display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:22px;align-items:start;}
+.kr .kr-exercises {display:grid;gap:16px;}.kr .kr-exercise {display:grid;grid-template-columns:160px minmax(0,1fr);gap:18px;padding:16px;background:#13151a;border:1px solid var(--kr-border);border-radius:16px;}
+.kr .kr-exercise.is-selected {border-color:#f13956;background:linear-gradient(130deg,#29141a,#13151a);}.kr .kr-picture {min-height:130px;}.kr .kr-exercise-body {align-self:center;min-width:0;}
+.kr .kr-guide {background:#14161b;padding:20px;border:1px solid var(--kr-border);border-radius:16px;}.kr .kr-guide>img {aspect-ratio:16/10;height:auto;margin:16px 0;}.kr .kr-guide>h3 {margin-top:12px;}
+.kr .kr-note {background:#321820;border:1px solid #7c2a3c;border-radius:10px;padding:14px;margin-top:20px;}.kr .kr-note h4{margin:0;}
+.kr .kr-actions {display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}.kr .kr-no-photo {background:linear-gradient(140deg,#242830,#14161b);border-radius:10px;min-height:110px;display:flex;align-items:center;justify-content:center;color:#aaa;}
+.kr .kr-progress {display:flex;align-items:center;gap:24px;padding:22px;margin-top:24px;border:1px solid var(--kr-border);border-radius:14px;background:#14161b;}.kr .kr-progress>div {flex:1;}.kr progress {display:block;width:100%;height:10px;accent-color:#ed1536;margin-top:12px;}
+.kr .kr-empty {border:1px dashed #444955;padding:28px;border-radius:12px;}.kr .kr-error {color:#ff9aa9;}.kr .kr-toolbar {display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:18px 0;}.kr .kr-pagination {display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.kr .kr-pagination[hidden] {display:none;}
+.kr .kr-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}.kr .kr-full {grid-column:1/-1;}
+.kr .kr-panel {padding:22px;border:1px solid var(--kr-border);background:#15171c;border-radius:16px;margin:16px 0;}.kr .kr-section-head {display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:18px;}.kr .kr-section-head input {max-width:450px;}
+.kr .kr-session-editor {border-left:3px solid #df1534;}.kr .kr-exercise-editor {background:#101216;border:1px solid #343842;border-radius:12px;padding:20px;margin-top:18px;}
+.kr .kr-media-editor {display:grid;grid-template-columns:160px minmax(0,1fr);gap:18px;align-items:center;}.kr .kr-media-editor img {height:130px;}
+.kr .kr-number-grid {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
+.kr .kr-footer {position:sticky;bottom:0;background:#121418ed;backdrop-filter:blur(14px);padding:16px;border:1px solid var(--kr-border);border-radius:12px;z-index:2;margin-top:22px;}
+.kr .kr-history {margin:22px 0;padding:18px;border:1px solid var(--kr-border);border-radius:12px;}.kr .kr-history li {margin:10px 0;color:#bbb;}
+#admin-rutinas .kr-list-cover {width:90px;height:65px;object-fit:cover;border-radius:9px;display:block;margin-bottom:9px;}
+#admin-rutina-editor {margin-top:20px;}.kr-client-container {max-width:1400px;margin:auto;padding:32px 24px;}#perfil-rutinas-lista.kr {display:block;}
+@media(max-width:1100px){.kr .kr-training{grid-template-columns:1fr;}.kr .kr-guide{max-width:none;}.kr .kr-guide>img{max-height:320px;object-fit:contain;}.kr .kr-number-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:650px){.kr .kr-grid{grid-template-columns:1fr;}.kr .kr-exercise{grid-template-columns:1fr;}.kr .kr-picture img{height:200px;}.kr .kr-plan-head{display:block;}.kr .kr-cover{width:100%;margin-bottom:18px;}.kr .kr-cover img{height:180px;}.kr .kr-progress{align-items:stretch;flex-direction:column;}.kr .kr-section-head{flex-wrap:wrap;}.kr .kr-media-editor{grid-template-columns:1fr;}.kr .kr-panel{padding:16px;}.kr-client-container{padding:20px 12px;}}
+
+.kr input[type=checkbox] {display:inline-block;width:auto;margin:0 8px 0 0;}
+#admin-rutinas [hidden], #admin-rutina-editor[hidden] {display:none!important;}

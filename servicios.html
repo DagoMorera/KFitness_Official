@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>KFitness - Servicios</title>
+  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
+  <style>
+    .servicio-card-v2 {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      overflow: hidden;
+      min-width: 0;
+      background: #111;
+      border: 1px solid #2c2c2c;
+    }
+    .servicio-card-media {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #1a1a1c;
+      border-bottom: 1px solid rgba(237, 28, 46, 0.25);
+      display: block;
+    }
+    .servicio-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      border: 0;
+      cursor: pointer;
+    }
+    .servicio-card-v2[data-servicio-clave='hot-pilates'] .servicio-card-img {
+      object-position: center 32%;
+    }
+    .servicio-card-media-fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      color: #cfcfd4;
+      font-weight: 600;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+    .servicio-card-media--sin-imagen .servicio-card-img {
+      display: none;
+    }
+    .servicio-card-media--sin-imagen .servicio-card-media-fallback {
+      display: flex;
+    }
+    .servicio-card-contenido {
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+      padding: 1rem;
+      min-width: 0;
+      flex: 1;
+    }
+    .chip-categoria {
+      display: inline-block;
+      width: fit-content;
+      padding: .15rem .6rem;
+      border-radius: 999px;
+      background: #2b2b2b;
+      color: #ddd;
+      font-size: .78rem;
+    }
+    .servicio-card-titulo {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      text-align: left;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      font-weight: 700;
+      font-size: 1.2rem;
+      line-height: 1.3;
+      cursor: pointer;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+    .servicio-card-titulo:hover,
+    .servicio-card-titulo:focus-visible {
+      color: #ffffff;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .servicio-card-descripcion {
+      margin: 0;
+      color: var(--texto-claro);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+    }
+    .servicio-card-acciones {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: .2rem;
+    }
+    @media (max-width: 620px) {
+      .servicio-card-acciones .boton {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body class='fondo-gimnasio-rojo'>
+  <header class='site-header' aria-label='Encabezado del sitio'></header>
+  <main>
+    <section class='seccion servicios-principal' aria-label='Listado y filtros de servicios'>
+      <div class='contenedor'>
+        <div class='pagina-intro-compacta'>
+          <h1 id='servicios-principal-titulo'>Encontrá tu próximo entrenamiento</h1>
+          <p>Explorá nuestros servicios y reservá tu próxima sesión en pocos pasos.</p>
+        </div>
+        <div class='filtros-servicios' role='group' aria-label='Filtros de servicios'>
+          <button class='boton boton-pequeno filtro activo' data-filtro='todos'>Todos</button>
+          <button class='boton boton-pequeno filtro' data-filtro='entrenamiento'>Entrenamiento</button>
+          <button class='boton boton-pequeno filtro' data-filtro='asesoria'>Asesoría</button>
+          <button class='boton boton-pequeno filtro' data-filtro='clases'>Clases</button>
+        </div>
+        <p id='estado-servicios' class='detalle' aria-live='polite'>Cargando servicios...</p>
+        <div class='grid tarjetas-servicios' id='lista-servicios' data-servicios-render='inline'></div>
+        <div class='pagination' id='servicios-pagination-wrap' hidden>
+          <span id='servicios-pagination-summary'>Mostrando 0–0 de 0</span>
+          <div class='pagination-nav'>
+            <button type='button' class='boton boton-secundario boton-pequeno' id='servicios-pagination-prev'>Anterior</button>
+            <span id='servicios-pagination-pageinfo'>Página 1 de 1</span>
+            <button type='button' class='boton boton-secundario boton-pequeno' id='servicios-pagination-next'>Siguiente</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class='site-footer' aria-label='Pie de página'></footer>
+
+  <div id='servicio-detalle-modal' class='perfil-modal-overlay' role='dialog' aria-modal='true' aria-labelledby='servicio-detalle-titulo' hidden>
+    <div class='perfil-modal'>
+      <div class='perfil-modal-header'>
+        <h2 id='servicio-detalle-titulo'>Detalle del servicio</h2>
+      </div>
+      <div id='servicio-detalle-contenido'></div>
+      <div class='perfil-modal-actions'>
+        <button type='button' id='servicio-detalle-cerrar' class='boton boton-secundario'>Cerrar</button>
+      </div>
+    </div>
+  </div>
+  <script src='js/app.js?v=20261112-5' defer></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var estado = { servicios: [], filtro: 'todos', cargando: false, paginacion: { pagina: 1, pageSize: 6 } };
+      var lista = document.getElementById('lista-servicios');
+      var estadoEl = document.getElementById('estado-servicios');
+      var botonesFiltro = Array.prototype.slice.call(document.querySelectorAll('.filtros-servicios .filtro'));
+      var pagWrap = document.getElementById('servicios-pagination-wrap');
+      var pagSummary = document.getElementById('servicios-pagination-summary');
+      var pagPageInfo = document.getElementById('servicios-pagination-pageinfo');
+      var pagPrev = document.getElementById('servicios-pagination-prev');
+      var pagNext = document.getElementById('servicios-pagination-next');
+      var modal = document.getElementById('servicio-detalle-modal');
+      var modalContenido = document.getElementById('servicio-detalle-contenido');
+      var modalCerrar = document.getElementById('servicio-detalle-cerrar');
+      var focoPrevio = null;
+
+      if (!lista || !estadoEl) return;
+
+      function formatearCRC(valor) {
+        try {
+          return new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'CRC', maximumFractionDigits: 0 }).format(Number(valor || 0));
+        } catch (e) {
+          return '₡ ' + Number(valor || 0).toFixed(0);
+        }
+      }
+
+      function normalizar(texto) {
+        return String(texto || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+      }
+
+      function coincideFiltro(servicio) {
+        if (estado.filtro === 'todos') return true;
+        return normalizar(servicio.categoria).indexOf(estado.filtro) >= 0;
+      }
+
+      function obtenerImagen(servicio) {
+        if (!servicio) return '';
+
+        var nombre = normalizar(servicio.nombre || '');
+        var referencia = String(servicio.imagenPrincipal || '').trim();
+
+        if (!referencia) {
+          if (nombre.indexOf('hot pilates') >= 0) return 'img/servicio-clases.png';
+          return '';
+        }
+
+        if (/^\/?img\/[a-z0-9._-]+$/i.test(referencia)) return '/' + referencia.replace(/^\//, '');
+
+        if (/^https?:\/\//i.test(referencia)) return referencia;
+
+        var desdeApi = referencia.match(/[?&]v=([^&]+)/i);
+        if (/service-image\.ashx/i.test(referencia) && desdeApi && desdeApi[1]) {
+          return 'api/service-image.ashx?v=' + encodeURIComponent(decodeURIComponent(desdeApi[1]));
+        }
+
+        var sinQuery = referencia.split('?')[0];
+        var nombreArchivo = sinQuery.split(/[\\/]/).pop();
+        if (!nombreArchivo) {
+          if (nombre.indexOf('hot pilates') >= 0) return 'img/servicio-clases.png';
+          return '';
+        }
+
+        return 'api/service-image.ashx?v=' + encodeURIComponent(nombreArchivo);
+      }
+
+      function abrirModal(titulo, html, disparador) {
+        if (!modal) return;
+        focoPrevio = disparador || document.activeElement;
+        document.getElementById('servicio-detalle-titulo').textContent = titulo;
+        modalContenido.innerHTML = html;
+        modal.hidden = false;
+        if (modalCerrar) modalCerrar.focus();
+      }
+
+      function cerrarModal() {
+        if (!modal) return;
+        modal.hidden = true;
+        modalContenido.innerHTML = '';
+        if (focoPrevio && typeof focoPrevio.focus === 'function') focoPrevio.focus();
+      }
+
+      function crearCard(servicio) {
+        var card = document.createElement('article');
+        var imagenUrl = obtenerImagen(servicio);
+        var nombreServicio = normalizar(servicio && servicio.nombre ? servicio.nombre : '');
+        card.className = 'tarjeta servicio-card-v2';
+        if (nombreServicio.indexOf('hot pilates') >= 0) card.setAttribute('data-servicio-clave', 'hot-pilates');
+        card.innerHTML =
+          '<div class="servicio-card-media">' +
+            '<img class="servicio-card-img" alt="' + (servicio.nombre || 'Servicio') + '" role="button" tabindex="0" src="' + (imagenUrl || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==') + '">' +
+            '<div class="servicio-card-media-fallback" aria-hidden="true">Imagen no disponible</div>' +
+          '</div>' +
+          '<div class="servicio-card-contenido">' +
+            '<span class="chip-categoria">' + (servicio.categoria || 'Servicio') + '</span>' +
+            '<button type="button" class="servicio-card-titulo">' + (servicio.nombre || 'Servicio') + '</button>' +
+            '<p class="servicio-card-descripcion">' + (servicio.descripcion || '') + '</p>' +
+            '<div class="servicio-card-acciones">' +
+              '<a class="boton boton-principal" href="reservas.html?servicio=' + encodeURIComponent(servicio.idProducto) + '">Reservar</a>' +
+              '<button type="button" class="boton boton-secundario">Ver detalle</button>' +
+            '</div>' +
+          '</div>';
+
+        var media = card.querySelector('.servicio-card-media');
+        var imagen = card.querySelector('.servicio-card-img');
+        var titulo = card.querySelector('.servicio-card-titulo');
+        var ver = card.querySelector('.boton-secundario');
+
+        function mostrarFallbackImagen() {
+          if (media) media.classList.add('servicio-card-media--sin-imagen');
+        }
+
+        if (imagen) {
+          if (!imagenUrl) {
+            mostrarFallbackImagen();
+          } else {
+            imagen.addEventListener('error', mostrarFallbackImagen);
+          }
+        }
+
+        function abrirDetalle(disparador) {
+          abrirModal(
+            servicio.nombre || 'Detalle del servicio',
+            '<p><strong>Categoría:</strong> ' + (servicio.categoria || 'N/D') + '</p>' +
+            '<p><strong>Precio:</strong> ' + formatearCRC(servicio.precio) + '</p>' +
+            '<p>' + (servicio.descripcion || '') + '</p>',
+            disparador
+          );
+        }
+
+        if (imagen) {
+          imagen.addEventListener('click', function () { abrirDetalle(imagen); });
+          imagen.addEventListener('keydown', function (ev) {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+              ev.preventDefault();
+              abrirDetalle(imagen);
+            }
+          });
+        }
+
+        if (titulo) {
+          titulo.addEventListener('click', function () { abrirDetalle(titulo); });
+        }
+
+        if (ver) {
+          ver.addEventListener('click', function () { abrirDetalle(ver); });
+        }
+
+        return card;
+      }
+
+      function renderPaginacion(total, pagina, pageSize) {
+        if (!pagWrap || !pagSummary || !pagPageInfo || !pagPrev || !pagNext) return;
+        var totalPaginas = total > 0 ? Math.ceil(total / pageSize) : 1;
+        var actual = pagina;
+        if (actual < 1) actual = 1;
+        if (actual > totalPaginas) actual = totalPaginas;
+        var desde = total > 0 ? ((actual - 1) * pageSize) + 1 : 0;
+        var hasta = total > 0 ? Math.min(actual * pageSize, total) : 0;
+        pagSummary.textContent = 'Mostrando ' + String(desde) + '–' + String(hasta) + ' de ' + String(total);
+        pagPageInfo.textContent = 'Página ' + String(actual) + ' de ' + String(totalPaginas);
+        pagPrev.disabled = actual <= 1;
+        pagNext.disabled = actual >= totalPaginas;
+        pagWrap.hidden = total <= pageSize;
+      }
+
+      function render() {
+        var filtrados = estado.servicios.filter(coincideFiltro);
+        var total = filtrados.length;
+        var pageSize = estado.paginacion.pageSize;
+        var totalPaginas = total > 0 ? Math.ceil(total / pageSize) : 1;
+        if (estado.paginacion.pagina > totalPaginas) estado.paginacion.pagina = totalPaginas;
+        if (estado.paginacion.pagina < 1) estado.paginacion.pagina = 1;
+
+        lista.innerHTML = '';
+        if (!filtrados.length) {
+          renderPaginacion(0, 1, pageSize);
+          estadoEl.textContent = 'No hay servicios para este filtro.';
+          return;
+        }
+
+        var inicio = (estado.paginacion.pagina - 1) * pageSize;
+        var fin = Math.min(inicio + pageSize, total);
+        var paginaItems = filtrados.slice(inicio, fin);
+        var frag = document.createDocumentFragment();
+        paginaItems.forEach(function (s) { frag.appendChild(crearCard(s)); });
+        lista.appendChild(frag);
+
+        renderPaginacion(total, estado.paginacion.pagina, pageSize);
+        estadoEl.textContent = 'Mostrando ' + paginaItems.length + ' de ' + total + ' servicio(s).';
+      }
+
+      function cargarServicios() {
+        if (estado.cargando) return;
+        estado.cargando = true;
+        estadoEl.textContent = 'Cargando servicios...';
+        fetch('api/services.ashx', { credentials: 'same-origin' })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (!data || !data.success || !Array.isArray(data.servicios)) throw new Error((data && data.message) || 'No fue posible cargar servicios.');
+            estado.servicios = data.servicios;
+            render();
+          })
+          .catch(function (err) {
+            estadoEl.textContent = err && err.message ? err.message : 'No fue posible cargar servicios.';
+          })
+          .finally(function () { estado.cargando = false; });
+      }
+
+      botonesFiltro.forEach(function (btn) {
+        btn.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          estado.filtro = btn.getAttribute('data-filtro') || 'todos';
+          estado.paginacion.pagina = 1;
+          botonesFiltro.forEach(function (b) { b.classList.toggle('activo', b === btn); });
+          render();
+        });
+      });
+
+      if (pagPrev) {
+        pagPrev.addEventListener('click', function () {
+          if (estado.paginacion.pagina <= 1) return;
+          estado.paginacion.pagina -= 1;
+          render();
+        });
+      }
+
+      if (pagNext) {
+        pagNext.addEventListener('click', function () {
+          estado.paginacion.pagina += 1;
+          render();
+        });
+      }
+
+      if (modalCerrar) modalCerrar.addEventListener('click', cerrarModal);
+      if (modal) modal.addEventListener('click', function (ev) { if (ev.target === modal) cerrarModal(); });
+      document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && modal && !modal.hidden) cerrarModal(); });
+
+      cargarServicios();
+    })();
+  </script>
+  <script src='js/site-info.js?v=20261112-5' defer></script>
+</body>
+</html>

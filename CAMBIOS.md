@@ -1,0 +1,81 @@
+# Archivos de esta actualización
+
+## Modificados
+
+- `.gitignore`
+- `App_Code/Repositories/RepositorioRutinasEditor.cs`
+- `App_Code/Security/SmtpRecoveryMailer.cs`
+- `DataBase/024_Rutinas_Editor_Inline.sql`
+- `admin.html`
+- `api/admin/audit-log.ashx`
+- `api/admin/reports.ashx`
+- `api/admin/routines-ai-draft.ashx`
+- `api/admin/routines-assign.ashx`
+- `api/admin/routines-detail.ashx`
+- `api/admin/routines-exercises-catalog.ashx`
+- `api/admin/routines-list.ashx`
+- `api/admin/routines-save.ashx`
+- `api/admin/routines-toggle.ashx`
+- `api/admin/routines-users.ashx`
+- `api/admin/service-categories.ashx`
+- `api/admin/service-create.ashx`
+- `api/admin/service-detail.ashx`
+- `api/admin/service-list.ashx`
+- `api/admin/service-update.ashx`
+- `api/profile.ashx`
+- `api/register.ashx`
+- `api/reservations-cancel.ashx`
+- `api/reservations.ashx`
+- `api/routine-media.ashx`
+- `api/routines-my.ashx`
+- `contacto.html`
+- `horarios.html`
+- `index.html`
+- `js/admin.js`
+- `js/app.js`
+- `js/formularios.js`
+- `js/profile.js`
+- `login.html`
+- `perfil.html`
+- `promociones.html`
+- `recuperar-contrasena.html`
+- `registro.html`
+- `reservas.html`
+- `restablecer-contrasena.html`
+- `rutinas.html`
+- `servicios.html`
+- `web.config`
+
+## Nuevos
+
+- `App_Code/Infrastructure/CorreosWeb.cs`
+- `App_Code/Infrastructure/WebJson.cs`
+- `App_Code/Repositories/RepositorioConfiguracionWeb.cs`
+- `App_Code/Repositories/RepositorioConsultasWeb.cs`
+- `App_Code/Repositories/RepositorioRutinasProgreso.cs`
+- `DataBase/024_Preflight.sql`
+- `DataBase/025_Rutinas_Progreso.sql`
+- `DataBase/026_Consultas_Web.sql`
+- `DataBase/027_Correos_Web.sql`
+- `LEEME_ACTUALIZACION.md`
+- `api/admin/contacts.ashx`
+- `api/admin/notifications.ashx`
+- `api/admin/reports-extra.ashx`
+- `api/admin/site-settings.ashx`
+- `api/contact.ashx`
+- `api/routines-progress.ashx`
+- `api/site-settings.ashx`
+- `css/rutinas.css`
+- `js/contacto.js`
+- `js/gestion-web.js`
+- `js/reportes-web.js`
+- `js/rutinas-admin.js`
+- `js/rutinas-cliente.js`
+- `js/rutinas-ui.js`
+- `js/site-info.js`
+- `tools/Actualizar-Sitio.ps1`
+- `tools/Aplicar-Migraciones.ps1`
+- `tools/Diagnostico-Rutinas.sql`
+- `tools/Validar-Compilacion.ps1`
+
+La lista compara el código de esta entrega con el ZIP recibido. No implica que se haya ejecutado el sitio ni las migraciones.

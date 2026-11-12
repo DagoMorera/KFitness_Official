@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>KFitness - Restablecer contraseña</title>
+  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/formularios.css'>
+  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
+</head>
+<body>
+  <header class='site-header' aria-label='Encabezado del sitio'></header>
+  <main>
+    <section class='seccion recuperar-principal' aria-labelledby='restablecer-titulo'>
+        <div class='contenedor formulario-centro'>
+
+            <div class="tarjeta formulario-tarjeta restablecer-tarjeta">
+
+                <div class="restablecer-encabezado">
+                    <div class="restablecer-candado" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none"
+                             stroke="currentColor" stroke-width="1.8"
+                             stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="5" y="10" width="14" height="11" rx="2"></rect>
+                            <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                        </svg>
+                    </div>
+
+                    <h1 id="restablecer-titulo">Restablecer contraseña</h1>
+
+                    <p class="restablecer-subtitulo">
+                        Crea una nueva contraseña para recuperar el acceso
+                        a tu cuenta de KFitness.
+                    </p>
+                </div>
+
+                <form id="form-restablecer" class="formulario" novalidate>
+
+                    <label for="reset-password">Nueva contraseña</label>
+
+                    <div class="restablecer-campo">
+                        <span class="restablecer-campo-icono" aria-hidden="true">♙</span>
+
+                        <input type="password"
+                               id="reset-password"
+                               name="password"
+                               placeholder="Ingresa tu nueva contraseña"
+                               autocomplete="new-password"
+                               required>
+
+                        <button type="button"
+                                class="restablecer-ver-password"
+                                data-target="reset-password"
+                                aria-label="Mostrar contraseña">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="21"
+                                 height="21"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+
+                        </button>
+                    </div>
+
+                    <div class="restablecer-seguridad">
+                        <div class="restablecer-seguridad-barra">
+                            <span id="restablecer-nivel-barra"></span>
+                        </div>
+                        <span id="restablecer-nivel-texto">Seguridad</span>
+                    </div>
+
+                    <div class="restablecer-requisitos">
+                        <p id="requisito-longitud">Al menos 8 caracteres</p>
+                        <p id="requisito-mayuscula">Una letra mayúscula (A - Z)</p>
+                        <p id="requisito-minuscula">Una letra minúscula (a - z)</p>
+                        <p id="requisito-numero">Un número (0 - 9)</p>
+                    </div>
+
+                    <label for="reset-password2">Confirmar nueva contraseña</label>
+
+                    <div class="restablecer-campo">
+                        <span class="restablecer-campo-icono" aria-hidden="true">♙</span>
+
+                        <input type="password"
+                               id="reset-password2"
+                               name="password2"
+                               placeholder="Confirma tu nueva contraseña"
+                               autocomplete="new-password"
+                               required>
+
+                        <button type="button"
+                                class="restablecer-ver-password"
+                                data-target="reset-password2"
+                                aria-label="Mostrar contraseña">
+
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 width="21"
+                                 height="21"
+                                 viewBox="0 0 24 24"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 stroke-width="1.8"
+                                 stroke-linecap="round"
+                                 stroke-linejoin="round"
+                                 aria-hidden="true">
+                                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <p id="restablecer-coincidencia"
+                       class="restablecer-coincidencia"
+                       aria-live="polite"></p>
+
+
+                    <button type="submit"
+                            class="boton boton-principal restablecer-boton">
+                        Guardar nueva contraseña
+                        <span aria-hidden="true">→</span>
+                    </button>
+
+                    <p class="mensaje-formulario"
+                       id="restablecer-mensaje"
+                       aria-live="polite"></p>
+
+                </form>
+
+                <!-- Resultado del restablecimiento de contraseña -->
+                <div id="restablecer-resultado"
+                     class="restablecer-resultado"
+                     role="status"
+                     aria-live="polite"
+                     hidden>
+
+                    <div class="restablecer-resultado-icono"
+                         aria-hidden="true">
+                        <span id="restablecer-resultado-simbolo"></span>
+                    </div>
+
+                    <h2 id="restablecer-resultado-titulo"></h2>
+
+                    <p id="restablecer-resultado-texto"></p>
+
+                    <a href="login.html"
+                       id="restablecer-enlace-login"
+                       class="restablecer-enlace-login"
+                       hidden>
+                        <span>Volver al inicio de sesión</span>
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+
+                    <!-- Volver a intentar si ocurre un error -->
+                    <button type="button"
+                            id="restablecer-reintentar"
+                            class="restablecer-reintentar"
+                            hidden>
+                        <span aria-hidden="true">↻</span>
+                        <span>Intentar nuevamente</span>
+                    </button>
+
+
+                </div>
+
+
+                <div class="restablecer-separador"></div>
+
+                <a href="login.html" class="restablecer-volver">
+                    ← Volver al inicio de sesión
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+  </main>
+  <footer class='site-footer' aria-label='Pie de página'></footer>
+  <script src='js/app.js?v=20261112-5' defer></script>
+  <script src='js/formularios.js?v=4' defer></script></body>
+</html>

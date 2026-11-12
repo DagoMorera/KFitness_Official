@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-label="Ilustración entrenamiento">
+  <rect width="800" height="480" fill="#0f1114" rx="24" />
+  <g transform="translate(40,40)" fill="#ffffff" opacity="0.08">
+    <rect x="0" y="0" width="320" height="240" rx="14" />
+  </g>
+  <text x="420" y="160" font-family="Arial, Helvetica, sans-serif" font-size="36" fill="#18a85a">Imagen demostrativa</text>
+  <text x="420" y="210" font-family="Arial, Helvetica, sans-serif" font-size="16" fill="#d7d7d7">Ilustración ligera para prototipo</text>
+</svg>

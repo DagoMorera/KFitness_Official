@@ -1,0 +1,173 @@
+﻿@media (max-width: 1100px) {
+  .hero-image {
+    height: clamp(320px, 48vw, 560px);
+  }
+
+  .inicio-home .hero-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 0.9fr);
+    gap: 1.4rem;
+  }
+
+  .inicio-home .hero-image {
+    height: clamp(280px, 36vw, 390px);
+  }
+
+  .hero-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .inicio-home .hero {
+    padding: 2.1rem 0;
+  }
+
+  .inicio-home .hero-layout {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+
+  .inicio-home .hero-texto-bloque {
+    order: 1;
+  }
+
+  .inicio-home .hero-container {
+    order: 2;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+
+  .inicio-home .hero-image {
+    height: clamp(240px, 56vw, 360px);
+    margin-inline: auto;
+  }
+
+  .servicios-principal .tarjetas-servicios {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .promociones-principal .promociones-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .horarios-filtros {
+    grid-template-columns: 1fr;
+  }
+
+  .horarios-principal .tabla-horarios {
+    min-width: 860px;
+  }
+
+  .nav-logo {
+    width: 100px;
+    height: 56px;
+  }
+
+  .nav-bar {
+    flex-wrap: wrap;
+  }
+
+  .nav-links {
+    display: none;
+    width: 100%;
+  }
+
+  .nav-links.visible {
+    display: flex;
+  }
+
+  .menu-hamburguesa {
+    display: inline-flex;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-button {
+    width: 100%;
+  }
+
+  .hero-card,
+  .benefit-card {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 620px) {
+  .inicio-home .hero {
+    padding: 1.8rem 0;
+  }
+
+  .inicio-home .hero-image {
+    height: clamp(220px, 62vw, 320px);
+  }
+
+  .inicio-home .hero-image img {
+    object-position: center;
+  }
+
+  .encabezado-interno-imagen {
+    height: clamp(220px, 56vw, 340px);
+    background-position: 64% 18%;
+  }
+
+  .encabezado-kfitness2 .encabezado-interno-imagen,
+  .encabezado-kfitness3 .encabezado-interno-imagen,
+  .encabezado-kfitness4 .encabezado-interno-imagen,
+  .encabezado-kfitness5 .encabezado-interno-imagen,
+  .encabezado-kfitness6 .encabezado-interno-imagen {
+    background-position: 62% 15%;
+  }
+
+  .servicios-principal .tarjetas-servicios {
+    grid-template-columns: 1fr;
+  }
+
+  .promociones-principal .promociones-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .promo-acciones .boton {
+    flex: 1 1 100%;
+  }
+
+  .horarios-principal .tabla-horarios {
+    min-width: 780px;
+  }
+
+  .horarios-filtros .boton {
+    width: 100%;
+  }
+
+  .hero-title {
+    font-size: clamp(2.3rem, 8vw, 4rem);
+  }
+
+  .hero-image {
+    height: clamp(250px, 72vw, 380px);
+  }
+
+  .hero-image img {
+    object-position: 66% 22%;
+  }
+
+  .hero-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links.visible {
+    position: absolute;
+    top: 78px;
+    left: 0;
+    right: 0;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .servicio-detalle-imagen {
+    height: 180px;
+  }
+}

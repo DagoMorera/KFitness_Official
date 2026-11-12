@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KFitness - Registro</title>
+
+    <link rel="stylesheet" href="css/estilos.css?v=20261112-5">
+    <link rel="stylesheet" href="css/formularios.css">
+    <link rel="stylesheet" href="css/responsive.css?v=20261112-5">
+    <link rel="stylesheet" href="css/registro-arena.css?v=20261112-5">
+</head>
+
+<body class="pagina-registro-arena">
+
+    <header class="site-header"
+            aria-label="Encabezado del sitio"></header>
+
+    <main>
+
+        <section class="seccion registro-principal arena-principal"
+                 aria-labelledby="registro-titulo">
+
+            <div class="arena-contenedor">
+
+                <!-- PRESENTACIÓN CINEMATOGRÁFICA -->
+
+                <div class="arena-presentacion">
+
+                    <div class="arena-presentacion-contenido">
+
+                        <span class="arena-etiqueta">
+                            KFITNESS · THE ARENA
+                        </span>
+
+                        <h2 class="arena-titulo">
+                            ENTRA A TU
+                            <span>NUEVA ERA</span>
+                        </h2>
+
+                        <p class="arena-descripcion">
+                            Tu transformación comienza con una decisión.
+                            Supera tus límites, desafía tus metas y
+                            construye tu mejor versión.
+                        </p>
+
+                        <div class="arena-beneficios">
+
+                            <div class="arena-beneficio">
+                                <span class="arena-beneficio-numero">01</span>
+                                <span>ENTRENA</span>
+                            </div>
+
+                            <div class="arena-beneficio">
+                                <span class="arena-beneficio-numero">02</span>
+                                <span>PROGRESA</span>
+                            </div>
+
+                            <div class="arena-beneficio">
+                                <span class="arena-beneficio-numero">03</span>
+                                <span>SUPÉRATE</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- FORMULARIO DE REGISTRO -->
+
+                <div class="tarjeta formulario-tarjeta arena-formulario">
+
+                    <div class="arena-formulario-encabezado">
+
+                        <img class="auth-logo"
+                             src="img/Logo1.png"
+                             alt="KFitness">
+
+                        <span class="arena-formulario-etiqueta">
+                            COMIENZA TU TRANSFORMACIÓN
+                        </span>
+
+                        <h1 id="registro-titulo">
+                            Crear cuenta
+                        </h1>
+
+                        <p class="arena-formulario-descripcion">
+                            Completa tus datos y forma parte de KFitness.
+                        </p>
+
+                    </div>
+
+                    <form id="form-registro"
+                          class="formulario arena-formulario-grid"
+                          novalidate>
+
+                        <!-- DATOS PERSONALES -->
+
+                        <div class="arena-seccion-titulo">
+                            <span>01</span>
+                            <h2>Datos personales</h2>
+                        </div>
+
+                        <div class="arena-campo">
+
+                            <label for="registro-nombre">
+                                Nombre
+                            </label>
+
+                            <input type="text"
+                                   id="registro-nombre"
+                                   name="nombre"
+                                   autocomplete="given-name"
+                                   required>
+
+                        </div>
+
+                        <div class="arena-campo">
+
+                            <label for="registro-apellido1">
+                                Primer apellido
+                            </label>
+
+                            <input type="text"
+                                   id="registro-apellido1"
+                                   name="apellido1"
+                                   autocomplete="family-name"
+                                   required>
+
+                        </div>
+
+                        <div class="arena-campo">
+
+                            <label for="registro-apellido2">
+                                Segundo apellido
+                            </label>
+
+                            <input type="text"
+                                   id="registro-apellido2"
+                                   name="apellido2"
+                                   required>
+
+                        </div>
+
+                        <div class="arena-campo">
+
+                            <label for="registro-nacimiento">
+                                Fecha de nacimiento
+                            </label>
+
+                            <input type="date"
+                                   id="registro-nacimiento"
+                                   name="nacimiento"
+                                   autocomplete="bday"
+                                   required>
+
+                        </div>
+
+                        <!-- CONTACTO -->
+
+                        <div class="arena-seccion-titulo">
+                            <span>02</span>
+                            <h2>Información de contacto</h2>
+                        </div>
+
+                        <div class="arena-campo">
+
+                            <label for="registro-email">
+                                Correo electrónico
+                            </label>
+
+                            <input type="email"
+                                   id="registro-email"
+                                   name="email"
+                                   autocomplete="email"
+                                   required>
+
+                        </div>
+
+                        <div class="arena-campo">
+
+                            <label for="registro-telefono">
+                                Teléfono
+                            </label>
+
+                            <input type="tel"
+                                   id="registro-telefono"
+                                   name="telefono"
+                                   autocomplete="tel"
+                                   required>
+
+                        </div>
+
+                        <!-- SEGURIDAD -->
+
+                        <div class="arena-seccion-titulo">
+                            <span>03</span>
+                            <h2>Seguridad de tu cuenta</h2>
+                        </div>
+
+                        <div class="arena-campo">
+
+                            <label for="registro-password">
+                                Contraseña
+                            </label>
+
+                            <input type="password"
+                                   id="registro-password"
+                                   name="password"
+                                   minlength="8"
+                                   autocomplete="new-password"
+                                   aria-describedby="registro-password-ayuda"
+                                   required>
+
+                            <small id="registro-password-ayuda"
+                                   class="texto-ayuda">
+                                Mínimo 8 caracteres, con mayúscula,
+                                minúscula y número.
+                            </small>
+
+                        </div>
+
+                        <div class="arena-campo">
+
+                            <label for="registro-password2">
+                                Confirmar contraseña
+                            </label>
+
+                            <input type="password"
+                                   id="registro-password2"
+                                   name="password2"
+                                   minlength="8"
+                                   autocomplete="new-password"
+                                   required>
+
+                        </div>
+
+                        <!-- TÉRMINOS -->
+
+                        <label class="check-terminos arena-terminos">
+
+                            <input type="checkbox"
+                                   id="registro-terminos"
+                                   name="terminos"
+                                   required>
+
+                            Acepto los términos y condiciones
+
+                        </label>
+
+                        <!-- BOTÓN -->
+
+                        <button type="submit"
+                                class="boton boton-principal arena-boton">
+
+                            CREAR MI CUENTA
+
+                            <span aria-hidden="true">→</span>
+
+                        </button>
+
+                        <!-- MENSAJES -->
+
+                        <p class="mensaje-formulario"
+                           id="registro-mensaje"
+                           aria-live="polite"></p>
+
+                    </form>
+
+                    <div class="arena-login-enlace">
+
+                        <p>
+                            ¿Ya tienes una cuenta?
+                            <a href="login.html">
+                                Inicia sesión
+                            </a>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="site-footer"
+            aria-label="Pie de página"></footer>
+
+    <script src="js/app.js?v=20261112-5" defer></script>
+    <script src="js/formularios.js?v=2" defer></script>
+
+</body>
+</html>

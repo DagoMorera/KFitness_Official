@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>KFitness - Contacto</title>
+  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
+  <link rel='preconnect' href='https://fonts.googleapis.com'>
+  <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+  <link href='https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;650;700&display=swap' rel='stylesheet'>
+  <style>
+    #contacto-titulo,
+    .contacto-principal,
+    .contacto-principal input,
+    .contacto-principal textarea,
+    .contacto-principal button {
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+
+    .contacto-principal .contacto-contenido {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) minmax(380px, 1.1fr);
+      gap: clamp(1.1rem, 2.4vw, 2rem);
+      align-items: start;
+    }
+
+    .contacto-principal .contacto-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      min-width: 0;
+    }
+
+    .contacto-principal .contacto-info h1 {
+      font-size: clamp(32px, 4.7vw, 48px);
+      font-weight: 650;
+      letter-spacing: -0.025em;
+      margin: 0 0 .9rem;
+      color: #fff;
+    }
+
+    .contacto-principal .contacto-info .contacto-intro {
+      margin: 0 0 1.2rem;
+      font-size: 16px;
+      line-height: 1.55;
+      color: #d9dde6;
+      max-width: 44ch;
+    }
+
+    .contacto-principal .contacto-datos-lista {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .7rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      width: 100%;
+    }
+
+    .contacto-principal .contacto-dato-item {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: .7rem;
+      align-items: start;
+      padding: .72rem .8rem;
+      border: 1px solid rgba(255, 255, 255, .11);
+      border-radius: .8rem;
+      background: rgba(15, 15, 18, .58);
+      backdrop-filter: blur(3px);
+    }
+
+    .contacto-principal .contacto-dato-icono {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(237, 28, 46, .2);
+      color: #f6f7fb;
+      border: 1px solid rgba(237, 28, 46, .45);
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .contacto-principal .contacto-dato-item h3 {
+      margin: 0 0 .15rem;
+      font-size: 13px;
+      letter-spacing: .01em;
+      color: #e6e8ee;
+      font-weight: 600;
+    }
+
+    .contacto-principal .contacto-dato-item p {
+      margin: 0;
+      color: #f5f6fa;
+      font-size: 14px;
+      line-height: 1.45;
+      word-break: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .contacto-principal .contacto-dato-item a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .contacto-principal #form-contacto {
+      background: rgba(12, 12, 15, .92);
+      border: 1px solid rgba(170, 176, 186, .26);
+      border-radius: 14px;
+      padding: clamp(1rem, 2.2vw, 1.35rem);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, .35);
+      display: grid;
+      gap: .55rem;
+    }
+
+    .contacto-principal #form-contacto h2 {
+      margin: 0 0 .3rem;
+      color: #fff;
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 650;
+      letter-spacing: -.018em;
+    }
+
+    .contacto-principal #form-contacto .contacto-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .72rem;
+    }
+
+    #contacto-visitante { display: contents; }
+    #contacto-visitante[hidden], #contacto-identidad[hidden] { display: none; }
+    #contacto-visitante[hidden] + .contacto-campo { grid-column: 1 / -1; }
+    #contacto-identidad {
+      margin: 0;
+      padding: .65rem .8rem;
+      border-left: 2px solid #ed1c2e;
+      background: rgba(237, 28, 46, .08);
+      color: #f5e9ed;
+      overflow-wrap: anywhere;
+    }
+
+    .contacto-principal #form-contacto .contacto-campo {
+      display: grid;
+      gap: .34rem;
+    }
+
+    .contacto-principal #form-contacto label {
+      font-size: 13px;
+      color: #e3e6ee;
+      letter-spacing: .012em;
+      font-weight: 500;
+    }
+
+    .contacto-principal #form-contacto input,
+    .contacto-principal #form-contacto textarea {
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(24, 26, 32, .88);
+      color: #f6f7fb;
+      border-radius: .72rem;
+      padding: .66rem .74rem;
+      font-size: 15px;
+    }
+
+    .contacto-principal #form-contacto textarea {
+      resize: vertical;
+      min-height: 132px;
+    }
+
+    .contacto-principal #form-contacto .boton {
+      margin-top: .25rem;
+      width: fit-content;
+      min-width: 170px;
+      font-weight: 600;
+    }
+
+    .contacto-principal #form-contacto .mensaje-formulario {
+      margin-top: .35rem;
+      min-height: 1.2em;
+    }
+
+    @media (max-width: 900px) {
+      .contacto-principal .contacto-contenido {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .contacto-principal .contacto-dato-item p {
+        overflow-wrap: anywhere;
+      }
+
+      .contacto-principal #form-contacto .contacto-row {
+        grid-template-columns: 1fr;
+      }
+
+      .contacto-principal #form-contacto .boton {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body class='fondo-gimnasio-rojo'>
+  <header class='site-header' aria-label='Encabezado del sitio'></header>
+  <main>
+    <section class='seccion contacto-principal' aria-label='Información y formulario de contacto'>
+      <div class='contenedor contacto-contenido'>
+        <div class='contacto-info'>
+          <h1 id='contacto-titulo'>Contacto</h1>
+          <p class='contacto-intro'>¿Tenés dudas sobre servicios, horarios o reservas? Escribinos.</p>
+          <ul class='contacto-datos-lista'>
+            <li class='contacto-dato-item'>
+              <span class='contacto-dato-icono' aria-hidden='true'>☎</span>
+              <div>
+                <h3>Teléfono</h3>
+                <p><a href='tel:+50670124477'>+506 7012 4477</a></p>
+              </div>
+            </li>
+            <li class='contacto-dato-item'>
+              <span class='contacto-dato-icono' aria-hidden='true'>✉</span>
+              <div>
+                <h3>Correo</h3>
+                <p><a href='mailto:karinamartinezg19@gmail.com'>karinamartinezg19@gmail.com</a></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <form id='form-contacto' class='formulario' novalidate>
+          <h2>Escribinos</h2>
+          <p id='contacto-identidad' hidden></p>
+          <div class='contacto-row'>
+            <fieldset id='contacto-visitante' hidden disabled>
+              <div class='contacto-campo'>
+                <label for='contacto-nombre'>Nombre</label>
+                <input type='text' id='contacto-nombre' maxlength='150' name='nombre' required>
+              </div>
+              <div class='contacto-campo'>
+                <label for='contacto-email'>Correo electrónico</label>
+                <input type='email' id='contacto-email' maxlength='256' name='email' required>
+              </div>
+              <div class='contacto-campo'>
+                <label for='contacto-telefono'>Teléfono</label>
+                <input type='tel' id='contacto-telefono' maxlength='30' name='telefono' required>
+              </div>
+            </fieldset>
+            <div class='contacto-campo'>
+              <label for='contacto-asunto'>Asunto</label>
+              <input type='text' id='contacto-asunto' maxlength='200' name='asunto' required>
+            </div>
+          </div>
+          <div class='contacto-campo'>
+            <label for='contacto-mensaje'>Mensaje</label>
+            <textarea id='contacto-mensaje' maxlength='4000' name='mensaje' rows='5' required></textarea>
+          </div>
+          <button type='submit' class='boton boton-principal'>Enviar mensaje</button>
+          <p class='mensaje-formulario' id='contacto-mensaje-respuesta' aria-live='polite'></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer class='site-footer' aria-label='Pie de página'></footer>
+  <script src='js/app.js?v=20261112-5' defer></script>
+  <script src='js/rutinas-ui.js?v=20261112-5' defer></script>
+  <script src='js/contacto.js?v=20261112-5' defer></script>
+  <script src='js/site-info.js?v=20261112-5' defer></script>
+</body>
+</html>

@@ -1,0 +1,1229 @@
+﻿.perfil-fondo {
+  --kf-imagen-fondo: url('../img/hero-fondo-rojo.jpg');
+}
+
+.perfil-principal .contenedor.perfil-contenido {
+  width: min(calc(100% - 1.5rem), 1800px);
+  max-width: 1800px;
+  padding-inline: clamp(0.25rem, 1.4vw, 1rem);
+}
+
+.perfil-principal .perfil-contenido {
+  display: grid;
+  grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+  gap: clamp(0.9rem, 1.8vw, 1.4rem);
+  align-items: start;
+}
+
+.perfil-principal .contenido-perfil > .tarjeta[hidden] {
+  display: none !important;
+}
+
+.perfil-principal .panel-usuario {
+  width: 100%;
+  min-width: 0;
+  position: sticky;
+  top: 94px;
+}
+
+.perfil-principal .contenido-perfil {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.perfil-principal .contenido-perfil > .tarjeta,
+.perfil-principal .contenido-perfil > .perfil-modal-overlay {
+  width: 100%;
+  min-width: 0;
+}
+
+.perfil-principal .formulario,
+.perfil-principal .perfil-password-wrap,
+.perfil-principal .perfil-policy,
+.perfil-principal .lista-datos {
+  min-width: 0;
+}
+
+.perfil-principal .contenido-perfil input,
+.perfil-principal .contenido-perfil textarea,
+.perfil-principal .contenido-perfil select,
+.perfil-principal .perfil-reserva-meta,
+.perfil-principal .perfil-reserva-promo,
+.perfil-principal .perfil-reservas-empty,
+.perfil-principal .tarjeta p,
+.perfil-principal .tarjeta h1,
+.perfil-principal .tarjeta h2,
+.perfil-principal .tarjeta h3,
+.perfil-principal .tarjeta h4,
+.perfil-principal .perfil-nav-link span {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+#perfil-datos {
+  display: grid;
+  gap: 0.9rem;
+}
+
+#perfil-datos #form-perfil {
+  display: grid;
+  gap: 14px;
+}
+
+#perfil-datos #perfil-titulo {
+  margin: 0;
+}
+
+#perfil-datos .perfil-cuenta-card {
+  margin: 0;
+  border-radius: 1rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-left: 3px solid #ed1c2e;
+  background: linear-gradient(120deg, rgba(61,17,30,0.95) 0%, rgba(37,20,31,0.9) 55%, rgba(26,24,32,0.86) 100%);
+  padding: 1.05rem 1.1rem;
+}
+
+.perfil-principal .perfil-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.perfil-principal .perfil-identidad {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.perfil-principal .perfil-meta {
+  min-width: 0;
+}
+
+#perfil-datos .perfil-meta h2 {
+  margin: 0 0 0.28rem;
+  color: #fff;
+  font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+  line-height: 1.12;
+}
+
+#perfil-datos .perfil-contacto-card,
+#perfil-datos .perfil-resumen-card {
+  border-radius: 0.95rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(20,19,24,0.8);
+  padding: 1rem 1.05rem;
+}
+
+#perfil-datos .perfil-contacto-card h3,
+#perfil-datos .perfil-resumen-card h3 {
+  margin: 0 0 0.62rem;
+  color: #fff;
+  font-size: 1.05rem;
+}
+
+#perfil-datos .perfil-contacto-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+#perfil-datos .perfil-contacto-item {
+  margin: 0;
+  display: grid;
+  gap: 0.16rem;
+}
+
+#perfil-datos .perfil-contacto-label {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+}
+
+#perfil-datos .perfil-contacto-item strong {
+  color: #fff;
+  font-size: 1.03rem;
+  font-weight: 700;
+}
+
+#perfil-datos .perfil-resumen-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.2rem;
+}
+
+#perfil-datos .perfil-resumen-item {
+  display: grid;
+  grid-template-columns: auto minmax(130px, 170px) minmax(0, 1fr);
+  align-items: start;
+  gap: 0.62rem;
+  padding: 0.58rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+#perfil-datos .perfil-resumen-item:last-child {
+  border-bottom: 0;
+}
+
+#perfil-datos .perfil-resumen-icono {
+  width: 24px;
+  height: 24px;
+  border-radius: 0.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(237,28,46,0.14);
+  color: #ffb8c0;
+  font-size: 0.8rem;
+}
+
+#perfil-datos .perfil-resumen-label {
+  color: rgba(255,255,255,0.82);
+  font-size: 0.9rem;
+}
+
+#perfil-datos .perfil-resumen-valor {
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+#perfil-datos #perfil-edicion-panel {
+  border-radius: 0.95rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(14,15,18,0.76);
+  padding: 0.85rem;
+}
+
+.perfil-principal .perfil-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.perfil-principal .perfil-form-campo {
+  min-width: 0;
+}
+
+.perfil-principal .perfil-form-campo-full {
+  grid-column: 1 / -1;
+}
+
+.perfil-principal .perfil-form-campo label {
+  margin-bottom: 0.4rem;
+}
+
+.perfil-principal .perfil-form-campo input,
+.perfil-principal .perfil-form-campo select,
+.perfil-principal .perfil-form-campo textarea {
+  width: 100%;
+}
+
+.perfil-principal #perfil-rutinas .lista-datos li {
+  padding-right: 0.3rem;
+}
+
+#perfil-rutinas .perfil-rutinas-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+#perfil-rutinas .perfil-rutinas-head h2 {
+  margin: 0;
+}
+
+#perfil-rutinas #perfil-rutinas-mensaje {
+  margin: 0.45rem 0 0.5rem;
+  min-height: 1.2rem;
+}
+
+#perfil-rutinas .perfil-rutinas-contenedor {
+  width: 100%;
+}
+
+#perfil-rutinas .kr {
+  margin-top: 0.15rem;
+}
+
+#perfil-rutinas .kr .kr-toolbar {
+  margin: 0.45rem 0 0.9rem;
+  justify-content: flex-start;
+}
+
+#perfil-rutinas .kr .kr-plan-head {
+  border-radius: 1rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-left: 3px solid #ed1c2e;
+  background: linear-gradient(120deg, rgba(61,17,30,0.95) 0%, rgba(37,20,31,0.9) 55%, rgba(26,24,32,0.86) 100%);
+  padding: 1rem;
+  align-items: center;
+  gap: 1rem;
+}
+
+#perfil-rutinas .kr .kr-plan-head .kr-eyebrow {
+  display: none;
+}
+
+#perfil-rutinas .kr .kr-plan-head h2 {
+  margin: 0.1rem 0 0.35rem;
+  color: #fff;
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
+  line-height: 1.06;
+}
+
+#perfil-rutinas .kr .kr-plan-head p {
+  margin: 0.15rem 0;
+}
+
+#perfil-rutinas .kr .kr-plan-head p.kr-rutina-objetivo {
+  color: rgba(255,255,255,0.9);
+  font-size: 1rem;
+}
+
+#perfil-rutinas .kr .kr-chip {
+  border-color: rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  font-size: 0.78rem;
+  padding: 0.33rem 0.62rem;
+}
+
+#perfil-rutinas .kr .kr-sesiones-panel {
+  margin-top: 1rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(20,19,24,0.8);
+  padding: 0.85rem;
+}
+
+#perfil-rutinas .kr .kr-sesiones-panel > h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.12rem;
+  color: #fff;
+}
+
+#perfil-rutinas .kr .kr-empty.kr-pendiente {
+  margin: 0;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0.8rem;
+  background: rgba(255,255,255,0.03);
+  padding: 0.78rem;
+}
+
+#perfil-rutinas .kr .kr-empty.kr-pendiente strong {
+  display: block;
+  color: #fff;
+  margin-bottom: 0.22rem;
+}
+
+#perfil-rutinas .kr .kr-notas {
+  margin-top: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 0.82rem;
+  background: rgba(20,19,24,0.72);
+  overflow: hidden;
+}
+
+#perfil-rutinas .kr .kr-notas > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.62rem 0.8rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+#perfil-rutinas .kr .kr-notas > summary::-webkit-details-marker {
+  display: none;
+}
+
+#perfil-rutinas .kr .kr-notas > p {
+  margin: 0;
+  padding: 0 0.8rem 0.75rem;
+  white-space: pre-line;
+}
+
+#perfil-clave-modal .perfil-modal {
+  width: min(100%, 640px);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+#perfil-clave-modal .perfil-modal-actions {
+  flex-wrap: wrap;
+}
+
+.perfil-reservas-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.perfil-reservas-head h2 {
+  margin: 0;
+}
+
+.perfil-reservas-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.perfil-reservas-vista {
+  display: inline-flex;
+  padding: 0.2rem;
+  border-radius: 0.7rem;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.04);
+}
+
+.perfil-reservas-vista-btn {
+  border: 0;
+  background: transparent;
+  color: rgba(255,255,255,0.82);
+  min-width: auto;
+  padding: 0.35rem 0.68rem;
+}
+
+.perfil-reservas-vista-btn.activo {
+  background: rgba(237,28,46,0.26);
+  color: #fff;
+}
+
+.perfil-reservas-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0.7rem 0 0.9rem;
+  flex-wrap: wrap;
+}
+
+.perfil-reservas-toolbar-extra select {
+  min-width: 170px;
+}
+
+#perfil-reservas-mensaje {
+  margin: 0;
+  min-height: 1.2rem;
+}
+
+.perfil-reservas-destacada-wrap {
+  margin-bottom: 1rem;
+}
+
+.perfil-reserva-destacada {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255,255,255,0.13);
+  border-left: 3px solid #ed1c2e;
+  background: linear-gradient(120deg, rgba(61,17,30,0.95) 0%, rgba(37,20,31,0.9) 55%, rgba(26,24,32,0.86) 100%);
+  padding: 1rem;
+}
+
+.perfil-reserva-fecha-bloque {
+  width: 84px;
+  border-radius: 0.8rem;
+  text-align: center;
+  padding: 0.7rem 0.5rem;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.perfil-reserva-fecha-dia {
+  display: block;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 800;
+  color: #fff;
+}
+
+.perfil-reserva-fecha-mes {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.78);
+}
+
+.perfil-reserva-destacada-info h3 {
+  margin: 0.1rem 0 0.4rem;
+  color: #fff;
+  font-size: 1.8rem;
+  line-height: 1.1;
+}
+
+.perfil-reserva-tag {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #ffb6bf;
+  font-weight: 700;
+}
+
+.perfil-reserva-linea {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.88);
+}
+
+.perfil-reserva-destacada-side {
+  display: grid;
+  gap: 0.55rem;
+  justify-items: end;
+}
+
+.perfil-reservas-lista-wrap h3 {
+  margin: 0 0 0.55rem;
+  font-size: 1.18rem;
+}
+
+.perfil-reservas-agenda {
+  display: grid;
+  gap: 0.62rem;
+}
+
+.perfil-reserva-fila {
+  border-radius: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(20,19,24,0.78);
+  padding: 0.78rem 0.86rem;
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) auto;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+.perfil-reserva-fila-fecha {
+  text-align: center;
+}
+
+.perfil-reserva-fila-fecha .perfil-reserva-fecha-dia {
+  font-size: 1.5rem;
+}
+
+.perfil-reserva-fila-servicio {
+  margin: 0;
+  font-weight: 700;
+  color: #fff;
+}
+
+.perfil-reserva-fila-detalle {
+  margin: 0.12rem 0 0;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.88rem;
+}
+
+.perfil-reserva-fila-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.45rem;
+}
+
+.perfil-reserva-badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.16rem 0.58rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.perfil-reserva-badge.confirmada {
+  background: rgba(56,210,122,0.2);
+  color: #9cf4c2;
+  border-color: rgba(56,210,122,0.36);
+}
+
+.perfil-reserva-badge.pendiente {
+  background: rgba(255,193,7,0.15);
+  color: #ffe19c;
+  border-color: rgba(255,193,7,0.35);
+}
+
+.perfil-reserva-badge.cancelada {
+  background: rgba(255,107,107,0.16);
+  color: #ffb1b1;
+  border-color: rgba(255,107,107,0.38);
+}
+
+.perfil-reserva-promo {
+  margin: 0.22rem 0 0;
+  font-size: 0.78rem;
+  color: #ffb6bf;
+  font-weight: 700;
+}
+
+.perfil-reserva-beneficio {
+  margin: 0.08rem 0 0;
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.74);
+}
+
+.perfil-reservas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.perfil-reservas-empty {
+  margin: 0;
+  color: rgba(255,255,255,0.78);
+}
+
+:is(.fondo-gimnasio-rojo, .kf-global-bg) .perfil-principal {
+  position: relative;
+}
+
+:is(.fondo-gimnasio-rojo, .kf-global-bg) .perfil-principal .panel-usuario {
+  background: rgba(12,13,15,0.86);
+  border-color: rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+}
+
+:is(.fondo-gimnasio-rojo, .kf-global-bg) .perfil-principal .contenido-perfil > .tarjeta {
+  background: rgba(14,15,18,0.82);
+  border-color: rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+}
+
+#perfil-progreso {
+  position: relative;
+  overflow: hidden;
+  background: rgba(15,16,19,0.82);
+}
+
+#perfil-progreso .progreso-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+#perfil-progreso .progreso-header h2 {
+  margin: 0;
+}
+
+#progreso-abrir-modal {
+  background: #e91836;
+  border: 1px solid #e91836;
+  color: #fff;
+}
+
+#progreso-abrir-modal:hover,
+#progreso-abrir-modal:focus-visible {
+  background: #ff2647;
+  border-color: #ff2647;
+}
+
+.perfil-progreso-panel {
+  margin-top: 1rem;
+}
+
+.perfil-progreso-form {
+  margin-top: 1rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 0.85rem;
+  background: rgba(17,17,20,0.78);
+}
+
+.perfil-progreso-form h3 {
+  margin-top: 0;
+}
+
+.perfil-progreso-acciones {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.perfil-progreso-resumen {
+  min-height: 200px;
+}
+
+.progreso-resumen-card {
+  background: #141417;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 18px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.34);
+  padding: 1.2rem;
+}
+
+.progreso-resumen-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.progreso-resumen-head h3 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.progreso-fecha {
+  margin: 0;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.93rem;
+}
+
+.progreso-peso-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.9rem;
+  border-left: 2px solid #e91836;
+  border-radius: 12px;
+  background: linear-gradient(130deg, #431520 0%, #1b1519 100%);
+  padding: 1rem 1rem 0.95rem;
+}
+
+.progreso-peso-etiqueta {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba(255,255,255,0.82);
+}
+
+.progreso-peso-valor {
+  margin: 0.2rem 0 0;
+  color: #fff;
+  font-weight: 800;
+  line-height: 0.96;
+}
+
+.progreso-peso-numero {
+  font-size: clamp(62px, 10vw, 100px);
+  letter-spacing: -0.05em;
+}
+
+.progreso-peso-unidad {
+  font-size: clamp(1.8rem, 3.2vw, 2.3rem);
+  font-weight: 700;
+  margin-left: 0.25rem;
+}
+
+.progreso-medidas-grid {
+  margin-top: 1rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.progreso-medida-item {
+  min-width: 0;
+}
+
+.progreso-medida-label {
+  margin: 0;
+  color: rgba(255,255,255,0.72);
+  font-size: 0.86rem;
+}
+
+.progreso-medida-valor {
+  margin: 0.18rem 0 0;
+  color: #fff;
+  font-size: 1.95rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.progreso-medida-unidad {
+  font-size: 1rem;
+  margin-left: 0.22rem;
+  color: rgba(255,255,255,0.86);
+}
+
+.progreso-medida-vacio {
+  color: rgba(255,255,255,0.62);
+  font-size: 1.6rem;
+}
+
+.progreso-resumen-footer {
+  margin-top: 0.9rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#progreso-ver-historial {
+  color: #ffdbe0;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+#progreso-ver-historial:hover,
+#progreso-ver-historial:focus-visible {
+  color: #fff;
+}
+
+.progreso-vacio {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgba(255,255,255,0.82);
+}
+
+.progreso-datos-detalle {
+  margin-top: 1rem;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  background: rgba(17,17,20,0.88);
+  padding: 0.2rem 0.8rem 0.8rem;
+}
+
+.progreso-datos-detalle > summary {
+  list-style: none;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 700;
+  padding: 0.55rem 0;
+}
+
+.progreso-datos-detalle > summary::-webkit-details-marker {
+  display: none;
+}
+
+.progreso-datos-detalle > summary::before {
+  content: '▸';
+  color: #e91836;
+  margin-right: 0.45rem;
+  transition: transform 180ms ease;
+  display: inline-block;
+}
+
+.progreso-datos-detalle[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.perfil-progreso-item {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.perfil-progreso-item-actions {
+  margin-top: 0.4rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.perfil-progreso-modal-overlay {
+  z-index: 11000;
+}
+
+.perfil-progreso-modal-panel {
+  width: min(100%, 760px);
+  text-align: left;
+}
+
+.perfil-progreso-modal-panel .perfil-progreso-form {
+  margin-top: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.perfil-progreso-modal-panel .perfil-progreso-form h3 {
+  margin-bottom: 1rem;
+}
+
+.perfil-progreso-modal-panel #progreso-medicion-mensaje {
+  min-height: 1.2rem;
+  margin-bottom: 0;
+}
+
+.historial-progreso-principal {
+  padding-top: 2.2rem;
+}
+
+.historial-progreso-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.historial-progreso-grid {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.historial-progreso-paginacion {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.historial-progreso-paginacion-controles {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.historial-progreso-estado {
+  margin: 0;
+  color: rgba(255,255,255,0.8);
+}
+
+@media (max-width: 1366px) {
+  .perfil-principal .contenedor.perfil-contenido {
+    width: min(calc(100% - 1.25rem), 1560px);
+  }
+
+  .perfil-principal .perfil-contenido {
+    grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 1100px) {
+  .perfil-reserva-destacada {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .perfil-reserva-destacada-side {
+    grid-column: 1 / -1;
+    justify-items: start;
+  }
+}
+
+@media (max-width: 1024px) {
+  .perfil-principal .contenedor.perfil-contenido {
+    width: min(calc(100% - 1rem), 1200px);
+    padding-inline: 0.45rem;
+  }
+
+  .perfil-principal .perfil-contenido {
+    grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .perfil-principal .perfil-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .perfil-reservas-head {
+    align-items: stretch;
+  }
+
+  .perfil-reservas-head-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  #perfil-rutinas .perfil-rutinas-head {
+    align-items: stretch;
+  }
+
+  #perfil-rutinas #perfil-rutinas-recargar {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .perfil-reservas-toolbar {
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 768px) {
+  .perfil-principal .contenedor.perfil-contenido {
+    width: min(calc(100% - 0.75rem), 100%);
+    padding-inline: 0.35rem;
+  }
+
+  .perfil-principal .perfil-contenido {
+    grid-template-columns: 1fr;
+  }
+
+  .perfil-principal .panel-usuario {
+    position: static;
+    top: auto;
+  }
+
+  .perfil-principal .contenido-perfil {
+    width: 100%;
+  }
+
+  #perfil-rutinas .kr .kr-toolbar {
+    width: 100%;
+  }
+
+  #perfil-rutinas .kr .kr-toolbar label,
+  #perfil-rutinas .kr .kr-toolbar select {
+    width: 100%;
+  }
+
+  #perfil-rutinas .kr .kr-plan-head {
+    padding: 0.88rem;
+  }
+
+  #perfil-rutinas .kr .kr-chip {
+    display: inline-flex;
+    margin-top: 0.25rem;
+  }
+
+  .perfil-reserva-destacada {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 0.75rem;
+  }
+
+  .perfil-reserva-destacada-side {
+    justify-items: start;
+  }
+
+  .perfil-reserva-fila {
+    grid-template-columns: 64px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .perfil-reserva-fila-side {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .perfil-principal .perfil-encabezado {
+    align-items: center;
+  }
+
+  #perfil-datos .perfil-contacto-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #perfil-datos .perfil-resumen-item {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.55rem;
+  }
+
+  #perfil-datos .perfil-resumen-label {
+    grid-column: 2 / 3;
+  }
+
+  #perfil-datos .perfil-resumen-valor {
+    grid-column: 1 / -1;
+    padding-left: 2rem;
+  }
+
+  #perfil-clave-modal .perfil-modal-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  #perfil-progreso .progreso-header {
+    align-items: stretch;
+  }
+
+  #perfil-progreso .progreso-header #progreso-abrir-modal {
+    width: 100%;
+  }
+
+  .progreso-peso-panel {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .progreso-medidas-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .perfil-reserva-destacada {
+    padding: 0.85rem;
+  }
+
+  .perfil-reserva-destacada-info h3 {
+    font-size: 1.5rem;
+  }
+
+  .perfil-reservas-vista {
+    width: 100%;
+  }
+
+  .perfil-reservas-vista-btn {
+    flex: 1 1 0;
+    justify-content: center;
+  }
+
+  #perfil-editar-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .perfil-reservas-toolbar .boton,
+  #perfil-clave-modal .perfil-modal-actions .boton {
+    width: 100%;
+  }
+
+  .progreso-resumen-card {
+    padding: 0.95rem;
+  }
+
+  .progreso-medidas-grid {
+    gap: 0.55rem;
+  }
+
+  .progreso-medida-valor {
+    font-size: 1.5rem;
+  }
+
+  .historial-progreso-paginacion {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .historial-progreso-paginacion-controles {
+    width: 100%;
+  }
+
+  .historial-progreso-paginacion-controles .boton {
+    flex: 1 1 0;
+  }
+}
+
+/* NUEVO: Confirmación visual para cancelar reservas */
+.perfil-cancelar-reserva-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+}
+
+    .perfil-cancelar-reserva-overlay[hidden] {
+        display: none;
+    }
+
+.perfil-cancelar-reserva-panel {
+    width: min(100%, 440px);
+    padding: 1.6rem;
+    text-align: center;
+    color: #edf1f7;
+    border-top: 3px solid #ED1C2E;
+    border-radius: 1rem;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+    animation: perfilCancelacionEntrada 0.18s ease-out;
+}
+
+.perfil-cancelar-reserva-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    margin: 0 auto 1rem;
+    border: 1px solid rgba(237, 28, 46, 0.5);
+    border-radius: 50%;
+    color: #ff5262;
+    background: rgba(237, 28, 46, 0.12);
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.perfil-cancelar-reserva-panel h2 {
+    margin: 0 0 0.75rem;
+    color: #fff;
+    font-size: 1.25rem;
+}
+
+.perfil-cancelar-reserva-panel p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.6;
+}
+
+.perfil-cancelar-reserva-acciones {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+    .perfil-cancelar-reserva-acciones .boton {
+        flex: 1 1 150px;
+        min-height: 42px;
+    }
+
+    .perfil-cancelar-reserva-acciones .boton-principal {
+        background: #ED1C2E;
+        border-color: #ED1C2E;
+        color: #fff;
+    }
+
+        .perfil-cancelar-reserva-acciones .boton-principal:hover {
+            background: #ff3348;
+        }
+
+@keyframes perfilCancelacionEntrada {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 640px) {
+  .perfil-principal .perfil-identidad {
+    width: 100%;
+  }
+
+  .perfil-principal .perfil-encabezado > #perfil-editar-btn {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+    .perfil-cancelar-reserva-panel {
+        padding: 1.2rem;
+    }
+
+    .perfil-cancelar-reserva-acciones {
+        flex-direction: column-reverse;
+    }
+
+        .perfil-cancelar-reserva-acciones .boton {
+            width: 100%;
+            flex-basis: auto;
+        }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .perfil-cancelar-reserva-panel {
+        animation: none;
+    }
+}
+

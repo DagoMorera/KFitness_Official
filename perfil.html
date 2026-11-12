@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>KFitness - Perfil</title>
+  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/perfil.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
+  <style>
+    .perfil-avatar-contenedor { position: relative; display: inline-block; }
+    .perfil-avatar { border-radius: 50%; overflow: hidden; width: 96px; height: 96px; display:flex; align-items:center; justify-content:center; background:#f3f3f3; }
+    .perfil-avatar img { width:100%; height:100%; object-fit:cover; display:block; }
+    .perfil-avatar-button { position: absolute; right: 6px; bottom: 6px; width:36px; height:36px; border-radius:50%; border: none; background: rgba(0,0,0,0.45); color: #fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+    .perfil-avatar-button:focus { outline: 2px solid #fff; }
+    .perfil-avatar:hover { transition: box-shadow .18s ease, transform .12s ease; box-shadow: 0 6px 18px rgba(0,0,0,0.12); transform: translateY(-2px); cursor: pointer; }
+    .perfil-avatar:hover .perfil-avatar-button { opacity: 1; }
+    #perfil-foto-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 9999; }
+    #perfil-foto-modal[hidden] { display: none; }
+    #perfil-foto-modal .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.58); }
+    #perfil-foto-modal .modal-panel {
+      position: relative;
+      background: #111114;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      box-shadow: 0 18px 34px rgba(0,0,0,0.48);
+      width: 92%;
+      max-width: 420px;
+      padding: 18px;
+      z-index: 2;
+      color: #f5f5f7;
+    }
+    #perfil-foto-modal .modal-header h2 { margin:0 0 12px 0; font-size: 1.1rem; color:#fff; }
+    #perfil-foto-modal .modal-body { display:flex; flex-direction: column; gap: 12px; align-items:center; }
+    #perfil-foto-modal .modal-avatar { width:120px; height:120px; border-radius:50%; overflow:hidden; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); }
+    #perfil-foto-modal .modal-avatar img { width:100%; height:100%; object-fit:cover; }
+    #perfil-foto-modal .modal-controls { text-align:center; width:100%; }
+    #perfil-foto-modal .modal-info { font-size:0.9rem; color:#d0d0d6; margin-top:8px; }
+    #perfil-foto-modal .modal-footer { display:flex; gap:12px; justify-content:flex-end; margin-top:12px; }
+    #perfil-foto-modal .boton-secundario {
+      color: #fff;
+      border-color: rgba(255,255,255,0.32);
+      background: rgba(255,255,255,0.04);
+    }
+    #perfil-foto-modal .boton-secundario:hover,
+    #perfil-foto-modal .boton-secundario:focus-visible {
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.48);
+    }
+    #perfil-foto-modal .boton-principal {
+      background: #ED1C2E;
+      color: #fff;
+      border: 1px solid rgba(237,28,46,0.95);
+    }
+    #perfil-foto-modal .boton-principal:hover,
+    #perfil-foto-modal .boton-principal:focus-visible {
+      background: #ff3348;
+    }
+    #perfil-foto-modal .boton:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+    #perfil-foto-modal .boton-link {
+      background:none;
+      border:none;
+      color:#ff8893;
+      cursor:pointer;
+      font-weight:600;
+    }
+    #perfil-foto-modal .boton-link:hover,
+    #perfil-foto-modal .boton-link:focus-visible {
+      color:#ffb7bf;
+    }
+    #perfil-foto-modal .modal-message { color:#e7e7eb; font-size:0.9rem; min-height:1.2em; }
+    @media (max-width:420px) {
+      #perfil-foto-modal .modal-panel { width: 96%; padding: 12px; }
+      #perfil-foto-modal .modal-footer { flex-direction: column-reverse; }
+      #perfil-foto-modal .modal-footer .boton { width: 100%; }
+    }
+  </style>
+<link rel='stylesheet' href='css/rutinas.css?v=20261111-2'>
+</head>
+<body class='fondo-gimnasio-rojo perfil-fondo'>
+    <svg aria-hidden='true' class='icon-sprite' xmlns='http://www.w3.org/2000/svg'>
+        <symbol id='i-grid' viewBox='0 0 24 24'><path d='M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z' /></symbol>
+        <symbol id='i-person' viewBox='0 0 24 24'><path d='M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-4.42 0-8 2.24-8 5v3h16v-3c0-2.76-3.58-5-8-5z' /></symbol>
+        <symbol id='i-logout' viewBox='0 0 24 24'><path d='M10 17 15 12 10 7M15 12H3M13 3h6v18h-6' /></symbol>
+        <symbol id='i-lock' viewBox='0 0 24 24'><path d='M7 10V8a5 5 0 0 1 10 0v2M6 10h12a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zm6 4v3' /></symbol>
+        <symbol id='i-eye' viewBox='0 0 24 24'><path d='M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6zm10 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' /></symbol>
+        <symbol id='i-eye-off' viewBox='0 0 24 24'><path d='M3 3 21 21M10.58 10.59A2 2 0 0 0 13.4 13.4M9.88 5.09A11.2 11.2 0 0 1 12 4.9c6.5 0 10 6.1 10 6.1a18.3 18.3 0 0 1-3.48 4.22M6.62 6.63C3.58 8.3 2 11 2 11s3.5 6.1 10 6.1c1.82 0 3.4-.41 4.77-1.06' /></symbol>
+    </svg>
+
+    <header class='site-header' aria-label='Encabezado del sitio'></header>
+    <main>
+        <section class='seccion perfil-principal' aria-labelledby='perfil-titulo'>
+            <div class='contenedor perfil-contenido'>
+                <aside class='panel-usuario' aria-label='Menú interno de perfil'>
+                    <nav>
+                        <ul class='perfil-nav-lista'>
+                            <li id='sidebar-panel-admin' hidden>
+                                <a class='boton boton-pequeno perfil-nav-link' href='/admin.html'>
+                                    <svg class='perfil-nav-icon' viewBox='0 0 24 24'><use href='#i-grid'></use></svg>
+                                    <span>Panel de administración</span>
+                                </a>
+                            </li>
+                            <li>
+                                <button id='sidebar-mi-perfil' class='boton boton-pequeno perfil-nav-link' data-seccion='perfil-datos'>
+                                    <svg class='perfil-nav-icon' viewBox='0 0 24 24'><use href='#i-person'></use></svg>
+                                    <span>Mi perfil</span>
+                                </button>
+                            </li>
+                            <li id='sidebar-mi-progreso'><button class='boton boton-pequeno perfil-nav-link' data-seccion='perfil-progreso'>Mi progreso</button></li>
+                            <li id='sidebar-mis-reservas'><button class='boton boton-pequeno perfil-nav-link' data-seccion='perfil-reservas'>Mis reservas</button></li>
+                            <li id='sidebar-mis-rutinas'><button class='boton boton-pequeno perfil-nav-link' data-seccion='perfil-rutinas'>Mis rutinas</button></li>
+                            <li id='sidebar-cambiar-clave-item'>
+                                <button id='sidebar-cambiar-clave' type='button' class='boton boton-pequeno perfil-nav-link'>
+                                    <svg class='perfil-nav-icon' viewBox='0 0 24 24'><use href='#i-lock'></use></svg>
+                                    <span>Cambiar contraseña</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button id='cerrar-sesion-perfil' class='boton boton-secundario perfil-nav-link perfil-logout-link'>
+                                    <svg class='perfil-nav-icon' viewBox='0 0 24 24'><use href='#i-logout'></use></svg>
+                                    <span>Cerrar sesión</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+                <section class='contenido-perfil'>
+                    <div class='tarjeta perfil-detalle' id='perfil-datos'>
+                        <h1 id='perfil-titulo'>Mi perfil</h1>
+                        <form id='form-perfil' class='formulario' novalidate>
+                            <section class='perfil-cuenta-card'>
+                                <div class="perfil-encabezado">
+                                    <div class="perfil-identidad">
+                                        <div class="perfil-avatar-contenedor">
+                                            <div id="perfil-avatar-display" class="perfil-avatar foto-preview" aria-hidden="true"></div>
+                                            <input type="file" id="perfil-foto-input" accept="image/jpeg,image/png" style="display:none">
+                                            <button type="button" id="perfil-avatar-button" class="perfil-avatar-button" aria-label="Abrir diálogo de fotografía" title="Cambiar foto" tabindex="0"></button>
+                                        </div>
+                                        <div class="perfil-meta">
+                                            <h2 id="perfil-nombre-titulo">Mi nombre</h2>
+                                            <span id="perfil-rol" class="perfil-rol-badge">Cliente</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class='perfil-contacto-card'>
+                                <h3>Datos de contacto</h3>
+                                <div class='perfil-contacto-grid'>
+                                    <p class='perfil-contacto-item'>
+                                        <span class='perfil-contacto-label'>Correo</span>
+                                        <strong id='perfil-contacto-correo'>—</strong>
+                                    </p>
+                                    <p class='perfil-contacto-item'>
+                                        <span class='perfil-contacto-label'>Teléfono</span>
+                                        <strong id='perfil-contacto-telefono'>—</strong>
+                                    </p>
+                                </div>
+                            </section>
+
+                            <section class='perfil-resumen-card'>
+                                <h3>Resumen de la cuenta</h3>
+                                <ul class='perfil-resumen-lista'>
+                                    <li id='fila-membresia' class='perfil-resumen-item'>
+                                        <span class='perfil-resumen-icono' aria-hidden='true'>◉</span>
+                                        <span class='perfil-resumen-label'>Membresía</span>
+                                        <span id='estado-membresia' class='texto-estado perfil-resumen-valor'></span>
+                                    </li>
+                                    <li id='fila-proxima-reserva' class='perfil-resumen-item'>
+                                        <span class='perfil-resumen-icono' aria-hidden='true'>◷</span>
+                                        <span class='perfil-resumen-label'>Próxima reserva</span>
+                                        <span id='proxima-reserva' class='texto-estado perfil-resumen-valor'></span>
+                                    </li>
+                                    <li id='fila-rutina-asignada' class='perfil-resumen-item'>
+                                        <span class='perfil-resumen-icono' aria-hidden='true'>⌁</span>
+                                        <span class='perfil-resumen-label'>Rutina asignada</span>
+                                        <span id='rutina-asignada' class='texto-estado perfil-resumen-valor'></span>
+                                    </li>
+                                </ul>
+                            </section>
+
+                            <div id='perfil-edicion-panel' hidden>
+                                <div class='perfil-form-grid'>
+                                    <div class='perfil-form-campo'>
+                                        <label for='perfil-nombre'>Nombre</label>
+                                        <input type='text' id='perfil-nombre' name='nombre'>
+                                    </div>
+                                    <div class='perfil-form-campo'>
+                                        <label for='perfil-apellido1'>Primer apellido</label>
+                                        <input type='text' id='perfil-apellido1' name='apellido1'>
+                                    </div>
+                                    <div class='perfil-form-campo'>
+                                        <label for='perfil-apellido2'>Segundo apellido</label>
+                                        <input type='text' id='perfil-apellido2' name='apellido2'>
+                                    </div>
+                                    <div class='perfil-form-campo'>
+                                        <label for='perfil-email'>Correo</label>
+                                        <input type='email' id='perfil-email' name='email' readonly>
+                                    </div>
+                                    <div class='perfil-form-campo perfil-form-campo-full'>
+                                        <label for='perfil-telefono'>Teléfono</label>
+                                        <input type='tel' id='perfil-telefono' name='telefono'>
+                                    </div>
+                                    <div class='perfil-form-campo perfil-form-campo-full' style="display:none">
+                                        <label for='perfil-nacimiento'>Fecha de nacimiento</label>
+                                        <input type='date' id='perfil-nacimiento' name='nacimiento'>
+                                    </div>
+                                </div>
+                                <button type='submit' class='boton boton-principal'>Guardar cambios</button>
+                            </div>
+                            <p class='mensaje-formulario' id='perfil-mensaje' aria-live='polite'></p>
+                        </form>
+                        <!-- Modal de fotografía -->
+                        <div id="perfil-foto-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-foto-titulo" hidden>
+                            <div class="modal-backdrop" id="perfil-foto-backdrop"></div>
+                            <div class="modal-panel" role="document">
+                                <header class="modal-header">
+                                    <h2 id="modal-foto-titulo">Fotografía de perfil</h2>
+                                </header>
+                                <div class="modal-body">
+                                    <div class="modal-preview">
+                                        <div class="perfil-avatar foto-preview modal-avatar" id="modal-avatar-display" aria-hidden="true"></div>
+                                    </div>
+                                    <div class="modal-controls">
+                                        <button type="button" class="boton boton-secundario" id="modal-select-photo">Seleccionar fotografía</button>
+                                        <p class="modal-info">Formatos permitidos: JPG y PNG. Máximo 5 MB.</p>
+                                        <button type="button" id="modal-delete-photo" class="boton boton-link" style="display:none"><span class="icon-trash" aria-hidden="true">🗑️</span> Eliminar fotografía</button>
+                                        <p id="modal-message" class="modal-message" aria-live="polite"></p>
+                                    </div>
+                                </div>
+                                <footer class="modal-footer">
+                                    <button type="button" class="boton boton-secundario" id="modal-cancel">Cancelar</button>
+                                    <button type="button" class="boton boton-principal" id="modal-save" disabled>Guardar cambios</button>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='tarjeta' id='perfil-progreso' hidden>
+                        <div class='progreso-header'>
+                            <h2>Mi progreso</h2>
+                            <button type='button' class='boton boton-principal' id='progreso-abrir-modal'>+ Registrar peso y medidas</button>
+                        </div>
+
+                        <div class='perfil-progreso-panel'>
+                            <div id='progreso-reciente' class='perfil-progreso-resumen'>Sin registros todavía.</div>
+                        </div>
+
+                        <details class='progreso-datos-detalle'>
+                            <summary>Datos personales</summary>
+                            <form id='form-perfil-progreso-datos' class='formulario perfil-progreso-form' novalidate>
+                                <div class='perfil-form-grid'>
+                                    <div class='perfil-form-campo'>
+                                        <label for='progreso-nacimiento'>Fecha de nacimiento</label>
+                                        <input type='date' id='progreso-nacimiento' name='fechaNacimiento'>
+                                    </div>
+                                    <div class='perfil-form-campo'>
+                                        <label for='progreso-edad'>Edad</label>
+                                        <input type='text' id='progreso-edad' name='edad' readonly placeholder='Se calcula automáticamente'>
+                                    </div>
+                                    <div class='perfil-form-campo'>
+                                        <label for='progreso-sexo'>Sexo</label>
+                                        <select id='progreso-sexo' name='sexo'>
+                                            <option value=''>Seleccionar (opcional)</option>
+                                            <option value='Femenino'>Femenino</option>
+                                            <option value='Masculino'>Masculino</option>
+                                            <option value='Prefiero no indicarlo'>Prefiero no indicarlo</option>
+                                        </select>
+                                    </div>
+                                    <div class='perfil-form-campo'>
+                                        <label for='progreso-actividad'>Nivel de actividad física</label>
+                                        <select id='progreso-actividad' name='nivelActividad'>
+                                            <option value=''>Seleccionar</option>
+                                            <option value='Sedentario'>Sedentario</option>
+                                            <option value='Ligero'>Ligero</option>
+                                            <option value='Moderado'>Moderado</option>
+                                            <option value='Alto'>Alto</option>
+                                            <option value='Muy alto'>Muy alto</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type='submit' class='boton boton-secundario'>Guardar datos personales</button>
+                                <p class='mensaje-formulario' id='progreso-datos-mensaje' aria-live='polite'></p>
+                            </form>
+                        </details>
+
+                        <div id='progreso-medicion-modal' class='perfil-cancelar-reserva-overlay perfil-progreso-modal-overlay' role='dialog' aria-modal='true' aria-labelledby='progreso-medicion-titulo' hidden>
+                            <div class='perfil-cancelar-reserva-panel perfil-progreso-modal-panel'>
+                                <form id='form-progreso-medicion' class='formulario perfil-progreso-form' novalidate>
+                                    <h3 id='progreso-medicion-titulo'>Registrar peso y medidas</h3>
+                                    <input type='hidden' id='progreso-id'>
+                                    <div class='perfil-form-grid'>
+                                        <div class='perfil-form-campo'>
+                                            <label for='progreso-fecha'>Fecha</label>
+                                            <input type='date' id='progreso-fecha' name='fecha' required>
+                                        </div>
+                                        <div class='perfil-form-campo'>
+                                            <label for='progreso-peso'>Peso (kg)</label>
+                                            <input type='text' id='progreso-peso' name='pesoKg' inputmode='decimal' placeholder='Ej. 72,5' required>
+                                        </div>
+                                        <div class='perfil-form-campo'>
+                                            <label for='progreso-cintura'>Cintura (cm)</label>
+                                            <input type='text' id='progreso-cintura' name='cinturaCm' inputmode='decimal' placeholder='Opcional'>
+                                        </div>
+                                        <div class='perfil-form-campo'>
+                                            <label for='progreso-cadera'>Cadera (cm)</label>
+                                            <input type='text' id='progreso-cadera' name='caderaCm' inputmode='decimal' placeholder='Opcional'>
+                                        </div>
+                                        <div class='perfil-form-campo'>
+                                            <label for='progreso-pecho'>Pecho (cm)</label>
+                                            <input type='text' id='progreso-pecho' name='pechoCm' inputmode='decimal' placeholder='Opcional'>
+                                        </div>
+                                        <div class='perfil-form-campo'>
+                                            <label for='progreso-brazo'>Brazo (cm)</label>
+                                            <input type='text' id='progreso-brazo' name='brazoCm' inputmode='decimal' placeholder='Opcional'>
+                                        </div>
+                                        <div class='perfil-form-campo'>
+                                            <label for='progreso-muslo'>Muslo (cm)</label>
+                                            <input type='text' id='progreso-muslo' name='musloCm' inputmode='decimal' placeholder='Opcional'>
+                                        </div>
+                                    </div>
+                                    <div class='perfil-progreso-acciones'>
+                                        <button type='submit' class='boton boton-principal' id='progreso-guardar-btn'>Guardar registro</button>
+                                        <button type='button' class='boton boton-secundario' id='progreso-cancelar-edicion'>Cancelar</button>
+                                    </div>
+                                    <p class='mensaje-formulario' id='progreso-medicion-mensaje' aria-live='polite'></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='tarjeta' id='perfil-reservas' hidden>
+                        <div class='perfil-reservas-head'>
+                            <h2>Mis reservas</h2>
+                            <div class='perfil-reservas-head-actions'>
+                                <div class='perfil-reservas-vista' role='tablist' aria-label='Vista de reservas'>
+                                    <button type='button' class='boton boton-pequeno perfil-reservas-vista-btn activo' id='perfil-reservas-vista-proximas' data-vista='proximas' aria-selected='true'>Próximas</button>
+                                    <button type='button' class='boton boton-pequeno perfil-reservas-vista-btn' id='perfil-reservas-vista-historial' data-vista='historial' aria-selected='false'>Historial</button>
+                                </div>
+                                <button id='perfil-reservas-recargar' type='button' class='boton boton-secundario boton-pequeno'>Actualizar</button>
+                            </div>
+                        </div>
+
+                        <div class='perfil-reservas-toolbar perfil-reservas-toolbar-extra'>
+                            <label for='perfil-reservas-filtro'>Estados</label>
+                            <select id='perfil-reservas-filtro'>
+                                <option value='todas' selected>Todas</option>
+                                <option value='confirmada'>Confirmadas</option>
+                                <option value='pendiente'>Pendientes</option>
+                                <option value='cancelada'>Canceladas</option>
+                            </select>
+                            <p class='mensaje-formulario' id='perfil-reservas-mensaje' aria-live='polite'></p>
+                        </div>
+
+                        <section id='perfil-reservas-destacada' class='perfil-reservas-destacada-wrap'></section>
+
+                        <section class='perfil-reservas-lista-wrap'>
+                            <h3 id='perfil-reservas-lista-titulo'>También tienes reservado</h3>
+                            <div id='perfil-reservas-lista' class='perfil-reservas-agenda'></div>
+                        </section>
+
+                        <div class='pagination' id='perfil-reservas-pagination-wrap' hidden>
+                            <span id='perfil-reservas-pagination-summary'>Mostrando 0–0 de 0</span>
+                            <div class='pagination-nav'>
+                                <button type='button' class='boton boton-secundario boton-pequeno' id='perfil-reservas-pagination-prev'>Anterior</button>
+                                <span id='perfil-reservas-pagination-pageinfo'>Página 1 de 1</span>
+                                <button type='button' class='boton boton-secundario boton-pequeno' id='perfil-reservas-pagination-next'>Siguiente</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='tarjeta' id='perfil-rutinas' hidden>
+                        <div class='perfil-rutinas-head'>
+                            <h2>Mis rutinas</h2>
+                            <button id='perfil-rutinas-recargar' type='button' class='boton boton-secundario boton-pequeno'>
+                                <span aria-hidden='true'>↻</span>
+                                <span>Actualizar</span>
+                            </button>
+                        </div>
+                        <p class='mensaje-formulario' id='perfil-rutinas-mensaje' aria-live='polite'></p>
+                        <div id='perfil-rutinas-lista' class='perfil-rutinas-contenedor'></div>
+                    </div>
+
+                </section>
+            </div>
+        </section>
+    </main>
+    <footer class='site-footer' aria-label='Pie de página'></footer>
+
+    <div id='perfil-clave-modal' class='perfil-modal-overlay' hidden>
+        <section class='perfil-modal' role='dialog' aria-modal='true' aria-labelledby='perfil-clave-titulo'>
+            <header class='perfil-modal-header'>
+                <h2 id='perfil-clave-titulo'>Cambiar contraseña</h2>
+            </header>
+            <form id='perfil-clave-form' class='formulario' novalidate>
+                <label for='clave-actual'>Contraseña actual</label>
+                <div class='perfil-password-wrap'>
+                    <input type='password' id='clave-actual' autocomplete='current-password'>
+                    <button type='button' class='perfil-toggle-clave' data-target='clave-actual' aria-label='Mostrar u ocultar contraseña actual'>
+                        <svg class='perfil-nav-icon' viewBox='0 0 24 24'><use href='#i-eye'></use></svg>
+                    </button>
+                </div>
+                <p class='perfil-error-campo' id='clave-actual-error' aria-live='polite'></p>
+
+                <label for='clave-nueva'>Nueva contraseña</label>
+                <div class='perfil-password-wrap'>
+                    <input type='password' id='clave-nueva' autocomplete='new-password'>
+                    <button type='button' class='perfil-toggle-clave' data-target='clave-nueva' aria-label='Mostrar u ocultar nueva contraseña'>
+                        <svg class='perfil-nav-icon' viewBox='0 0 24 24'><use href='#i-eye'></use></svg>
+                    </button>
+                </div>
+                <div class='perfil-policy' id='clave-policy'>
+                    <p id='policy-len'>• Mínimo 8 caracteres</p>
+                    <p id='policy-upper'>• Al menos una mayúscula</p>
+                    <p id='policy-lower'>• Al menos una minúscula</p>
+                    <p id='policy-num'>• Al menos un número</p>
+                </div>
+                <p class='perfil-error-campo' id='clave-nueva-error' aria-live='polite'></p>
+
+                <label for='clave-confirmar'>Confirmar nueva contraseña</label>
+                <div class='perfil-password-wrap'>
+                    <input type='password' id='clave-confirmar' autocomplete='new-password'>
+                    <button type='button' class='perfil-toggle-clave' data-target='clave-confirmar' aria-label='Mostrar u ocultar confirmación de contraseña'>
+                        <svg class='perfil-nav-icon' viewBox='0 0 24 24'><use href='#i-eye'></use></svg>
+                    </button>
+                </div>
+                <p class='perfil-error-campo' id='clave-confirmar-error' aria-live='polite'></p>
+                <p class='mensaje-formulario' id='perfil-clave-mensaje' aria-live='polite'></p>
+
+                <div class='perfil-modal-actions'>
+                    <button type='button' id='perfil-clave-cancelar' class='boton boton-secundario'>Cancelar</button>
+                    <button type='submit' class='boton boton-principal'>Cambiar contraseña</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <!-- NUEVO: Modal de confirmación para cancelar reservas -->
+    <div id="perfil-cancelar-reserva-modal"
+         class="perfil-cancelar-reserva-overlay"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="perfil-cancelar-reserva-titulo"
+         aria-describedby="perfil-cancelar-reserva-descripcion"
+         hidden>
+
+        <div class="perfil-cancelar-reserva-panel">
+            <div class="perfil-cancelar-reserva-icono" aria-hidden="true">!</div>
+
+            <h2 id="perfil-cancelar-reserva-titulo">
+                ¿Seguro que quieres cancelar?
+            </h2>
+
+            <p id="perfil-cancelar-reserva-descripcion">
+                Esta acción cancelará tu reserva del servicio seleccionado.
+                ¿Deseas continuar?
+            </p>
+
+            <div class="perfil-cancelar-reserva-acciones">
+                <button type="button"
+                        id="perfil-cancelar-reserva-no"
+                        class="boton boton-secundario">
+                    No, mantener reserva
+                </button>
+
+                <button type="button"
+                        id="perfil-cancelar-reserva-si"
+                        class="boton boton-principal">
+                    Sí, cancelar reserva
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- FIN: Modal de confirmación -->
+
+    <script src='js/app.js?v=20261112-5' defer></script>
+    <script src='js/autenticacion.js?v=20261001-2' defer></script>
+    <script src='js/rutinas-ui.js?v=20261112-5' defer></script>
+    <script src='js/rutinas-cliente.js?v=20261112-5' defer></script>
+    <script src='js/profile.js?v=20261112-5' defer></script>
+    <script>
+        // Wire lateral Cerrar sesión button to centralized logout
+        document.addEventListener('DOMContentLoaded', function () {
+            var btn = document.getElementById('cerrar-sesion-perfil');
+            if (btn) {
+                btn.addEventListener('click', function () {
+                    if (window.kfLogout) window.kfLogout(); else window.location.href = '/index.html';
+                });
+            }
+        });
+    </script>
+  <script src='js/site-info.js?v=20261112-5' defer></script>
+</body>
+</html>

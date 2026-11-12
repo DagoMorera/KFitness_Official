@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>KFitness - Carrito</title>
+  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
+  <style>
+    .carrito-wrap { display:grid; grid-template-columns:1.4fr .9fr; gap:16px; }
+    .carrito-lista { display:grid; gap:12px; }
+    .carrito-item ul { margin:8px 0 10px 16px; }
+    .carrito-vacio { border:1px dashed #3c434e; border-radius:10px; padding:14px; }
+    .carrito-acciones { display:flex; gap:8px; flex-wrap:wrap; }
+    @media (max-width: 900px) { .carrito-wrap { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <header class='site-header' aria-label='Encabezado del sitio'></header>
+  <main>
+    <section class='seccion' id='carrito-cliente'>
+      <div class='contenedor'>
+        <h1>Carrito</h1>
+        <p id='carrito-mensaje' class='mensaje-formulario' aria-live='polite'></p>
+
+        <div class='carrito-wrap'>
+          <div>
+            <div id='carrito-vacio' class='carrito-vacio' hidden>Tu carrito está vacío. Agregá sesiones desde Horarios.</div>
+            <div id='carrito-lista' class='carrito-lista'></div>
+          </div>
+          <aside class='tarjeta'>
+            <h2>Resumen</h2>
+            <div id='carrito-resumen'></div>
+            <div class='carrito-acciones'>
+              <button type='button' class='boton boton-secundario' id='carrito-seguir'>Seguir reservando</button>
+              <button type='button' class='boton boton-principal' id='carrito-continuar-pago'>Continuar al pago</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class='site-footer' aria-label='Pie de página'></footer>
+  <script src='js/carrito-store.js?v=20261111-3' defer></script>
+  <script src='js/app.js?v=20261112-5' defer></script>
+  <script src='js/carrito.js?v=20261111-1' defer></script>
+  <script src='js/site-info.js?v=20261112-5' defer></script>
+</body>
+</html>

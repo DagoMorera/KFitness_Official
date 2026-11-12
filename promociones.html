@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>KFitness - Promociones</title>
+  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
+</head>
+<body class='fondo-gimnasio-rojo'>
+  <header class='site-header' aria-label='Encabezado del sitio'></header>
+  <main>
+    <section class='seccion promociones-principal' aria-label='Listado de promociones'>
+      <div class='contenedor'>
+        <div class='pagina-intro-compacta'>
+          <h1 id='promociones-titulo'>Promociones vigentes</h1>
+          <p>Aprovecha nuestras promociones y descubre ofertas especiales para nuevos clientes.</p>
+        </div>
+        <p id='promociones-mensaje' class='mensaje-formulario' aria-live='polite'></p>
+        <div class='grid tarjetas-promociones promociones-grid' id='promociones-listado'>
+          <article class='tarjeta promocion promo-card-cargando'>
+            <h3>Cargando promociones...</h3>
+          </article>
+        </div>
+        <div class='pagination' id='promociones-pagination-wrap' hidden>
+          <span id='promociones-pagination-summary'>Mostrando 0–0 de 0</span>
+          <div class='pagination-nav'>
+            <button type='button' class='boton boton-secundario boton-pequeno' id='promociones-pagination-prev'>Anterior</button>
+            <span id='promociones-pagination-pageinfo'>Página 1 de 1</span>
+            <button type='button' class='boton boton-secundario boton-pequeno' id='promociones-pagination-next'>Siguiente</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class='promocion-modal' id='promocion-detalle-modal' hidden aria-hidden='true'>
+      <div class='promocion-modal-backdrop' data-promocion-detalle-cerrar='1'></div>
+      <div class='promocion-modal-panel' role='dialog' aria-modal='true' aria-labelledby='promocion-detalle-titulo'>
+        <div class='promocion-modal-header'>
+          <h3 id='promocion-detalle-titulo'>Detalle de promoción</h3>
+          <button type='button' class='promocion-modal-close' id='promocion-detalle-cerrar' aria-label='Cerrar'>×</button>
+        </div>
+        <div class='promocion-modal-body'>
+          <div id='promocion-detalle-contenido'></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class='site-footer' aria-label='Pie de página'></footer>
+  <script src='js/app.js?v=20261112-5' defer></script>
+  <script src='js/promociones.js?v=20261112-5' defer></script>
+  <script src='js/site-info.js?v=20261112-5' defer></script>
+</body>
+</html>

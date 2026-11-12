@@ -1,0 +1,1292 @@
+.formulario {
+  display: grid;
+  gap: 1rem;
+}
+
+.formulario input,
+.formulario textarea,
+.formulario select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.formulario input:focus,
+.formulario textarea:focus,
+.formulario select:focus {
+  outline: 2px solid rgba(237,28,46,0.45);
+}
+
+.formulario-tarjeta {
+  max-width: 540px;
+}
+
+.auth-logo {
+  display: block;
+  width: min(210px, 52%);
+  height: auto;
+  aspect-ratio: 3 / 2;
+  margin: -1rem auto 0.35rem;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px rgba(237,28,46,0.3));
+}
+
+.formulario-tarjeta > .auth-logo + h1 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.formulario .check-terminos {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.formulario .check-terminos input[type='checkbox'] {
+  flex: 0 0 1.15rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--acento);
+}
+
+.formulario .fila-check label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  cursor: pointer;
+}
+
+.formulario .fila-check input[type='checkbox'] {
+  flex: 0 0 1.1rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--acento);
+}
+
+.formulario .fila-check a {
+  color: #f2a0a8;
+}
+
+.formulario .fila-check a:hover,
+.formulario .fila-check a:focus-visible {
+  color: #ffffff;
+}
+
+.formulario .mensaje-formulario {
+  min-height: 1.4em;
+  margin: 0;
+}
+
+#reserva-mensaje.reserva-mensaje-exito {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  color: #7effb6;
+  background: rgba(55, 183, 104, 0.14);
+  border: 1px solid rgba(55, 183, 104, 0.4);
+  border-radius: 10px;
+  padding: 0.65rem 0.75rem;
+}
+
+#reserva-mensaje.reserva-mensaje-error {
+  color: #ff6b6b;
+}
+
+.reserva-mensaje-icono {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.reserva-mensaje-contenido {
+  line-height: 1.35;
+}
+
+.formulario-tarjeta h1 {
+  margin-top: 0;
+}
+
+.formulario-tarjeta .texto-ayuda {
+  margin-top: 1rem;
+}
+
+/* Personalización visual del módulo de reservas (selectores centralizados en estilos.css) */
+
+.reserva-sesiones-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.reserva-sesion-card {
+  width: 100%;
+  text-align: left;
+  background: #1e1e1e;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  padding: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reserva-sesion-card:hover,
+.reserva-sesion-card:focus-visible {
+  border-color: rgba(237, 27, 47, 0.75);
+  box-shadow: 0 0 0 2px rgba(237, 27, 47, 0.22);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.reserva-sesion-card.activa {
+  border-color: #ed1b2f;
+  box-shadow: 0 0 0 2px rgba(237, 27, 47, 0.28);
+}
+
+.reserva-sesion-card.inhabilitada {
+  opacity: 0.68;
+  cursor: not-allowed;
+}
+
+.reserva-sesion-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+
+.reserva-sesion-card-titulo {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.reserva-sesion-card-info {
+  margin: 0.2rem 0;
+  color: #cfcfd3;
+  font-size: 0.92rem;
+}
+
+#reserva-promocion-beneficio {
+  color: #f2f2f2;
+}
+
+.reserva-cupo-indicador {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+
+.reserva-cupo-indicador.verde {
+  background: rgba(55, 183, 104, 0.2);
+  color: #7effb6;
+  border: 1px solid rgba(55, 183, 104, 0.45);
+}
+
+.reserva-cupo-indicador.amarillo {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffe58a;
+  border: 1px solid rgba(255, 193, 7, 0.45);
+}
+
+.reserva-cupo-indicador.rojo {
+  background: rgba(237, 27, 47, 0.22);
+  color: #ff9ca8;
+  border: 1px solid rgba(237, 27, 47, 0.55);
+}
+
+.reserva-promo-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.2rem 0.62rem;
+  background: rgba(237, 28, 46, 0.18);
+  border: 1px solid rgba(237, 28, 46, 0.45);
+  color: #ffd6db;
+  font-weight: 700;
+  font-size: 0.76rem;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reserva-promo-detalle {
+  color: rgba(255,255,255,0.78);
+  display: inline-block;
+  margin-top: 0.2rem;
+  line-height: 1.3;
+}
+
+@media (max-width: 900px) {
+  .tabla-reservas thead {
+    display: none;
+  }
+
+  .tabla-reservas,
+  .tabla-reservas tbody,
+  .tabla-reservas tr,
+  .tabla-reservas td {
+    display: block;
+    width: 100%;
+  }
+
+  .tabla-reservas tr {
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 0.85rem;
+    background: rgba(255,255,255,0.02);
+    padding: 0.7rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .tabla-reservas td {
+    border: none;
+    padding: 0.38rem 0;
+  }
+
+  .tabla-reservas td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.74rem;
+    color: rgba(255,255,255,0.68);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.14rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .auth-logo {
+    width: min(170px, 58%);
+    height: auto;
+    margin-top: -0.75rem;
+  }
+
+  .formulario-tarjeta {
+    padding: 1.5rem;
+  }
+
+  .reserva-sesiones-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================
+   RECUPERACIÓN DE CONTRASEÑA - KFITNESS
+   ===================================================== */
+
+.recuperar-page {
+    min-height: 100vh;
+    background: #070708;
+}
+
+.recuperar-main {
+    min-height: calc(100vh - 80px);
+}
+
+.recuperar-seccion {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 720px;
+    padding: 5rem 1.5rem;
+    overflow: hidden;
+    background: radial-gradient( ellipse at 50% 45%, rgba(237, 28, 46, 0.10), transparent 55% ), #070708;
+}
+
+.recuperar-contenedor {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 510px;
+    margin: auto;
+}
+
+.recuperar-tarjeta {
+    padding: 3rem;
+    background: linear-gradient( 145deg, #151517, #0D0D0F 75% );
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-top: 3px solid #ED1C2E;
+    border-radius: 20px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55), 0 0 45px rgba(237, 28, 46, 0.07);
+}
+
+.recuperar-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 1.5rem;
+    color: #ED1C2E;
+    background: rgba(237, 28, 46, 0.10);
+    border: 1px solid rgba(237, 28, 46, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(237, 28, 46, 0.08);
+}
+
+    .recuperar-icono svg {
+        width: 39px;
+        height: 39px;
+    }
+
+.recuperar-etiqueta {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: #ED1C2E;
+    font-size: 0.73rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-align: center;
+}
+
+.recuperar-tarjeta h1 {
+    margin: 0;
+    color: #FFFFFF;
+    font-size: clamp(1.7rem, 4vw, 2.1rem);
+    line-height: 1.2;
+    text-align: center;
+}
+
+.recuperar-descripcion {
+    max-width: 370px;
+    margin: 1rem auto 2rem;
+    color: #B8B8BE;
+    font-size: 0.96rem;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.recuperar-formulario {
+    gap: 0.8rem;
+}
+
+    .recuperar-formulario > label {
+        color: #FFFFFF;
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+
+.recuperar-input-contenedor {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+    .recuperar-input-contenedor svg {
+        position: absolute;
+        left: 1rem;
+        width: 21px;
+        height: 21px;
+        color: #88888F;
+        pointer-events: none;
+    }
+
+    .recuperar-input-contenedor input {
+        width: 100%;
+        min-height: 54px;
+        padding: 0.9rem 1rem 0.9rem 3rem;
+        color: #FFFFFF;
+        background: #0A0A0C;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        border-radius: 10px;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .recuperar-input-contenedor input::placeholder {
+            color: #77777E;
+        }
+
+        .recuperar-input-contenedor input:focus {
+            outline: none;
+            border-color: #ED1C2E;
+            box-shadow: 0 0 0 3px rgba(237, 28, 46, 0.13);
+        }
+
+.recuperar-ayuda {
+    margin: 0.1rem 0 0.8rem;
+    color: #929299;
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+.recuperar-boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    width: 100%;
+    min-height: 54px;
+    font-weight: 800;
+    transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .recuperar-boton span {
+        font-size: 1.25rem;
+        transition: transform 0.2s ease;
+    }
+
+    .recuperar-boton:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(237, 28, 46, 0.25);
+    }
+
+        .recuperar-boton:hover span {
+            transform: translateX(4px);
+        }
+
+.recuperar-mensaje {
+    min-height: 1.5rem;
+    margin: 0.2rem 0 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.recuperar-separador {
+    height: 1px;
+    margin: 1.8rem 0 1.4rem;
+    background: rgba(255, 255, 255, 0.09);
+}
+
+.recuperar-volver {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: color 0.2s ease;
+}
+
+    .recuperar-volver span {
+        color: #ED1C2E;
+        font-size: 1.2rem;
+    }
+
+    .recuperar-volver:hover {
+        color: #ED1C2E;
+    }
+
+.recuperar-seguridad {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    color: #77777E;
+    font-size: 0.76rem;
+}
+
+    .recuperar-seguridad svg {
+        width: 17px;
+        height: 17px;
+        color: #ED1C2E;
+    }
+
+.recuperar-decoracion {
+    position: absolute;
+    width: 340px;
+    height: 340px;
+    border: 1px solid rgba(237, 28, 46, 0.08);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.recuperar-decoracion-uno {
+    top: -180px;
+    left: -150px;
+}
+
+.recuperar-decoracion-dos {
+    right: -180px;
+    bottom: -190px;
+    width: 430px;
+    height: 430px;
+}
+
+@media (max-width: 600px) {
+    .recuperar-seccion {
+        min-height: 650px;
+        padding: 3rem 1rem;
+    }
+
+    .recuperar-tarjeta {
+        padding: 2rem 1.4rem;
+        border-radius: 16px;
+    }
+
+    .recuperar-icono {
+        width: 66px;
+        height: 66px;
+    }
+
+        .recuperar-icono svg {
+            width: 34px;
+            height: 34px;
+        }
+
+    .recuperar-descripcion {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* ==========================================
+   RESULTADOS DE RECUPERACIÓN DE CONTRASEÑA
+   ========================================== */
+
+.recuperar-resultado {
+    text-align: center;
+    padding: 1rem 0 0.5rem;
+    animation: recuperarAparecer 0.35s ease;
+}
+
+    .recuperar-resultado[hidden] {
+        display: none !important;
+    }
+
+.recuperar-resultado-icono {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 2.4rem;
+    font-weight: 800;
+}
+
+.recuperar-resultado.exito .recuperar-resultado-icono {
+    color: #7effb6;
+    background: rgba(55, 183, 104, 0.15);
+    border: 1px solid rgba(55, 183, 104, 0.4);
+    box-shadow: 0 0 25px rgba(55, 183, 104, 0.10);
+}
+
+.recuperar-resultado.error .recuperar-resultado-icono {
+    color: #ff6b6b;
+    background: rgba(237, 28, 46, 0.13);
+    border: 1px solid rgba(237, 28, 46, 0.4);
+    box-shadow: 0 0 25px rgba(237, 28, 46, 0.10);
+}
+
+.recuperar-resultado h2 {
+    color: #ffffff;
+    font-size: 1.65rem;
+    margin: 0 0 0.85rem;
+}
+
+.recuperar-resultado p {
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.65;
+    margin: 0 auto 1.7rem;
+    max-width: 390px;
+}
+
+.recuperar-volver {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .recuperar-volver:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 18px rgba(237, 28, 46, 0.25);
+    }
+
+@keyframes recuperarAparecer {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .recuperar-resultado h2 {
+        font-size: 1.4rem;
+    }
+
+    .recuperar-resultado-icono {
+        width: 66px;
+        height: 66px;
+        font-size: 2rem;
+    }
+}
+/* ==========================================
+   ANIMACIONES DE RECUPERACIÓN DE CONTRASEÑA
+   ========================================== */
+
+/* Estado de carga */
+.recuperar-resultado.cargando .recuperar-resultado-icono {
+    width: 76px;
+    height: 76px;
+    border: 4px solid rgba(237, 28, 46, 0.18);
+    border-top-color: #ED1C2E;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: 0 0 25px rgba(237, 28, 46, 0.10);
+    animation: recuperarGirar 0.8s linear infinite;
+}
+
+.recuperar-resultado.cargando #recuperar-icono {
+    display: none;
+}
+
+.recuperar-resultado.cargando h2,
+.recuperar-resultado.cargando p {
+    display: none;
+}
+
+/* Giro del indicador */
+@keyframes recuperarGirar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Aparición del resultado */
+.recuperar-resultado.exito .recuperar-resultado-icono,
+.recuperar-resultado.error .recuperar-resultado-icono {
+    animation: recuperarIconoAparecer 0.45s ease;
+}
+
+@keyframes recuperarIconoAparecer {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Desvanecimiento del formulario */
+.recuperar-formulario {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .recuperar-resultado.cargando .recuperar-resultado-icono,
+    .recuperar-resultado.exito .recuperar-resultado-icono,
+    .recuperar-resultado.error .recuperar-resultado-icono {
+        animation: none;
+    }
+}
+
+/* ==========================================
+   RESTABLECER CONTRASEÑA - KFITNESS
+   ========================================== */
+
+.recuperar-principal:has(.restablecer-tarjeta) {
+    min-height: 780px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1rem;
+    background: radial-gradient(ellipse at 50% 45%, rgba(237, 28, 46, 0.10), transparent 65%), #070708;
+}
+
+.formulario-centro:has(.restablecer-tarjeta) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.restablecer-tarjeta {
+    width: 100%;
+    max-width: 540px;
+    padding: 2.8rem;
+    background: linear-gradient(145deg, #171719, #0d0d0f);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-top: 3px solid #ed1c2e;
+    border-radius: 20px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.55), 0 0 45px rgba(237,28,46,0.08);
+    animation: restablecerAparecer 0.5s ease both;
+}
+
+/* Encabezado */
+
+.restablecer-encabezado {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.restablecer-candado {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 74px;
+    height: 74px;
+    margin: 0 auto 1.3rem;
+    color: #ed1c2e;
+    background: rgba(237,28,46,0.10);
+    border: 1px solid rgba(237,28,46,0.35);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(237,28,46,0.12);
+}
+
+.restablecer-encabezado h1 {
+    margin: 0 0 0.8rem;
+    color: #fff;
+    font-size: clamp(1.65rem, 4vw, 2rem);
+    line-height: 1.2;
+}
+
+.restablecer-subtitulo {
+    max-width: 390px;
+    margin: 0 auto;
+    color: #aaaab1;
+    font-size: 0.93rem;
+    line-height: 1.65;
+}
+
+/* Formulario */
+
+#form-restablecer {
+    display: grid;
+    gap: 0.85rem;
+}
+
+    #form-restablecer > label {
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+
+.restablecer-campo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+    .restablecer-campo input {
+        width: 100%;
+        min-height: 54px;
+        padding: 0.9rem 3.3rem 0.9rem 3rem;
+        color: #fff;
+        background: #0a0a0c;
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 10px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+        .restablecer-campo input::placeholder {
+            color: #77777e;
+        }
+
+        .restablecer-campo input:focus {
+            outline: none;
+            border-color: #ed1c2e;
+            box-shadow: 0 0 0 3px rgba(237,28,46,0.13);
+        }
+
+.restablecer-campo-icono {
+    position: absolute;
+    left: 1rem;
+    color: #88888f;
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+.restablecer-ver-password {
+    position: absolute;
+    right: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    color: #a4a4aa;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+}
+
+    .restablecer-ver-password:hover {
+        color: #fff;
+        background: rgba(255,255,255,0.07);
+    }
+
+    .restablecer-ver-password:focus-visible {
+        outline: 2px solid #ed1c2e;
+        outline-offset: 2px;
+    }
+
+/* Indicador de seguridad */
+
+.restablecer-seguridad {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 0.15rem 0 0;
+}
+
+.restablecer-seguridad-barra {
+    flex: 1;
+    height: 6px;
+    overflow: hidden;
+    background: #343438;
+    border-radius: 20px;
+}
+
+#restablecer-nivel-barra {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: #ed1c2e;
+    border-radius: inherit;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+#restablecer-nivel-texto {
+    min-width: 75px;
+    color: #aaaab1;
+    font-size: 0.78rem;
+    text-align: right;
+}
+
+/* Requisitos */
+
+.restablecer-requisitos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem 0.8rem;
+    margin: 0.2rem 0 1rem;
+}
+
+    .restablecer-requisitos p {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin: 0;
+        color: #a4a4aa;
+        font-size: 0.78rem;
+        line-height: 1.4;
+        transition: color 0.2s ease;
+    }
+
+        .restablecer-requisitos p::before {
+            content: "○";
+            color: #77777e;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .restablecer-requisitos p.cumplido {
+            color: #7effb6;
+        }
+
+            .restablecer-requisitos p.cumplido::before {
+                content: "✓";
+                color: #7effb6;
+            }
+
+/* Botón principal */
+
+#form-restablecer .restablecer-boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    width: 100%;
+    min-height: 54px;
+    margin-top: 0.8rem;
+    color: #fff;
+    background: #ed1c2e;
+    border: none;
+    border-radius: 10px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+    #form-restablecer .restablecer-boton:hover {
+        transform: translateY(-2px);
+        background: #ff263c;
+        box-shadow: 0 9px 28px rgba(237,28,46,0.28);
+    }
+
+.restablecer-boton span {
+    font-size: 1.3rem;
+    transition: transform 0.2s ease;
+}
+
+.restablecer-boton:hover span {
+    transform: translateX(4px);
+}
+
+/* Mensajes */
+
+#restablecer-mensaje {
+    margin: 0;
+    min-height: 1.4rem;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+/* Regresar al inicio de sesión */
+
+.restablecer-separador {
+    height: 1px;
+    margin: 1.6rem 0 1.3rem;
+    background: rgba(255,255,255,0.10);
+}
+
+.restablecer-volver {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #c5c5ca;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+    .restablecer-volver:hover {
+        color: #ed1c2e;
+    }
+
+/* Animación de entrada */
+
+@keyframes restablecerAparecer {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Adaptación a celulares */
+
+@media (max-width: 600px) {
+    .recuperar-principal:has(.restablecer-tarjeta) {
+        min-height: auto;
+        padding: 3rem 1rem;
+    }
+
+    .restablecer-tarjeta {
+        padding: 2rem 1.4rem;
+        border-radius: 16px;
+    }
+
+    .restablecer-candado {
+        width: 65px;
+        height: 65px;
+    }
+
+    .restablecer-requisitos {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .restablecer-tarjeta {
+        animation: none;
+    }
+
+        .restablecer-tarjeta *,
+        .restablecer-tarjeta *::before {
+            transition: none !important;
+        }
+}
+
+/* Validación de coincidencia de contraseñas */
+
+.restablecer-coincidencia {
+    min-height: 1.2rem;
+    margin: -0.25rem 0 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+    .restablecer-coincidencia.coincide {
+        color: #7effb6;
+    }
+
+    .restablecer-coincidencia.no-coincide {
+        color: #ff6b6b;
+    }
+
+/* ==========================================
+   RESULTADOS DE RESTABLECER CONTRASEÑA
+   KFITNESS - CARGA, ÉXITO Y ERROR
+   ========================================== */
+
+.restablecer-resultado {
+    padding: 1.5rem 0 0.5rem;
+    text-align: center;
+    animation: restablecerResultadoAparecer 0.4s ease;
+}
+
+    .restablecer-resultado[hidden] {
+        display: none !important;
+    }
+
+/* Contenedor del icono */
+
+.restablecer-resultado-icono {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+/* Estado de carga */
+
+.restablecer-resultado.cargando
+.restablecer-resultado-icono {
+    width: 80px;
+    height: 80px;
+    border: 4px solid rgba(237, 28, 46, 0.15);
+    border-top-color: #ed1c2e;
+    background: transparent;
+    border-radius: 50%;
+    animation: restablecerGirar 0.8s linear infinite;
+}
+
+.restablecer-resultado.cargando
+#restablecer-resultado-simbolo {
+    display: none;
+}
+
+.restablecer-resultado.cargando h2,
+.restablecer-resultado.cargando p {
+    display: none;
+}
+
+/* Estado de éxito */
+
+.restablecer-resultado.exito
+.restablecer-resultado-icono {
+    color: #7effb6;
+    background: rgba(55, 183, 104, 0.15);
+    border: 1px solid rgba(55, 183, 104, 0.4);
+    box-shadow: 0 0 30px rgba(55, 183, 104, 0.12);
+    animation: restablecerIconoAparecer 0.45s ease;
+}
+
+/* Estado de error */
+
+.restablecer-resultado.error
+.restablecer-resultado-icono {
+    color: #ff6b6b;
+    background: rgba(237, 28, 46, 0.13);
+    border: 1px solid rgba(237, 28, 46, 0.4);
+    box-shadow: 0 0 30px rgba(237, 28, 46, 0.12);
+    animation: restablecerIconoAparecer 0.45s ease;
+}
+
+/* Títulos y mensajes */
+
+.restablecer-resultado h2 {
+    margin: 0 0 0.85rem;
+    color: #ffffff;
+    font-size: 1.65rem;
+    line-height: 1.3;
+}
+
+.restablecer-resultado p {
+    max-width: 390px;
+    margin: 0 auto 1rem;
+    color: #b8b8be;
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+/* Animaciones */
+
+@keyframes restablecerGirar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes restablecerIconoAparecer {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes restablecerResultadoAparecer {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Adaptación a celulares */
+
+@media (max-width: 480px) {
+    .restablecer-resultado-icono {
+        width: 68px;
+        height: 68px;
+        font-size: 2rem;
+    }
+
+    .restablecer-resultado h2 {
+        font-size: 1.4rem;
+    }
+}
+
+/* Accesibilidad */
+
+@media (prefers-reduced-motion: reduce) {
+    .restablecer-resultado,
+    .restablecer-resultado-icono,
+    .restablecer-resultado.cargando
+    .restablecer-resultado-icono {
+        animation: none;
+    }
+}
+
+/* Ocultar el formulario durante el resultado */
+
+#form-restablecer[hidden] {
+    display: none !important;
+}
+
+/* ==========================================
+   ENLACE MINIMALISTA - KFITNESS
+   ========================================== */
+
+.restablecer-enlace-login {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: fit-content;
+    margin: 1.5rem auto 0;
+    padding: 0.5rem 0;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-underline-offset: 5px;
+    transition: color 0.25s ease;
+}
+
+    .restablecer-enlace-login span:last-child {
+        color: #ed1c2e;
+        font-size: 1.3rem;
+        text-decoration: none;
+        transition: transform 0.25s ease;
+    }
+
+    .restablecer-enlace-login:hover {
+        color: #ff4657;
+    }
+
+        .restablecer-enlace-login:hover span:last-child {
+            transform: translate(3px, -3px);
+        }
+
+    /* Mantener oculto hasta que el cambio sea exitoso */
+
+    .restablecer-enlace-login[hidden] {
+        display: none !important;
+    }
+
+/* ==========================================
+   REINTENTAR RESTABLECIMIENTO - KFITNESS
+   ========================================== */
+
+.restablecer-reintentar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: fit-content;
+    margin: 1.5rem auto 0;
+    padding: 0.5rem 0;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.4);
+    text-underline-offset: 5px;
+    cursor: pointer;
+    transition: color 0.25s ease;
+}
+
+    .restablecer-reintentar span:first-child {
+        color: #ed1c2e;
+        font-size: 1.5rem;
+        text-decoration: none;
+        transition: transform 0.3s ease;
+    }
+
+    .restablecer-reintentar:hover {
+        color: #ff4657;
+    }
+
+        .restablecer-reintentar:hover span:first-child {
+            transform: rotate(-45deg);
+        }
+
+    .restablecer-reintentar:focus-visible {
+        outline: 2px solid #ed1c2e;
+        outline-offset: 5px;
+        border-radius: 4px;
+    }
+
+    /* Ocultar cuando no exista un error */
+
+    .restablecer-reintentar[hidden] {
+        display: none !important;
+    }

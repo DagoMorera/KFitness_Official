@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>KFitness - Panel administrativo</title>
+  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/admin.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/rutinas.css?v=20261111-2'>
+</head>
+<body>
+  <svg aria-hidden='true' class='icon-sprite' xmlns='http://www.w3.org/2000/svg'>
+    <symbol id='i-grid' viewBox='0 0 24 24'><path d='M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z'/></symbol>
+    <symbol id='i-users' viewBox='0 0 24 24'><path d='M16 11c1.66 0 3-1.79 3-4s-1.34-4-3-4-3 1.79-3 4 1.34 4 3 4zM8 11c1.66 0 3-1.79 3-4S9.66 3 8 3 5 4.79 5 7s1.34 4 3 4zM8 13c-2.76 0-5 2.24-5 5v2h10v-2c0-2.76-2.24-5-5-5zM16 13c-.58 0-1.14.1-1.66.29 1.54 1.08 2.55 2.87 2.64 4.91V20h7v-2c0-2.76-2.24-5-5-5z'/></symbol>
+    <symbol id='i-calendar' viewBox='0 0 24 24'><path d='M7 2v3M17 2v3M3 9h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z'/></symbol>
+    <symbol id='i-dumbbell' viewBox='0 0 24 24'><path d='M3 10h2v4H3zM19 10h2v4h-2zM7 9h2v6H7zM15 9h2v6h-2zM9 11h6v2H9z'/></symbol>
+    <symbol id='i-tag' viewBox='0 0 24 24'><path d='M20.59 13.41 12 22l-9-9V4h9l8.59 8.59a1.996 1.996 0 0 1 0 2.82zM7 7h.01'/></symbol>
+    <symbol id='i-chat' viewBox='0 0 24 24'><path d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/></symbol>
+    <symbol id='i-chart' viewBox='0 0 24 24'><path d='M4 19h16M7 16V9M12 16V5M17 16v-3'/></symbol>
+    <symbol id='i-gear' viewBox='0 0 24 24'><path d='M12 8.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 1 0 12 8.5zM19.4 15a7.97 7.97 0 0 0 .06-2l2.04-1.58-2-3.46-2.45.63a8.06 8.06 0 0 0-1.73-1L15 4h-6l-.32 2.59c-.62.23-1.2.57-1.73 1l-2.45-.63-2 3.46L4.54 13a7.97 7.97 0 0 0 .06 2L2.56 16.58l2 3.46 2.45-.63c.53.43 1.11.77 1.73 1L9 23h6l.32-2.59c.62-.23 1.2-.57 1.73-1l2.45.63 2-3.46z'/></symbol>
+    <symbol id='i-shield' viewBox='0 0 24 24'><path d='M12 2 4 5v6c0 5.25 3.4 10.74 8 12 4.6-1.26 8-6.75 8-12V5z'/></symbol>
+    <symbol id='i-person' viewBox='0 0 24 24'><path d='M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-4.42 0-8 2.24-8 5v3h16v-3c0-2.76-3.58-5-8-5z'/></symbol>
+    <symbol id='i-logout' viewBox='0 0 24 24'><path d='M10 17 15 12 10 7M15 12H3M13 3h6v18h-6'/></symbol>
+    <symbol id='i-info' viewBox='0 0 24 24'><path d='M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zM11 11h2v6h-2zm0-4h2v2h-2z'/></symbol>
+    <symbol id='i-file-sheet' viewBox='0 0 24 24'><path d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7zM14 2v5h5'/><path d='M9 11h6M9 15h6M9 19h6'/></symbol>
+    <symbol id='i-nav-dashboard' viewBox='0 0 24 24'><path d='M4 20V11M10 20V7M16 20V4M22 20H2'/></symbol>
+    <symbol id='i-nav-users' viewBox='0 0 24 24'><path d='M16 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM4 20v-1a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v1M14 20v-1a4 4 0 0 1 4-4h1a4 4 0 0 1 4 4v1'/></symbol>
+    <symbol id='i-nav-layers' viewBox='0 0 24 24'><path d='M12 3 3 7.5 12 12l9-4.5zM3 12.5 12 17l9-4.5M3 17.5 12 22l9-4.5'/></symbol>
+    <symbol id='i-nav-calendar' viewBox='0 0 24 24'><path d='M7 2v4M17 2v4M3 9h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z'/></symbol>
+    <symbol id='i-nav-calendar-check' viewBox='0 0 24 24'><path d='M7 2v4M17 2v4M3 9h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM7.5 13h2M11 13h2M14.5 13h2M7.5 17h2M11 17h2M14.5 17h2'/></symbol>
+    <symbol id='i-nav-dumbbell' viewBox='0 0 24 24'><path d='M2 10v4M5 9v6M8 11h8M16 9v6M19 8v8M22 10v4'/></symbol>
+    <symbol id='i-nav-tag' viewBox='0 0 24 24'><path d='M20 13 11 22 2 13V4h9zM7 9h.01'/></symbol>
+    <symbol id='i-nav-chat' viewBox='0 0 24 24'><path d='M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/></symbol>
+    <symbol id='i-nav-report' viewBox='0 0 24 24'><path d='M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7zM14 2v5h5'/><path d='M9 12h6M9 16h6M9 20h4'/></symbol>
+    <symbol id='i-nav-gear' viewBox='0 0 24 24'><path d='M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM19.4 15a7.97 7.97 0 0 0 .06-2l2.04-1.58-2-3.46-2.45.63a8.06 8.06 0 0 0-1.73-1L15 4h-6l-.32 2.59c-.62.23-1.2.57-1.73 1l-2.45-.63-2 3.46L4.54 13a7.97 7.97 0 0 0 .06 2L2.56 16.58l2 3.46 2.45-.63c.53.43 1.11.77 1.73 1L9 23h6l.32-2.59c.62-.23 1.2-.57 1.73-1l2.45.63 2-3.46z'/></symbol>
+    <symbol id='i-nav-shield' viewBox='0 0 24 24'><path d='M12 2 4 5v6c0 5.25 3.4 10.74 8 12 4.6-1.26 8-6.75 8-12V5z'/></symbol>
+    <symbol id='i-nav-person' viewBox='0 0 24 24'><path d='M12 12a4.5 4.5 0 1 0-4.5-4.5A4.5 4.5 0 0 0 12 12zM4 21v-1a8 8 0 0 1 16 0v1'/></symbol>
+    <symbol id='i-nav-logout' viewBox='0 0 24 24'><path d='M13 8l4 4-4 4M17 12H9'/><path d='M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5'/></symbol>
+  </svg>
+
+  <header class='site-header admin-header' aria-label='Encabezado del panel administrativo'></header>
+  <main class='admin-main'>
+    <aside class='admin-sidebar' aria-label='Barra lateral administrativa'>
+      <div class='admin-brand'>
+        <img src='img/Logo1.png' alt='KFitness' class='admin-brand-logo'>
+        <p class='admin-logo'>KFITNESS</p>
+        <p class='admin-subtitulo'>ADMINISTRACIÓN</p>
+      </div>
+      <nav class='admin-nav'>
+        <p class='admin-nav-titulo'>NAVEGACIÓN</p>
+        <button class='boton boton-pequeno activo' data-admin-seccion='dashboard'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-dashboard'></use></svg><span>Dashboard</span></button>
+        <button class='boton boton-pequeno' data-admin-seccion='usuarios'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-users'></use></svg><span>Control de usuarios</span></button>
+        <button class='boton boton-pequeno' data-admin-seccion='servicios'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-layers'></use></svg><span>Servicios</span></button>
+        <button class='boton boton-pequeno' data-admin-seccion='horarios'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-calendar'></use></svg><span>Horarios</span></button>
+        <button class='boton boton-pequeno' data-admin-seccion='reservas'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-calendar-check'></use></svg><span>Reservas</span></button>
+        <button class='boton boton-pequeno' data-admin-seccion='rutinas'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-dumbbell'></use></svg><span>Rutinas</span></button>
+        <button class='boton boton-pequeno' data-admin-seccion='promociones'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-tag'></use></svg><span>Promociones</span></button>
+        <button class='boton boton-pequeno' data-admin-seccion='consultas'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-chat'></use></svg><span>Consultas</span></button>
+        <button class='boton boton-pequeno' data-admin-seccion='reportes'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-report'></use></svg><span>Reportes</span></button>
+
+        <p class='admin-nav-titulo'>GESTIÓN DEL SISTEMA</p>
+        <button class='boton boton-pequeno' data-admin-seccion='configuracion'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-gear'></use></svg><span>Configuración</span></button>
+        <button class='boton boton-pequeno' data-admin-seccion='seguridad'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-shield'></use></svg><span>Seguridad y auditoría</span></button>
+
+        <p class='admin-nav-titulo'>CUENTA</p>
+        <a class='boton boton-pequeno admin-link' href='/perfil.html'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-person'></use></svg><span>Mi perfil</span></a>
+        <button class='boton boton-secundario' id='cerrar-sesion-admin'><svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-logout'></use></svg><span>Cerrar sesión</span></button>
+      </nav>
+    </aside>
+
+    <section class='admin-dashboard'>
+      <div class='admin-contenido'>
+        <section class='admin-seccion' id='admin-dashboard'>
+          <header class='admin-hero admin-seccion-header admin-seccion-header-con-accion'>
+            <div class='admin-seccion-header-main'>
+              <span class='admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-grid'></use></svg>
+              </span>
+              <div class='admin-seccion-header-text'>
+                <h1>Dashboard administrativo</h1>
+                <p class='texto-principal'>Bienvenida, <strong id='admin-nombre'>Admin</strong>.</p>
+                <p class='admin-seccion-header-descripcion'>Monitorea indicadores y estadísticas operativas en tiempo real.</p>
+              </div>
+            </div>
+            <span class='admin-status-badge'><span class='status-dot'></span>Analítica activa</span>
+          </header>
+
+          <section class='grid indicadores admin-dashboard-kpis'>
+            <article class='tarjeta indicador kpi-card'>
+              <div class='kpi-icono'><svg class='kpi-svg' viewBox='0 0 24 24'><use href='#i-tag'></use></svg></div>
+              <h3>Servicios activos</h3>
+              <p id='kpi-servicios-activos'>0</p>
+              <small>Total actual del catálogo</small>
+            </article>
+            <article class='tarjeta indicador kpi-card'>
+              <div class='kpi-icono'><svg class='kpi-svg' viewBox='0 0 24 24'><use href='#i-users'></use></svg></div>
+              <h3>Usuarios registrados</h3>
+              <p id='kpi-usuarios-registrados'>0</p>
+              <small>Total actual de seguridad</small>
+            </article>
+            <article class='tarjeta indicador kpi-card'>
+              <div class='kpi-icono'><svg class='kpi-svg' viewBox='0 0 24 24'><use href='#i-calendar'></use></svg></div>
+              <h3>Reservas del período</h3>
+              <p id='kpi-reservas-periodo'>0</p>
+              <small>Métrica del rango aplicado</small>
+            </article>
+            <article class='tarjeta indicador kpi-card'>
+              <div class='kpi-icono'><svg class='kpi-svg' viewBox='0 0 24 24'><use href='#i-chart'></use></svg></div>
+              <h3>Ocupación de horarios</h3>
+              <p id='kpi-ocupacion'>0%</p>
+              <small>Confirmadas/capacidad del período</small>
+            </article>
+          </section>
+
+          <section class='admin-dashboard-graficos'>
+            <article class='admin-bloque admin-grafico-card admin-dashboard-card-alineable admin-reservas-mes-card'>
+              <header class='admin-grafico-header admin-dashboard-card-header admin-reservas-mes-header'>
+                <h2>Reservas por mes</h2>
+                <div class='admin-reservas-mes-selector-wrap'>
+                  <button type='button' class='boton boton-secundario admin-reservas-mes-toggle' id='admin-reservas-mes-toggle' aria-expanded='false' aria-controls='admin-reservas-mes-panel'>
+                    <svg class='admin-icon' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><use href='#i-nav-calendar'></use></svg>
+                    <span id='admin-reservas-mes-toggle-text'>Todos los meses del período</span>
+                    <svg class='admin-reservas-mes-toggle-arrow' aria-hidden='true' focusable='false' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6'></path></svg>
+                  </button>
+                  <section class='admin-reservas-mes-panel' id='admin-reservas-mes-panel' hidden>
+                    <div class='admin-reservas-mes-panel-header'>
+                      <p class='admin-reservas-mes-panel-titulo'>Seleccionar meses</p>
+                      <button type='button' class='admin-reservas-mes-panel-cerrar' id='admin-reservas-mes-panel-cerrar' aria-label='Cerrar selector de meses'>
+                        <svg viewBox='0 0 24 24' aria-hidden='true' focusable='false'><path d='M6 6l12 12M18 6l-12 12'></path></svg>
+                      </button>
+                    </div>
+                    <div class='admin-reservas-mes-panel-top'>
+                      <label for='admin-reservas-mes-anio'>Año</label>
+                      <select id='admin-reservas-mes-anio' aria-label='Seleccionar año para meses'></select>
+                    </div>
+                    <div class='admin-reservas-mes-grid' id='admin-reservas-mes-grid' role='group' aria-label='Meses disponibles para filtrar'></div>
+                    <p class='admin-reservas-mes-hint' id='admin-reservas-mes-hint'>Selecciona al menos un mes para aplicar el filtro.</p>
+                    <div class='admin-reservas-mes-actions'>
+                      <button type='button' class='boton boton-principal' id='admin-reservas-mes-aplicar' disabled>Aplicar</button>
+                      <button type='button' class='boton boton-secundario' id='admin-reservas-mes-restablecer'>Restablecer</button>
+                    </div>
+                  </section>
+                </div>
+              </header>
+              <div class='admin-dashboard-card-resumen admin-reservas-mes-resumen'>
+                <p class='admin-reservas-mes-total' id='admin-reservas-mes-total'>0</p>
+                <p class='admin-reservas-mes-descripcion' id='admin-reservas-mes-descripcion'>Sin meses disponibles en el período.</p>
+              </div>
+              <div class='admin-dashboard-card-visual admin-reservas-mes-visual'>
+                <div class='admin-grafico-vacio' id='grafico-reservas-periodo-vacio' hidden>Sin reservas en los meses seleccionados.</div>
+                <div class='admin-chart-wrap'><canvas id='grafico-reservas-periodo' aria-label='Gráfico de reservas por mes'></canvas></div>
+              </div>
+            </article>
+
+            <article class='admin-bloque admin-grafico-card admin-dashboard-card-alineable admin-estado-distribucion-card'>
+              <header class='admin-grafico-header admin-dashboard-card-header'>
+                <h2>Reservas por estado</h2>
+                <p class='admin-estado-subtitulo'>Distribución del período seleccionado</p>
+              </header>
+              <div class='admin-dashboard-card-resumen admin-estado-resumen-total'>
+                <p id='grafico-reservas-estado-total'>0</p>
+                <span>reservas en total</span>
+              </div>
+              <div class='admin-dashboard-card-visual admin-estado-visual'>
+                <div class='admin-estado-segmentos' id='grafico-reservas-estado-segmentos' role='img' aria-label='Distribución de reservas por estado'></div>
+                <p class='admin-estado-sin-datos' id='grafico-reservas-estado-vacio' hidden>Sin reservas en este período.</p>
+                <div class='admin-estado-cards' id='grafico-reservas-estado-cards' aria-live='polite'></div>
+              </div>
+            </article>
+
+            <article class='admin-bloque admin-grafico-card'>
+              <header class='admin-grafico-header'>
+                <h2>Servicios más reservados</h2>
+              </header>
+              <div class='admin-grafico-vacio' id='grafico-servicios-categoria-vacio' hidden>Sin datos de servicios reservados en el período.</div>
+              <div class='admin-chart-wrap'>
+                <canvas id='grafico-servicios-categoria' aria-label='Gráfico de servicios más reservados'></canvas>
+              </div>
+            </article>
+
+            <article class='admin-bloque admin-grafico-card'>
+              <header class='admin-grafico-header'>
+                <h2>Ocupación por servicio</h2>
+              </header>
+              <div class='admin-grafico-vacio' id='grafico-ocupacion-vacio' hidden>Sin cupos programados.</div>
+              <div class='admin-ocupacion-servicio-lista' id='grafico-ocupacion-servicio-lista'></div>
+            </article>
+          </section>
+
+          <section class='admin-bloque admin-dashboard-filtros'>
+            <form id='admin-dashboard-filtros-form' class='admin-filtros admin-dashboard-filtros-form' novalidate>
+              <div class='admin-dashboard-filtros-chip'>
+                <svg class='admin-icon' viewBox='0 0 24 24' aria-hidden='true'><use href='#i-chart'></use></svg>
+                <span>Filtrar período</span>
+              </div>
+              <div class='admin-dashboard-filtro-campo-inline'>
+                <label for='admin-dashboard-desde'>Desde</label>
+                <input id='admin-dashboard-desde' type='date'>
+              </div>
+              <div class='admin-dashboard-filtro-campo-inline'>
+                <label for='admin-dashboard-hasta'>Hasta</label>
+                <input id='admin-dashboard-hasta' type='date'>
+              </div>
+              <div class='admin-form-actions admin-dashboard-filtros-acciones'>
+                <button type='submit' class='boton boton-principal' id='admin-dashboard-aplicar'>Aplicar filtros</button>
+                <button type='button' class='boton boton-secundario' id='admin-dashboard-limpiar'>Limpiar</button>
+              </div>
+              <p class='admin-dashboard-periodo-aplicado' id='admin-dashboard-periodo-aplicado' aria-live='polite'>Período aplicado: —</p>
+            </form>
+            <p class='mensaje-formulario' id='admin-dashboard-mensaje' aria-live='polite'></p>
+            <button type='button' class='boton boton-secundario admin-dashboard-reintentar' id='admin-dashboard-reintentar' hidden>Reintentar</button>
+          </section>
+        </section>
+
+        <section class='admin-seccion admin-modulo' id='admin-usuarios' hidden>
+          <header class='admin-modulo-header admin-seccion-header'>
+            <div class='admin-seccion-header-main'>
+              <span class='admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-users'></use></svg>
+              </span>
+              <div class='admin-seccion-header-text'>
+                <h2>Control de usuarios</h2>
+                <p>Gestiona los usuarios y permisos de acceso a KFitness.</p>
+              </div>
+            </div>
+          </header>
+
+          <form class='admin-buscador' id='admin-usuarios-form'>
+            <input id='admin-usuarios-query' type='search' placeholder='Buscar por nombre o correo...' autocomplete='off'>
+            <button type='submit' class='boton boton-principal'>Buscar</button>
+          </form>
+
+          <div class='admin-users-summary'>
+            <article class='admin-users-stat'>
+              <h3>Usuarios totales</h3>
+              <p id='usuarios-total'>0</p>
+            </article>
+            <article class='admin-users-stat'>
+              <h3>Clientes</h3>
+              <p id='usuarios-clientes'>0</p>
+            </article>
+            <article class='admin-users-stat'>
+              <h3>Administradores</h3>
+              <p id='usuarios-admins'>0</p>
+            </article>
+            <article class='admin-users-stat'>
+              <h3>Usuarios activos</h3>
+              <p id='usuarios-activos'>0</p>
+            </article>
+          </div>
+
+          <div class='tabla-responsiva admin-users-table-wrap'>
+            <table class='admin-users-table'>
+              <thead>
+                <tr>
+                  <th>Usuario</th>
+                  <th>Correo</th>
+                  <th>Rol</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id='admin-usuarios-tbody'>
+                <tr><td colspan='5'>Cargando usuarios...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class='admin-empty-state' id='admin-usuarios-estado' hidden></p>
+
+          <div class='admin-pagination' id='admin-usuarios-pagination-wrap' hidden>
+            <span id='admin-usuarios-pagination-summary'>Mostrando 0–0 de 0</span>
+            <div class='admin-pagination-nav'>
+              <button class='boton boton-pequeno' id='admin-usuarios-prev' type='button'>Anterior</button>
+              <span id='admin-usuarios-pageinfo'>Página 1 de 1</span>
+              <button class='boton boton-pequeno' id='admin-usuarios-next' type='button'>Siguiente</button>
+            </div>
+          </div>
+
+          <div class='admin-modal' id='admin-usuario-modal' hidden>
+            <div class='admin-modal-panel'>
+              <div class='admin-modal-header'>
+                <h3>Detalle de usuario</h3>
+                <button type='button' class='admin-modal-close' id='admin-modal-cerrar' aria-label='Cerrar'>×</button>
+              </div>
+
+              <div class='admin-modal-body'>
+                <div class='admin-detalle-top'>
+                  <div class='admin-detalle-grid'>
+                    <div><span class='label'>Nombre completo</span><strong id='detalle-nombre'>-</strong></div>
+                    <div><span class='label'>Correo</span><strong id='detalle-correo'>-</strong></div>
+                    <div><span class='label'>Rol actual</span><strong id='detalle-rol'>-</strong></div>
+                    <div><span class='label'>Estado</span><strong id='detalle-estado'>-</strong></div>
+                    <div id='detalle-telefono-wrap' hidden><span class='label'>Teléfono</span><strong id='detalle-telefono'>-</strong></div>
+                  </div>
+
+                  <div class='admin-detalle-avatar' id='detalle-avatar-display' aria-label='Fotografía de perfil'></div>
+                </div>
+
+                <div class='admin-role-editor'>
+                  <label for='admin-rol-select'>Rol</label>
+                  <select id='admin-rol-select'></select>
+                  <p class='admin-self-protect' id='admin-self-protect' hidden>
+                    Tu cuenta administrativa. Por seguridad, no puedes retirar tus propios permisos de Administrador.
+                  </p>
+                </div>
+
+                <div class='admin-confirm-box' id='admin-confirm-box' hidden>
+                  <h4>Cambiar rol de usuario</h4>
+                  <p id='admin-confirm-texto'></p>
+                  <div class='admin-confirm-actions'>
+                    <button type='button' class='boton boton-secundario' id='admin-confirm-cancelar'>Cancelar</button>
+                    <button type='button' class='boton boton-principal' id='admin-confirm-aceptar'>Confirmar cambio</button>
+                  </div>
+                </div>
+
+                <p class='mensaje-formulario' id='admin-usuario-mensaje' aria-live='polite'></p>
+              </div>
+
+              <div class='admin-modal-footer'>
+                <button type='button' class='boton boton-secundario' id='admin-rol-cancelar'>Cancelar</button>
+                <button type='button' class='boton boton-principal' id='admin-rol-guardar'>Guardar cambios</button>
+              </div>
+            </div>
+          </div>
+
+          <div class='admin-modal admin-usuario-foto-modal' id='admin-usuario-foto-modal' hidden role='dialog' aria-modal='true' aria-labelledby='admin-usuario-foto-titulo'>
+            <div class='admin-modal-panel admin-usuario-foto-panel'>
+              <div class='admin-modal-header'>
+                <h3 id='admin-usuario-foto-titulo'>Fotografía de usuario</h3>
+                <button type='button' class='admin-modal-close' id='admin-usuario-foto-cerrar-x' aria-label='Cerrar'>×</button>
+              </div>
+
+              <div class='admin-modal-body admin-usuario-foto-body'>
+                <div class='admin-usuario-foto-visor'>
+                  <img id='admin-usuario-foto-imagen' src='' alt='Fotografía de usuario' loading='lazy'>
+                  <p id='admin-usuario-foto-error' hidden>No fue posible cargar la fotografía.</p>
+                </div>
+              </div>
+
+              <div class='admin-modal-footer'>
+                <button type='button' class='boton boton-secundario' id='admin-usuario-foto-cerrar'>Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class='admin-seccion admin-modulo' id='admin-servicios' hidden>
+          <header class='admin-modulo-header admin-seccion-header'>
+            <div class='admin-seccion-header-main'>
+              <span class='admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-tag'></use></svg>
+              </span>
+              <div class='admin-seccion-header-text'>
+                <h2>Gestión de servicios</h2>
+                <p>Administra la oferta de servicios, su disponibilidad y su contenido.</p>
+              </div>
+            </div>
+          </header>
+
+          <form id='admin-servicios-form' class='admin-servicios-form admin-servicio-form-modal' novalidate>
+            <div class='admin-servicio-modal-layout'>
+              <div class='admin-servicio-modal-form-col'>
+                <section class='admin-servicio-form-bloque'>
+                  <h4>Información del servicio</h4>
+                  <div class='admin-form-grid'>
+                    <div class='admin-form-field'>
+                      <label for='servicio-nombre'>Nombre del servicio</label>
+                      <input id='servicio-nombre' name='nombre' type='text' maxlength='150' required>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='servicio-categoria'>Categoría</label>
+                      <select id='servicio-categoria' name='categoria' required>
+                        <option value=''>Selecciona una categoría</option>
+                      </select>
+                    </div>
+
+                    <div class='admin-form-field admin-form-field-full'>
+                      <label for='servicio-descripcion'>Descripción</label>
+                      <textarea id='servicio-descripcion' name='descripcion' rows='4' maxlength='1000' required></textarea>
+                    </div>
+                  </div>
+                </section>
+
+                <section class='admin-servicio-form-bloque'>
+                  <h4>Precio y publicación</h4>
+                  <div class='admin-form-grid'>
+                    <div class='admin-form-field'>
+                      <label for='servicio-precio'>Precio (CRC)</label>
+                      <input id='servicio-precio' name='precio' type='number' min='0' step='0.01' required>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='servicio-estado'>Estado</label>
+                      <select id='servicio-estado' name='estado'>
+                        <option value='1'>Activo</option>
+                        <option value='0'>Inactivo</option>
+                      </select>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='servicio-orden'>Orden de visualización</label>
+                      <input id='servicio-orden' name='orden' type='number' step='1' value='0' required>
+                    </div>
+                  </div>
+                </section>
+
+                <section class='admin-servicio-form-bloque'>
+                  <h4>Imagen</h4>
+                  <div class='admin-form-field admin-form-field-full'>
+                    <label for='servicio-imagen-input'>Imagen del servicio (opcional)</label>
+                    <input id='servicio-imagen-input' name='imagenServicio' type='file' accept='.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp' hidden>
+
+                    <div class='admin-servicio-imagen-actions'>
+                      <button type='button' class='boton boton-secundario' id='servicio-imagen-seleccionar'>Seleccionar fotografía</button>
+                      <button type='button' class='boton boton-secundario' id='servicio-imagen-quitar' hidden>Quitar imagen</button>
+                    </div>
+
+                    <p class='admin-servicio-imagen-ayuda'>Formatos permitidos: JPG, PNG y WebP. Tamaño máximo: 5 MB.</p>
+                  </div>
+                </section>
+
+                <p class='mensaje-formulario' id='admin-servicios-mensaje' aria-live='polite'></p>
+
+                <div class='admin-modal-footer admin-servicio-modal-footer'>
+                  <button id='servicio-limpiar' type='button' class='boton boton-secundario'>Cancelar</button>
+                  <button id='servicio-submit' type='submit' class='boton boton-principal'>Guardar servicio</button>
+                </div>
+              </div>
+
+              <aside class='admin-servicio-modal-preview-col' aria-live='polite'>
+                <h4>Vista previa</h4>
+                <figure class='admin-servicio-vista-previa-imagen' id='servicio-imagen-preview'>
+                  <img id='servicio-imagen-preview-img' alt='Vista previa de la imagen del servicio'>
+                  <span class='admin-servicio-vista-previa-sin-imagen' id='servicio-vista-previa-sin-imagen'>Sin imagen</span>
+                </figure>
+                <div class='admin-servicio-vista-previa-detalle'>
+                  <p class='admin-servicio-vista-previa-categoria' id='servicio-vista-previa-categoria'>Categoría: -</p>
+                  <p class='admin-servicio-vista-previa-nombre' id='servicio-vista-previa-nombre'>Nombre del servicio</p>
+                  <p class='admin-servicio-vista-previa-descripcion' id='servicio-vista-previa-descripcion'>Descripción del servicio.</p>
+                  <p class='admin-servicio-vista-previa-precio' id='servicio-vista-previa-precio'>₡0</p>
+                </div>
+              </aside>
+            </div>
+          </form>
+
+          <div class='admin-servicios-existentes'>
+            <header class='admin-submodulo-header'>
+              <h3>Servicios registrados</h3>
+              <p>Consulta y edita los servicios existentes sin volver a crearlos.</p>
+            </header>
+
+            <div class='admin-form-grid admin-servicios-filtros' id='admin-servicios-filtros'>
+              <div class='admin-form-field'>
+                <label for='admin-servicios-filtro-busqueda'>Búsqueda</label>
+                <input id='admin-servicios-filtro-busqueda' type='search' placeholder='Buscar por nombre'>
+              </div>
+              <div class='admin-form-field'>
+                <label for='admin-servicios-filtro-categoria'>Categoría</label>
+                <select id='admin-servicios-filtro-categoria'>
+                  <option value=''>Todas las categorías</option>
+                </select>
+              </div>
+              <div class='admin-form-field'>
+                <label for='admin-servicios-filtro-estado'>Estado</label>
+                <select id='admin-servicios-filtro-estado'>
+                  <option value=''>Todos</option>
+                  <option value='activo'>Activo</option>
+                  <option value='inactivo'>Inactivo</option>
+                </select>
+              </div>
+              <div class='admin-servicios-accion-field'>
+                <button type='button' class='boton boton-principal' id='admin-servicio-crear-toggle' aria-controls='admin-servicio-crear-modal' aria-expanded='false'>＋ Agregar servicio</button>
+              </div>
+            </div>
+
+            <div class='admin-servicios-list-wrap'>
+              <table class='admin-servicios-lista' aria-label='Listado de servicios registrados'>
+                <thead>
+                  <tr>
+                    <th>Foto</th>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody id='admin-servicios-lista-body'>
+                  <tr>
+                    <td colspan='6'>Cargando servicios...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class='admin-pagination' id='admin-servicios-paginacion-wrap' hidden>
+              <span class='mensaje-formulario' id='admin-servicios-paginacion-resumen' aria-live='polite'>Mostrando 0–0 de 0</span>
+              <div class='admin-pagination-nav'>
+                <button type='button' class='boton boton-secundario boton-pequeno' id='admin-servicios-paginacion-anterior'>Anterior</button>
+                <span id='admin-servicios-paginacion-pageinfo'>Página 1 de 1</span>
+                <button type='button' class='boton boton-secundario boton-pequeno' id='admin-servicios-paginacion-siguiente'>Siguiente</button>
+              </div>
+            </div>
+
+            <p class='mensaje-formulario' id='admin-servicios-lista-mensaje' aria-live='polite'></p>
+          </div>
+
+          <div class='admin-modal' id='admin-servicio-editar-modal' hidden aria-hidden='true'>
+            <div class='admin-modal-backdrop' data-admin-servicio-modal-cerrar='1'></div>
+            <div class='admin-modal-panel' role='dialog' aria-modal='true' aria-labelledby='admin-servicio-editar-titulo'>
+              <div class='admin-modal-header'>
+                <h3 id='admin-servicio-editar-titulo'>Editar servicio</h3>
+                <button type='button' class='admin-modal-close' id='admin-servicio-editar-cerrar' aria-label='Cerrar'>×</button>
+              </div>
+
+              <div class='admin-modal-body'>
+                <form id='admin-servicio-editar-form' class='admin-servicios-form admin-servicio-form-modal' novalidate>
+                  <input id='editar-servicio-id' type='hidden'>
+
+                  <div class='admin-servicio-modal-layout'>
+                    <div class='admin-servicio-modal-form-col'>
+                      <section class='admin-servicio-form-bloque'>
+                        <h4>Información del servicio</h4>
+                        <div class='admin-form-grid'>
+                          <div class='admin-form-field'>
+                            <label for='editar-servicio-nombre'>Nombre del servicio</label>
+                            <input id='editar-servicio-nombre' name='nombre' type='text' maxlength='150' required>
+                          </div>
+
+                          <div class='admin-form-field'>
+                            <label for='editar-servicio-categoria'>Categoría</label>
+                            <select id='editar-servicio-categoria' name='categoria' required>
+                              <option value=''>Selecciona una categoría</option>
+                            </select>
+                          </div>
+
+                          <div class='admin-form-field admin-form-field-full'>
+                            <label for='editar-servicio-descripcion'>Descripción</label>
+                            <textarea id='editar-servicio-descripcion' name='descripcion' rows='4' maxlength='1000' required></textarea>
+                          </div>
+                        </div>
+                      </section>
+
+                      <section class='admin-servicio-form-bloque'>
+                        <h4>Precio y publicación</h4>
+                        <div class='admin-form-grid'>
+                          <div class='admin-form-field'>
+                            <label for='editar-servicio-precio'>Precio (CRC)</label>
+                            <input id='editar-servicio-precio' name='precio' type='number' min='0' step='0.01' required>
+                          </div>
+
+                          <div class='admin-form-field'>
+                            <label for='editar-servicio-estado'>Estado</label>
+                            <select id='editar-servicio-estado' name='estado'>
+                              <option value='1'>Activo</option>
+                              <option value='0'>Inactivo</option>
+                            </select>
+                          </div>
+
+                          <div class='admin-form-field'>
+                            <label for='editar-servicio-orden'>Orden de visualización</label>
+                            <input id='editar-servicio-orden' name='orden' type='number' step='1' value='0' required>
+                          </div>
+                        </div>
+                      </section>
+
+                      <section class='admin-servicio-form-bloque'>
+                        <h4>Imagen</h4>
+                        <div class='admin-form-field admin-form-field-full'>
+                          <label for='editar-servicio-imagen-input'>Fotografía del servicio</label>
+                          <input id='editar-servicio-imagen-input' name='imagenServicio' type='file' accept='.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp' hidden>
+
+                          <div class='admin-servicio-imagen-actions'>
+                            <button type='button' class='boton boton-secundario' id='editar-servicio-imagen-seleccionar'>Seleccionar fotografía</button>
+                            <button type='button' class='boton boton-secundario' id='editar-servicio-imagen-quitar' hidden>Quitar fotografía</button>
+                          </div>
+
+                          <p class='admin-servicio-imagen-ayuda'>Formatos permitidos: JPG, PNG y WebP. Tamaño máximo: 5 MB.</p>
+                        </div>
+                      </section>
+
+                      <p class='mensaje-formulario' id='admin-servicio-editar-mensaje' aria-live='polite'></p>
+
+                      <div class='admin-modal-footer admin-servicio-modal-footer'>
+                        <button type='button' class='boton boton-secundario' id='admin-servicio-editar-cancelar'>Cancelar</button>
+                        <button type='submit' class='boton boton-principal' id='admin-servicio-editar-guardar'>Guardar cambios</button>
+                      </div>
+                    </div>
+
+                    <aside class='admin-servicio-modal-preview-col' aria-live='polite'>
+                      <h4>Vista previa</h4>
+                      <figure class='admin-servicio-vista-previa-imagen' id='editar-servicio-imagen-preview'>
+                        <img id='editar-servicio-imagen-preview-img' alt='Vista previa de la imagen del servicio'>
+                        <span class='admin-servicio-vista-previa-sin-imagen' id='editar-servicio-vista-previa-sin-imagen'>Sin imagen</span>
+                      </figure>
+                      <div class='admin-servicio-vista-previa-detalle'>
+                        <p class='admin-servicio-vista-previa-nombre' id='editar-servicio-vista-previa-nombre'>Nombre del servicio</p>
+                        <p class='admin-servicio-vista-previa-categoria' id='editar-servicio-vista-previa-categoria'>Categoría: -</p>
+                        <p class='admin-servicio-vista-previa-precio' id='editar-servicio-vista-previa-precio'>₡0</p>
+                        <p class='admin-servicio-vista-previa-descripcion' id='editar-servicio-vista-previa-descripcion'>Descripción del servicio.</p>
+                      </div>
+                    </aside>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class='admin-seccion admin-modulo' id='admin-horarios' hidden>
+          <style id='admin-horarios-style'>
+            #admin-horarios{--kf-red:#D81F26;--kf-red-dark:#A31723;--kf-red-border:#C83B46;--kf-gradient:linear-gradient(110deg,#791923 0%,#42151B 65%,#241719 100%);--kf-page:#111214;--kf-card:#161618;--kf-card-alt:#19191B;--kf-text:#f5f5f5;--kf-muted:#cfcfcf;--kf-border:#2d2d31;}
+            #admin-horarios .admin-horarios-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 0 16px;}
+            #admin-horarios .admin-horarios-vistas{display:inline-flex;background:#141414;border:1px solid #2f2f2f;border-radius:10px;padding:4px;gap:4px;}
+            #admin-horarios .admin-horarios-vistas .boton{background:transparent;border-color:transparent;color:#d2d2d2;padding:8px 12px;}
+            #admin-horarios .admin-horarios-vistas .boton[aria-pressed='true']{background:var(--kf-gradient);color:#fff;font-weight:700;border-color:var(--kf-red-border);}
+            #admin-horarios #admin-horarios-cal-nav{display:flex;align-items:center;gap:8px;}
+            #admin-horarios #admin-horarios-cal-nav strong{color:var(--kf-text);font-size:1rem;}
+            #admin-horarios .admin-form-grid{gap:12px;}
+            #admin-horarios #horario-filtrar{width:auto;display:inline-flex;align-self:flex-end;}
+            #admin-horarios .admin-horarios-cal-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:16px;}
+            #admin-horarios .admin-horarios-cal-card,#admin-horarios .admin-horarios-agenda-card{background:var(--kf-card);border:1px solid var(--kf-border);border-radius:12px;padding:16px;}
+            #admin-horarios .admin-horarios-cal-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;}
+            #admin-horarios .admin-horarios-cal-header h3{margin:0;color:#fff;font-size:1.05rem;}
+            #admin-horarios .admin-horarios-cal-actions{display:flex;gap:8px;align-items:center;}
+            #admin-horarios .admin-horarios-cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;}
+            #admin-horarios .admin-horarios-cal-weekday{font-size:.78rem;color:#bdbdbd;text-align:center;padding:4px 0;}
+            #admin-horarios .admin-horarios-cal-day{width:100%;background:#1a1a1d;color:var(--kf-text);border:1px solid #2b2b30;border-radius:8px;min-height:68px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;transition:background .15s,border-color .15s,box-shadow .15s;}
+            #admin-horarios .admin-horarios-cal-day .num{font-weight:700;font-size:.98rem;line-height:1;margin-top:0;}
+            #admin-horarios .admin-horarios-cal-day .count{font-size:.74rem;color:#d6d6d8;line-height:1.1;display:inline-flex;align-items:center;gap:6px;}
+            #admin-horarios .admin-horarios-cal-day .count-dot{width:6px;height:6px;border-radius:999px;background:var(--kf-red);display:inline-block;}
+            #admin-horarios .admin-horarios-cal-day .today-dot{width:7px;height:7px;border-radius:999px;background:var(--kf-red);display:inline-block;}
+            #admin-horarios .admin-horarios-cal-day[data-hoy='1']{border-color:#5b2a32;}
+            #admin-horarios .admin-horarios-cal-day[aria-selected='true']{background:var(--kf-gradient);border-color:var(--kf-red-border);box-shadow:0 0 0 1px var(--kf-red-border) inset;}
+            #admin-horarios .admin-horarios-cal-day:hover{background:linear-gradient(110deg,rgba(121,25,35,.35),rgba(66,21,27,.18));border-color:#5b3035;}
+            #admin-horarios .admin-horarios-cal-day:focus-visible{outline:none;box-shadow:0 0 0 2px #f2f2f2,0 0 0 4px rgba(216,31,38,.28);} 
+            #admin-horarios .admin-horarios-dia-panel{max-height:540px;overflow:auto;}
+            #admin-horarios .admin-horarios-dia-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:12px;}
+            #admin-horarios .admin-horarios-dia-head h3{margin:0;color:#fff;font-size:1.05rem;}
+            #admin-horarios .admin-horarios-dia-head p{margin:0;color:#c9c9c9;font-size:.86rem;}
+            #admin-horarios .admin-horarios-dia-head-actions{display:flex;justify-content:flex-end;align-items:center;}
+            #admin-horarios .admin-horarios-dia-head-actions .boton{background:linear-gradient(110deg,#C91E2A,#A31723);border-color:#C83B46;color:#fff;font-weight:700;display:inline-flex;align-items:center;gap:8px;}
+            #admin-horarios .admin-horarios-item{background:linear-gradient(90deg, rgba(216,31,38,.10), transparent 42%), #19191B;border:1px solid #2d2d2d;border-left:3px solid #A92836;border-radius:10px;padding:12px;margin-bottom:12px;}
+            #admin-horarios .admin-horarios-item-hora{font-size:1rem;font-weight:700;color:#fff;margin-bottom:4px;display:block;}
+            #admin-horarios .admin-horarios-item-servicio{font-size:1.08rem;font-weight:700;color:#fff;margin:0 0 4px;}
+            #admin-horarios .admin-horarios-item-inst{color:#d0d0d3;font-size:.88rem;margin:0 0 6px;}
+            #admin-horarios .admin-horarios-item-ocupacion{color:#d6d6d8;font-size:.86rem;margin:0 0 8px;}
+            #admin-horarios .admin-horarios-labels{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+            #admin-horarios .admin-horarios-estado{font-size:.76rem;padding:3px 8px;border-radius:999px;border:1px solid #454545;color:#d7d7d7;}
+            #admin-horarios .admin-horarios-estado.inactivo{border-color:#7b3f46;color:#ffc1c1;}
+            #admin-horarios .admin-horarios-estado.completo{border-color:#7c6540;color:#ffdfb8;}
+            #admin-horarios .admin-horarios-actions{display:flex;gap:8px;}
+            #admin-horarios .admin-horarios-actions .admin-horario-toggle-lite{opacity:.86;font-size:.86rem;padding:6px 10px;filter:saturate(.75);}
+            #admin-horarios .admin-horarios-oculto{display:none !important;}
+            #admin-horarios input[type='radio']{accent-color:#D81F26;}
+            #admin-horarios input[type='text'],#admin-horarios input[type='search'],#admin-horarios input[type='date'],#admin-horarios input[type='number'],#admin-horarios select,#admin-horarios textarea{background:#17181b;color:#f3f3f3;border:1px solid #37373b;}
+            #admin-horarios input[type='text']:focus,#admin-horarios input[type='search']:focus,#admin-horarios input[type='date']:focus,#admin-horarios input[type='number']:focus,#admin-horarios select:focus,#admin-horarios textarea:focus{outline:none;border-color:#D81F26;box-shadow:0 0 0 3px rgba(216,31,38,.16);} 
+            #admin-horarios .boton.boton-principal{background:linear-gradient(110deg,#C91E2A,#A31723);border-color:#C83B46;color:#fff;}
+            @media (max-width:900px){#admin-horarios .admin-horarios-cal-layout{grid-template-columns:1fr;}#admin-horarios .admin-horarios-dia-panel{max-height:none;}}
+            @media (max-width:640px){#admin-horarios .admin-horarios-dia-head{flex-direction:column;align-items:flex-start;}#admin-horarios .admin-horarios-dia-head-actions{width:100%;justify-content:flex-start;}}
+              #admin-horarios-crear-modal{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;padding:16px;}
+              #admin-horarios-crear-modal[hidden]{display:none !important;}
+              #admin-horarios-crear-modal .admin-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.62);}
+              #admin-horarios-crear-modal .admin-modal-panel{position:relative;width:min(980px,100%);max-height:92vh;background:rgba(18,19,22,.84);border:1px solid #2f2f33;border-radius:12px;display:flex;flex-direction:column;}
+              #admin-horarios-crear-modal .admin-modal-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #2b2b2f;}
+              #admin-horarios-crear-modal .admin-modal-header h3{margin:0;color:#fff;font-size:1.05rem;}
+              #admin-horarios-crear-modal .admin-modal-body{padding:12px 16px 16px;overflow:auto;}
+              #admin-horarios-crear-modal #admin-horarios-form .admin-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+              #admin-horarios-crear-modal #admin-horarios-form .admin-form-field-full{grid-column:1 / -1;}
+              #admin-horarios-crear-modal #admin-horarios-form .admin-form-actions{position:sticky;bottom:-16px;background:rgba(18,19,22,.78);padding:12px 0 4px;margin-top:8px;z-index:2;}
+              @media (max-width:760px){#admin-horarios-crear-modal #admin-horarios-form .admin-form-grid{grid-template-columns:1fr;}}
+              @media (max-width:430px){#admin-horarios .admin-horarios-cal-day{min-height:56px;padding:6px 2px;}#admin-horarios .admin-horarios-cal-day .num{font-size:.85rem;}#admin-horarios .admin-horarios-cal-day .count{font-size:.66rem;}}
+            </style>
+          <header class='admin-modulo-header admin-seccion-header'>
+            <div class='admin-seccion-header-main'>
+              <span class='admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-calendar'></use></svg>
+              </span>
+              <div class='admin-seccion-header-text'>
+                <h2>Gestión de horarios</h2>
+                <p>Administra sesiones por servicio con capacidad máxima y seguimiento de cupos.</p>
+              </div>
+            </div>
+          </header>
+
+          <form id='admin-horarios-form' class='admin-servicios-form' novalidate>
+            <input type='hidden' id='horario-id' value='0'>
+
+            <div class='admin-form-grid'>
+              <div class='admin-form-field admin-form-field-full'>
+                <label for='horario-servicio'>Servicio o actividad</label>
+                <select id='horario-servicio' required>
+                  <option value=''>Selecciona un servicio</option>
+                </select>
+              </div>
+            </div>
+
+            <div class='admin-horarios-modo-switch' role='radiogroup' aria-label='Modalidad de registro de horarios'>
+              <label><input type='radio' name='horario-modo' value='INDIVIDUAL' checked> Fecha individual</label>
+              <label><input type='radio' name='horario-modo' value='RECURRENTE'> Programación recurrente</label>
+            </div>
+
+            <div id='admin-horarios-bloques' class='admin-horarios-bloques'>
+              <article class='admin-horario-bloque' data-bloque-indice='0'>
+                <header class='admin-horario-bloque-header'>
+                  <h4>Horario 1</h4>
+                  <span class='admin-horario-dia' id='horario-dia-semana'>Sin fecha</span>
+                </header>
+
+                <div class='admin-form-grid'>
+                  <div class='admin-form-field'>
+                    <label for='horario-fecha'>Fecha</label>
+                    <input id='horario-fecha' type='date' required>
+                  </div>
+
+                  <div class='admin-form-field'>
+                    <label for='horario-hora-inicio'>Hora de inicio</label>
+                    <input id='horario-hora-inicio' type='time' required>
+                  </div>
+
+                  <div class='admin-form-field'>
+                    <label for='horario-hora-fin'>Hora de finalización</label>
+                    <input id='horario-hora-fin' type='time' required>
+                  </div>
+
+                  <div class='admin-form-field'>
+                    <label for='horario-capacidad'>Capacidad máxima</label>
+                    <input id='horario-capacidad' type='number' min='1' step='1' required>
+                  </div>
+
+                  <div class='admin-form-field'>
+                    <label for='horario-instructor'>Instructor</label>
+                    <input id='horario-instructor' type='text' maxlength='160' placeholder='Opcional'>
+                  </div>
+
+                  <div class='admin-form-field'>
+                    <label for='horario-activo'>Estado</label>
+                    <select id='horario-activo'>
+                      <option value='1'>Activo</option>
+                      <option value='0'>Inactivo</option>
+                    </select>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <section id='admin-horarios-recurrente' class='admin-horarios-recurrente' hidden>
+              <div class='admin-form-grid'>
+                <div class='admin-form-field'>
+                  <label for='horario-rec-fecha-inicio'>Fecha de inicio</label>
+                  <input id='horario-rec-fecha-inicio' type='date'>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='horario-rec-fecha-fin'>Fecha de finalización</label>
+                  <input id='horario-rec-fecha-fin' type='date'>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='horario-rec-hora-inicio'>Hora de inicio</label>
+                  <input id='horario-rec-hora-inicio' type='time'>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='horario-rec-hora-fin'>Hora de finalización</label>
+                  <input id='horario-rec-hora-fin' type='time'>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='horario-rec-capacidad'>Capacidad máxima</label>
+                  <input id='horario-rec-capacidad' type='number' min='1' step='1'>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='horario-rec-instructor'>Instructor</label>
+                  <input id='horario-rec-instructor' type='text' maxlength='160' placeholder='Opcional'>
+                </div>
+                <div class='admin-form-field admin-form-field-full'>
+                  <label for='horario-rec-activo'>Estado</label>
+                  <select id='horario-rec-activo'>
+                    <option value='1'>Activo</option>
+                    <option value='0'>Inactivo</option>
+                  </select>
+                </div>
+              </div>
+
+              <fieldset class='admin-horarios-dias'>
+                <legend>Días de la semana</legend>
+                <label><input type='checkbox' value='1'>Lunes</label>
+                <label><input type='checkbox' value='2'>Martes</label>
+                <label><input type='checkbox' value='3'>Miércoles</label>
+                <label><input type='checkbox' value='4'>Jueves</label>
+                <label><input type='checkbox' value='5'>Viernes</label>
+                <label><input type='checkbox' value='6'>Sábado</label>
+                <label><input type='checkbox' value='7'>Domingo</label>
+              </fieldset>
+
+              <div class='admin-horarios-preview'>
+                <div class='admin-form-actions'>
+                  <button type='button' class='boton boton-secundario' id='horario-rec-preview'>Ver vista previa</button>
+                  <span id='horario-rec-total' class='admin-horario-dia'>0 sesiones</span>
+                </div>
+                <div id='horario-rec-fechas' class='admin-horarios-preview-lista' aria-live='polite'></div>
+              </div>
+            </section>
+
+            <div class='admin-form-actions' id='admin-horarios-acciones-individual'>
+              <button id='horario-agregar-bloque' type='button' class='boton boton-secundario'>+ Agregar horario</button>
+              <button id='horario-guardar' type='submit' class='boton boton-principal'>Guardar horarios</button>
+              <button id='horario-limpiar' type='button' class='boton boton-secundario'>Limpiar</button>
+            </div>
+
+            <div class='admin-form-actions' id='admin-horarios-acciones-recurrente' hidden>
+              <button type='button' class='boton boton-secundario' id='horario-rec-preview-accion'>Ver vista previa</button>
+              <button id='horario-guardar-recurrente' type='submit' class='boton boton-principal'>Guardar programación</button>
+              <button id='horario-limpiar-recurrente' type='button' class='boton boton-secundario'>Limpiar</button>
+            </div>
+
+            <p class='mensaje-formulario' id='admin-horarios-mensaje' aria-live='polite'></p>
+          </form>
+
+          <div class='admin-servicios-existentes'>
+            <header class='admin-submodulo-header'>
+              <h3>Horarios registrados</h3>
+              <p>Consulta disponibilidad, reservas confirmadas y cupos restantes por sesión.</p>
+            </header>
+
+            <div class='admin-buscador admin-horarios-filtros'>
+              <select id='horario-filtro-servicio'>
+                <option value=''>Todos los servicios</option>
+              </select>
+              <input id='horario-filtro-fecha' type='date' aria-label='Filtrar por fecha'>
+              <button type='button' class='boton boton-secundario' id='horario-filtrar'>Filtrar</button>
+            </div>
+
+            <div class='admin-servicios-list-wrap'>
+              <table class='admin-servicios-lista admin-horarios-lista' aria-label='Listado de horarios registrados'>
+                <thead>
+                  <tr>
+                    <th>Servicio</th>
+                    <th>Fecha</th>
+                    <th>Horario</th>
+                    <th>Capacidad</th>
+                    <th>Confirmadas</th>
+                    <th>Cupos</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id='admin-horarios-lista-body'>
+                  <tr><td colspan='8'>Cargando horarios...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class='admin-pagination' id='admin-horarios-listado-pagination-wrap' hidden>
+              <span id='admin-horarios-listado-pagination-summary'>Mostrando 0–0 de 0</span>
+              <div class='admin-pagination-nav'>
+                <button type='button' class='boton boton-secundario boton-pequeno' id='admin-horarios-listado-pagination-prev'>Anterior</button>
+                <span id='admin-horarios-listado-pagination-pageinfo'>Página 1 de 1</span>
+                <button type='button' class='boton boton-secundario boton-pequeno' id='admin-horarios-listado-pagination-next'>Siguiente</button>
+              </div>
+            </div>
+
+            <p class='mensaje-formulario' id='admin-horarios-lista-mensaje' aria-live='polite'></p>
+          </div>
+
+          <div class='admin-modal' id='admin-horario-editar-modal' hidden aria-hidden='true'>
+            <div class='admin-modal-panel admin-horario-editar-modal-panel' role='dialog' aria-modal='true' aria-labelledby='admin-horario-editar-titulo'>
+              <header class='admin-modal-header'>
+                <h3 id='admin-horario-editar-titulo'>Editar horario</h3>
+                <button type='button' class='admin-modal-close' id='admin-horario-editar-cerrar' aria-label='Cerrar'>×</button>
+              </header>
+
+              <div class='admin-modal-body'>
+                <form id='admin-horario-editar-form' class='admin-servicios-form' novalidate>
+                  <input id='admin-horario-editar-id' type='hidden' value='0'>
+
+                  <div class='admin-form-grid'>
+                    <div class='admin-form-field admin-form-field-full'>
+                      <label for='admin-horario-editar-servicio'>Servicio o actividad</label>
+                      <select id='admin-horario-editar-servicio' required>
+                        <option value=''>Selecciona un servicio</option>
+                      </select>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='admin-horario-editar-fecha'>Fecha</label>
+                      <input id='admin-horario-editar-fecha' type='date' required>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='admin-horario-editar-hora-inicio'>Hora de inicio</label>
+                      <input id='admin-horario-editar-hora-inicio' type='time' required>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='admin-horario-editar-hora-fin'>Hora de finalización</label>
+                      <input id='admin-horario-editar-hora-fin' type='time' required>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='admin-horario-editar-capacidad'>Capacidad máxima</label>
+                      <input id='admin-horario-editar-capacidad' type='number' min='1' step='1' required>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='admin-horario-editar-instructor'>Instructor</label>
+                      <input id='admin-horario-editar-instructor' type='text' maxlength='160' placeholder='Opcional'>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='admin-horario-editar-activo'>Estado</label>
+                      <select id='admin-horario-editar-activo'>
+                        <option value='1'>Activo</option>
+                        <option value='0'>Inactivo</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <p class='mensaje-formulario' id='admin-horario-editar-mensaje' aria-live='polite'></p>
+
+                  <div class='admin-modal-footer'>
+                    <button type='button' class='boton boton-secundario' id='admin-horario-editar-cancelar'>Cancelar</button>
+                    <button type='submit' class='boton boton-principal' id='admin-horario-editar-guardar'>Guardar cambios</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class='admin-seccion admin-modulo' id='admin-reservas' hidden>
+          <header class='admin-modulo-header admin-seccion-header'>
+            <div class='admin-seccion-header-main'>
+              <span class='admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-calendar'></use></svg>
+              </span>
+              <div class='admin-seccion-header-text'>
+                <h2>Reservas</h2>
+                <p>Consulta reservas registradas, incluidas operaciones promocionales 2x1.</p>
+              </div>
+            </div>
+          </header>
+
+          <div class='admin-users-summary'>
+            <article class='admin-users-stat'>
+              <h3>Total</h3>
+              <p id='admin-reservas-total'>0</p>
+            </article>
+            <article class='admin-users-stat'>
+              <h3>Confirmadas</h3>
+              <p id='admin-reservas-confirmadas'>0</p>
+            </article>
+            <article class='admin-users-stat'>
+              <h3>Pendientes</h3>
+              <p id='admin-reservas-pendientes'>0</p>
+            </article>
+            <article class='admin-users-stat'>
+              <h3>Canceladas</h3>
+              <p id='admin-reservas-canceladas'>0</p>
+            </article>
+          </div>
+
+          <form class='admin-buscador admin-reservas-filtros' id='admin-reservas-filtros-form'>
+            <input id='admin-reservas-filtro-cliente' type='search' placeholder='Cliente (nombre/correo)' autocomplete='off'>
+            <input id='admin-reservas-filtro-servicio' type='search' placeholder='Servicio' autocomplete='off'>
+            <input id='admin-reservas-filtro-fecha' type='date' aria-label='Filtrar por fecha'>
+            <select id='admin-reservas-filtro-estado' aria-label='Filtrar por estado'>
+              <option value=''>Todos los estados</option>
+              <option value='CONFIRMADA'>Confirmada</option>
+              <option value='PENDIENTE'>Pendiente</option>
+              <option value='CANCELADA'>Cancelada</option>
+            </select>
+            <div class='admin-form-actions'>
+              <button type='submit' class='boton boton-principal'>Filtrar</button>
+              <button type='button' class='boton boton-secundario' id='admin-reservas-limpiar'>Limpiar</button>
+            </div>
+          </form>
+
+          <div class='admin-users-table-wrap'>
+            <table class='admin-users-table admin-reservas-lista' aria-label='Listado de reservas registradas'>
+              <thead>
+                <tr>
+                  <th>Reserva</th>
+                  <th>Cliente</th>
+                  <th>Servicio</th>
+                  <th>Sesión</th>
+                  <th>Tipo</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id='admin-reservas-lista-body'>
+                <tr><td colspan='6'>Cargando reservas...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class='admin-pagination' id='admin-reservas-pagination-wrap' hidden>
+            <span id='admin-reservas-pagination-summary'>Mostrando 0–0 de 0</span>
+            <div class='admin-pagination-nav'>
+              <button type='button' class='boton boton-secundario boton-pequeno' id='admin-reservas-pagination-prev'>Anterior</button>
+              <span id='admin-reservas-pagination-pageinfo'>Página 1 de 1</span>
+              <button type='button' class='boton boton-secundario boton-pequeno' id='admin-reservas-pagination-next'>Siguiente</button>
+            </div>
+          </div>
+
+          <p class='mensaje-formulario' id='admin-reservas-lista-mensaje' aria-live='polite'></p>
+        </section>
+
+        <section class='admin-seccion admin-modulo' id='admin-rutinas' hidden>
+          <header class='admin-modulo-header admin-seccion-header'>
+            <div class='admin-seccion-header-main'>
+              <span class='admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-dumbbell'></use></svg>
+              </span>
+              <div class='admin-seccion-header-text'>
+                <h2>Gestión de rutinas</h2>
+                <p>Crea, actualiza y asigna planes de entrenamiento.</p>
+              </div>
+            </div>
+          </header>
+
+          <div class='admin-form-grid admin-rutinas-filtros' id='admin-rutinas-filtros'>
+            <div class='admin-form-field'>
+              <label for='admin-rutinas-filtro-nombre'>Búsqueda</label>
+              <input id='admin-rutinas-filtro-nombre' type='search' placeholder='Buscar por nombre'>
+            </div>
+            <div class='admin-form-field'>
+              <label for='admin-rutinas-filtro-nivel'>Nivel</label>
+              <select id='admin-rutinas-filtro-nivel'>
+                <option value=''>Todos</option>
+                <option value='Principiante'>Principiante</option>
+                <option value='Intermedio'>Intermedio</option>
+                <option value='Avanzado'>Avanzado</option>
+              </select>
+            </div>
+            <div class='admin-form-field'>
+              <label for='admin-rutinas-filtro-estado'>Estado</label>
+              <select id='admin-rutinas-filtro-estado'>
+                <option value=''>Todos</option>
+                <option value='activa'>Activa</option>
+                <option value='inactiva'>Inactiva</option>
+              </select>
+            </div>
+            <div class='admin-rutinas-accion-field'>
+              <button type='button' class='boton boton-secundario' id='admin-rutina-ia-toggle' aria-controls='admin-rutina-ia-modal' aria-expanded='false'>Generar borrador con IA</button>
+              <button type='button' class='boton boton-principal' id='admin-rutina-crear-toggle' aria-controls='admin-rutina-editor' aria-expanded='false'>＋ Agregar rutina</button>
+            </div>
+          </div>
+
+          <div class='admin-users-table-wrap admin-rutinas-list-wrap'>
+            <table class='admin-users-table admin-rutinas-lista' aria-label='Listado de rutinas'>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Objetivo</th>
+                  <th>Nivel</th>
+                  <th>Duración</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id='admin-rutinas-lista-body'>
+                <tr><td colspan='6'>Cargando rutinas...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class='admin-pagination' id='admin-rutinas-pagination-wrap' hidden>
+            <span id='admin-rutinas-pagination-summary'>Mostrando 0–0 de 0</span>
+            <div class='admin-pagination-nav'>
+              <button type='button' class='boton boton-secundario boton-pequeno' id='admin-rutinas-pagination-prev'>Anterior</button>
+              <span id='admin-rutinas-pagination-pageinfo'>Página 1 de 1</span>
+              <button type='button' class='boton boton-secundario boton-pequeno' id='admin-rutinas-pagination-next'>Siguiente</button>
+            </div>
+          </div>
+
+          <p class='mensaje-formulario' id='admin-rutinas-mensaje' aria-live='polite'></p>
+
+          <div id='admin-rutina-editor' class='kr' hidden></div>
+
+          <div class='admin-modal' id='admin-rutina-asignar-modal' hidden aria-hidden='true'>
+            <div class='admin-modal-backdrop' data-admin-rutina-asignar-cerrar='1'></div>
+            <div class='admin-modal-panel' role='dialog' aria-modal='true' aria-labelledby='admin-rutina-asignar-titulo'>
+              <div class='admin-modal-header'>
+                <h3 id='admin-rutina-asignar-titulo'>Asignar rutina</h3>
+                <button type='button' class='admin-modal-close' id='admin-rutina-asignar-cerrar' aria-label='Cerrar'>×</button>
+              </div>
+              <div class='admin-modal-body'>
+                <form id='admin-rutina-asignar-form' class='admin-servicios-form' novalidate>
+                  <div class='admin-form-grid'>
+                    <div class='admin-form-field'>
+                      <label for='admin-rutina-asignar-usuario-buscar'>Buscar cliente</label>
+                      <input id='admin-rutina-asignar-usuario-buscar' type='search' placeholder='Nombre o correo'>
+                    </div>
+                    <div class='admin-form-field'>
+                      <label for='admin-rutina-asignar-usuario'>Cliente</label>
+                      <select id='admin-rutina-asignar-usuario' required>
+                        <option value=''>Selecciona un cliente</option>
+                      </select>
+                      <p class='mensaje-formulario admin-error-campo' id='admin-rutina-asignar-usuario-error' aria-live='polite'></p>
+                    </div>
+                    <div class='admin-form-field'>
+                      <label for='admin-rutina-asignar-rutina'>Rutina activa</label>
+                      <select id='admin-rutina-asignar-rutina' required>
+                        <option value=''>Selecciona una rutina</option>
+                      </select>
+                      <p class='mensaje-formulario admin-error-campo' id='admin-rutina-asignar-rutina-error' aria-live='polite'></p>
+                    </div>
+                    <div class='admin-form-field admin-form-field-full'>
+                      <p class='admin-rutina-resumen' id='admin-rutina-asignar-resumen'>Selecciona cliente y rutina para ver el resumen.</p>
+                    </div>
+                  </div>
+                  <p class='mensaje-formulario' id='admin-rutina-asignar-mensaje' aria-live='polite'></p>
+                  <div class='admin-form-actions'>
+                    <button type='button' class='boton boton-secundario' id='admin-rutina-asignar-cancelar'>Cancelar</button>
+                    <button type='submit' class='boton boton-principal' id='admin-rutina-asignar-confirmar'>Confirmar asignación</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class='admin-modal' id='admin-rutina-ia-modal' hidden aria-hidden='true'>
+            <div class='admin-modal-backdrop' data-admin-rutina-ia-cerrar='1'></div>
+            <div class='admin-modal-panel' role='dialog' aria-modal='true' aria-labelledby='admin-rutina-ia-titulo'>
+              <div class='admin-modal-header'>
+                <h3 id='admin-rutina-ia-titulo'>Generar borrador con IA</h3>
+                <button type='button' class='admin-modal-close' id='admin-rutina-ia-cerrar' aria-label='Cerrar'>×</button>
+              </div>
+              <div class='admin-modal-body'>
+                <form id='admin-rutina-ia-form' class='admin-servicios-form' novalidate>
+                  <div class='admin-form-grid'>
+                    <div class='admin-form-field'>
+                      <label for='admin-rutina-ia-objetivo'>Objetivo</label>
+                      <input id='admin-rutina-ia-objetivo' type='text' maxlength='200' required>
+                      <p class='mensaje-formulario admin-error-campo' id='admin-rutina-ia-objetivo-error' aria-live='polite'></p>
+                    </div>
+                    <div class='admin-form-field'>
+                      <label for='admin-rutina-ia-nivel'>Nivel</label>
+                      <select id='admin-rutina-ia-nivel' required>
+                        <option value=''>Selecciona un nivel</option>
+                        <option value='Principiante'>Principiante</option>
+                        <option value='Intermedio'>Intermedio</option>
+                        <option value='Avanzado'>Avanzado</option>
+                      </select>
+                      <p class='mensaje-formulario admin-error-campo' id='admin-rutina-ia-nivel-error' aria-live='polite'></p>
+                    </div>
+                    <div class='admin-form-field'>
+                      <label for='admin-rutina-ia-dias'>Días por semana</label>
+                      <input id='admin-rutina-ia-dias' type='number' min='1' max='7' step='1' required>
+                      <p class='mensaje-formulario admin-error-campo' id='admin-rutina-ia-dias-error' aria-live='polite'></p>
+                    </div>
+                    <div class='admin-form-field'>
+                      <label for='admin-rutina-ia-minutos'>Minutos por sesión</label>
+                      <input id='admin-rutina-ia-minutos' type='number' min='10' max='180' step='1' required>
+                      <p class='mensaje-formulario admin-error-campo' id='admin-rutina-ia-minutos-error' aria-live='polite'></p>
+                    </div>
+                    <div class='admin-form-field admin-form-field-full'>
+                      <label for='admin-rutina-ia-equipo'>Equipo disponible</label>
+                      <textarea id='admin-rutina-ia-equipo' rows='3' maxlength='500' placeholder='Ejemplo: mancuernas, barra olímpica, bandas elásticas'></textarea>
+                    </div>
+                  </div>
+                  <p class='mensaje-formulario' id='admin-rutina-ia-mensaje' aria-live='polite'></p>
+                  <div class='admin-form-actions'>
+                    <button type='button' class='boton boton-secundario' id='admin-rutina-ia-cancelar'>Cancelar</button>
+                    <button type='submit' class='boton boton-principal' id='admin-rutina-ia-generar'>Generar borrador</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class='admin-seccion admin-modulo' id='admin-promociones' hidden>
+          <header class='admin-modulo-header admin-seccion-header'>
+            <div class='admin-seccion-header-main'>
+              <span class='admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-tag'></use></svg>
+              </span>
+              <div class='admin-seccion-header-text'>
+                <h2>Gestión de promociones</h2>
+                <p>Gestiona promociones vigentes, incluyendo tipo 2x1 por servicio.</p>
+              </div>
+            </div>
+          </header>
+
+          <div class='admin-servicios-existentes'>
+            <div class='admin-form-grid admin-promociones-filtros' id='admin-promociones-filtros'>
+              <div class='admin-form-field admin-promociones-filtro-busqueda-field'>
+                <label for='admin-promociones-filtro-busqueda'>Búsqueda</label>
+                <input id='admin-promociones-filtro-busqueda' type='search' placeholder='Buscar por nombre'>
+              </div>
+              <div class='admin-form-field admin-promociones-filtro-servicio-field'>
+                <label for='admin-promociones-filtro-servicio'>Servicio</label>
+                <select id='admin-promociones-filtro-servicio'>
+                  <option value=''>Todos los servicios</option>
+                </select>
+              </div>
+              <div class='admin-form-field'>
+                <label for='admin-promociones-filtro-tipo'>Tipo</label>
+                <select id='admin-promociones-filtro-tipo'>
+                  <option value=''>Todos</option>
+                  <option value='PORCENTAJE'>Porcentaje</option>
+                  <option value='DOS_POR_UNO'>2x1</option>
+                  <option value='CONSULTA'>Solo consulta</option>
+                </select>
+              </div>
+              <div class='admin-form-field'>
+                <label for='admin-promociones-filtro-estado'>Estado</label>
+                <select id='admin-promociones-filtro-estado'>
+                  <option value=''>Todos</option>
+                  <option value='activa'>Activa</option>
+                  <option value='inactiva'>Inactiva</option>
+                </select>
+              </div>
+              <div class='admin-promociones-accion-field'>
+                <button type='button' class='boton boton-principal' id='admin-promocion-crear-toggle' aria-controls='admin-promocion-modal' aria-expanded='false'>＋ Agregar promoción</button>
+              </div>
+            </div>
+
+            <header class='admin-submodulo-header'>
+              <h3>Promociones registradas</h3>
+              <p>Consulta y edita promociones sin alterar otros módulos.</p>
+            </header>
+
+            <div class='admin-servicios-list-wrap'>
+              <table class='admin-servicios-lista' aria-label='Listado de promociones'>
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Servicio</th>
+                    <th>Tipo</th>
+                    <th>Beneficio</th>
+                    <th>Vigencia</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody id='admin-promociones-lista-body'>
+                  <tr><td colspan='7'>Cargando promociones...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class='admin-pagination' id='admin-promociones-pagination-wrap' hidden>
+              <span id='admin-promociones-pagination-summary'>Mostrando 0–0 de 0</span>
+              <div class='admin-pagination-nav'>
+                <button type='button' class='boton boton-secundario boton-pequeno' id='admin-promociones-pagination-prev'>Anterior</button>
+                <span id='admin-promociones-pagination-pageinfo'>Página 1 de 1</span>
+                <button type='button' class='boton boton-secundario boton-pequeno' id='admin-promociones-pagination-next'>Siguiente</button>
+              </div>
+            </div>
+
+            <p class='mensaje-formulario' id='admin-promociones-lista-mensaje' aria-live='polite'></p>
+            <button type='button' class='boton boton-secundario boton-pequeno' id='admin-promociones-reintentar' hidden>Reintentar</button>
+          </div>
+
+          <div class='admin-modal' id='admin-promocion-modal' hidden aria-hidden='true'>
+            <div class='admin-modal-backdrop' data-admin-promocion-modal-cerrar='1'></div>
+            <div class='admin-modal-panel' role='dialog' aria-modal='true' aria-labelledby='admin-promocion-modal-titulo'>
+              <div class='admin-modal-header'>
+                <h3 id='admin-promocion-modal-titulo'>Agregar promoción</h3>
+                <button type='button' class='admin-modal-close' id='admin-promocion-modal-cerrar' aria-label='Cerrar'>×</button>
+              </div>
+
+              <div class='admin-modal-body'>
+                <form id='admin-promociones-form' class='admin-servicios-form' novalidate>
+                  <input type='hidden' id='promocion-id' value='0'>
+                  <div class='admin-form-grid'>
+                    <div class='admin-form-field'>
+                      <label for='promocion-nombre'>Nombre</label>
+                      <input id='promocion-nombre' type='text' maxlength='150' required>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='promocion-servicio'>Servicio asociado</label>
+                      <select id='promocion-servicio' required>
+                        <option value=''>Selecciona un servicio</option>
+                      </select>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='promocion-tipo'>Tipo de promoción</label>
+                      <select id='promocion-tipo' required>
+                        <option value='PORCENTAJE'>Porcentaje</option>
+                        <option value='DOS_POR_UNO'>2x1</option>
+                        <option value='CONSULTA'>Solo consulta</option>
+                      </select>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='promocion-porcentaje'>Descuento (%)</label>
+                      <input id='promocion-porcentaje' type='number' min='0' max='100' step='0.01' value='0'>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='promocion-cantidad-compra'>Cantidad compra</label>
+                      <input id='promocion-cantidad-compra' type='number' min='1' step='1' value='1'>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='promocion-cantidad-entrega'>Cantidad entrega</label>
+                      <input id='promocion-cantidad-entrega' type='number' min='1' step='1' value='2'>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='promocion-fecha-inicio'>Fecha inicio</label>
+                      <input id='promocion-fecha-inicio' type='date' required>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='promocion-fecha-fin'>Fecha fin</label>
+                      <input id='promocion-fecha-fin' type='date' required>
+                    </div>
+
+                    <div class='admin-form-field'>
+                      <label for='promocion-estado'>Estado</label>
+                      <select id='promocion-estado'>
+                        <option value='1'>Activa</option>
+                        <option value='0'>Inactiva</option>
+                      </select>
+                    </div>
+
+                    <div class='admin-form-field admin-form-field-full'>
+                      <label for='promocion-descripcion'>Descripción</label>
+                      <textarea id='promocion-descripcion' rows='4' maxlength='500' required></textarea>
+                    </div>
+
+                    <div class='admin-form-field admin-form-field-full'>
+                      <label for='promocion-imagen-input'>Imagen de la promoción</label>
+                      <input id='promocion-imagen-input' type='file' accept='.jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp' hidden>
+                      <div class='admin-promocion-imagen-actions'>
+                        <button type='button' class='boton boton-secundario' id='promocion-imagen-seleccionar'>Seleccionar imagen</button>
+                      </div>
+                      <figure class='admin-promocion-imagen-preview' id='promocion-imagen-preview-wrap' hidden>
+                        <img id='promocion-imagen-preview-img' alt='Vista previa de imagen de la promoción'>
+                        <span id='promocion-imagen-preview-empty'>Sin imagen</span>
+                      </figure>
+                      <p class='admin-promocion-imagen-ayuda'>Formatos permitidos: JPG, PNG y WebP. Tamaño máximo: 5 MB.</p>
+                    </div>
+                  </div>
+
+                  <div class='admin-form-actions'>
+                    <button id='promocion-guardar' type='submit' class='boton boton-principal'>Guardar promoción</button>
+                    <button id='promocion-limpiar' type='button' class='boton boton-secundario'>Limpiar</button>
+                  </div>
+
+                  <p class='mensaje-formulario' id='admin-promociones-mensaje' aria-live='polite'></p>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class='admin-modal' id='admin-promocion-preview-modal' hidden aria-hidden='true'>
+            <div class='admin-modal-backdrop' data-admin-promocion-preview-modal-cerrar='1'></div>
+            <div class='admin-modal-panel' role='dialog' aria-modal='true' aria-labelledby='admin-promocion-preview-titulo'>
+              <div class='admin-modal-header'>
+                <h3 id='admin-promocion-preview-titulo'>Vista previa de promoción</h3>
+                <button type='button' class='admin-modal-close' id='admin-promocion-preview-modal-cerrar' aria-label='Cerrar'>×</button>
+              </div>
+              <div class='admin-modal-body'>
+                <div id='admin-promocion-preview-contenido'></div>
+              </div>
+              <div class='admin-modal-footer'>
+                <button type='button' class='boton boton-secundario' id='admin-promocion-preview-cerrar'>Cerrar</button>
+                <button type='button' class='boton boton-principal' id='admin-promocion-preview-editar'>Editar promoción</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class='admin-seccion admin-modulo' id='admin-consultas' hidden>
+          <header class='admin-modulo-header admin-seccion-header'>
+            <div class='admin-seccion-header-main'>
+              <span class='admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-chat'></use></svg>
+              </span>
+              <div class='admin-seccion-header-text'>
+                <h2>Consultas</h2>
+                <p>Revisa y responde los mensajes recibidos desde Contacto.</p>
+              </div>
+            </div>
+          </header>
+          <div class='kr' id='admin-consultas-content'></div>
+        </section>
+
+        <section class='admin-seccion admin-modulo' id='admin-reportes' hidden>
+          <header class='admin-reportes-hero admin-seccion-header admin-seccion-header-con-accion'>
+            <div class='admin-reportes-hero-main admin-seccion-header-main'>
+              <span class='admin-reportes-hero-icono admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-chart'></use></svg>
+              </span>
+              <div>
+                <h2>Reportes</h2>
+                <p>Analiza la información de KFitness y facilita el seguimiento de las operaciones.</p>
+              </div>
+            </div>
+          </header>
+          <div class='kr' id='admin-reportes-extra'></div>
+
+          <section class='admin-reportes-kpis' id='admin-reportes-resumen' aria-live='polite'>
+            <article class='admin-reportes-kpi'>
+              <div class='admin-reportes-kpi-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-grid'></use></svg>
+              </div>
+              <p class='admin-reportes-kpi-etiqueta' id='admin-reportes-kpi-etiqueta-1'>Total de servicios</p>
+              <p class='admin-reportes-kpi-valor' id='admin-reportes-kpi-total'>0</p>
+            </article>
+            <article class='admin-reportes-kpi'>
+              <div class='admin-reportes-kpi-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-tag'></use></svg>
+              </div>
+              <p class='admin-reportes-kpi-etiqueta' id='admin-reportes-kpi-etiqueta-2'>Servicios activos</p>
+              <p class='admin-reportes-kpi-valor' id='admin-reportes-kpi-activos'>0</p>
+            </article>
+            <article class='admin-reportes-kpi'>
+              <div class='admin-reportes-kpi-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-info'></use></svg>
+              </div>
+              <p class='admin-reportes-kpi-etiqueta' id='admin-reportes-kpi-etiqueta-3'>Servicios inactivos</p>
+              <p class='admin-reportes-kpi-valor' id='admin-reportes-kpi-inactivos'>0</p>
+            </article>
+            <article class='admin-reportes-kpi'>
+              <div class='admin-reportes-kpi-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-chart'></use></svg>
+              </div>
+              <p class='admin-reportes-kpi-etiqueta' id='admin-reportes-kpi-etiqueta-4'>Categorías</p>
+              <p class='admin-reportes-kpi-valor' id='admin-reportes-kpi-categorias'>0</p>
+            </article>
+          </section>
+
+          <section class='admin-reportes-filtros-toggle-wrap'>
+            <div class='admin-form-field admin-reportes-tipo-field'>
+              <label for='admin-reportes-tipo'>Tipo de reporte</label>
+              <select id='admin-reportes-tipo' form='admin-reportes-form'>
+                <option value='servicios'>Servicios</option>
+                <option value='promociones'>Promociones</option>
+                <option value='reservas'>Reservas</option>
+                <option value='usuarios'>Usuarios</option>
+              </select>
+            </div>
+            <button class='boton boton-secundario admin-reportes-filtros-toggle' type='button' id='admin-reportes-filtros-toggle' aria-expanded='false' aria-controls='admin-reportes-filtros-panel'>
+              <svg class='admin-icon' viewBox='0 0 24 24' aria-hidden='true'><use href='#i-filter'></use></svg>
+              <span id='admin-reportes-filtros-toggle-texto'>Filtrar resultados</span>
+            </button>
+            <button class='boton boton-secundario admin-reportes-limpiar-rapido' type='button' id='admin-reportes-limpiar-rapido' hidden>Limpiar</button>
+          </section>
+
+          <section class='admin-reportes-filtros-card' id='admin-reportes-filtros-panel' hidden>
+            <header class='admin-reportes-filtros-header'>
+              <h3>Filtrar resultados</h3>
+            </header>
+            <form id='admin-reportes-form' class='admin-filtros admin-reportes-filtros' novalidate>
+              <div class='admin-reportes-filtros-extra' id='admin-reportes-filtros-servicios'>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-nombre'>Nombre</label>
+                  <input id='admin-reportes-filtro-nombre' type='text' maxlength='150' placeholder='Ej. Entrenamiento funcional'>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-categoria'>Categoría</label>
+                  <select id='admin-reportes-filtro-categoria'>
+                    <option value=''>Todas</option>
+                    <option value='Entrenamiento'>Entrenamiento</option>
+                    <option value='Asesoría'>Asesoría</option>
+                    <option value='Clases'>Clases</option>
+                  </select>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-estado'>Estado</label>
+                  <select id='admin-reportes-filtro-estado'>
+                    <option value=''>Todos</option>
+                    <option value='activo'>Activo</option>
+                    <option value='inactivo'>Inactivo</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class='admin-reportes-filtros-extra' id='admin-reportes-filtros-promociones' hidden>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-promocion-nombre'>Nombre de promoción</label>
+                  <input id='admin-reportes-filtro-promocion-nombre' type='text' maxlength='180' placeholder='Ej. Promo Verano'>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-promocion-estado'>Estado</label>
+                  <select id='admin-reportes-filtro-promocion-estado'>
+                    <option value=''>Todos</option>
+                    <option value='activo'>Activo</option>
+                    <option value='inactivo'>Inactivo</option>
+                  </select>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-promocion-vigencia'>Vigencia</label>
+                  <select id='admin-reportes-filtro-promocion-vigencia'>
+                    <option value=''>Todas</option>
+                    <option value='vigente'>Vigente</option>
+                    <option value='proxima'>Próxima</option>
+                    <option value='vencida'>Vencida</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class='admin-reportes-filtros-extra' id='admin-reportes-filtros-reservas' hidden>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-reserva-servicio'>Servicio</label>
+                  <input id='admin-reportes-filtro-reserva-servicio' type='text' maxlength='150' placeholder='Ej. Yoga'>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-reserva-estado'>Estado</label>
+                  <select id='admin-reportes-filtro-reserva-estado'>
+                    <option value=''>Todos</option>
+                    <option value='CONFIRMADA'>Confirmada</option>
+                    <option value='PENDIENTE'>Pendiente</option>
+                    <option value='CANCELADA'>Cancelada</option>
+                  </select>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-reserva-desde'>Fecha desde</label>
+                  <input id='admin-reportes-filtro-reserva-desde' type='date'>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-reserva-hasta'>Fecha hasta</label>
+                  <input id='admin-reportes-filtro-reserva-hasta' type='date'>
+                </div>
+              </div>
+
+              <div class='admin-reportes-filtros-extra' id='admin-reportes-filtros-usuarios' hidden>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-usuario-busqueda'>Nombre o correo</label>
+                  <input id='admin-reportes-filtro-usuario-busqueda' type='text' maxlength='160' placeholder='Ej. maria@correo.com'>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-usuario-rol'>Rol</label>
+                  <select id='admin-reportes-filtro-usuario-rol'>
+                    <option value=''>Todos</option>
+                  </select>
+                </div>
+                <div class='admin-form-field'>
+                  <label for='admin-reportes-filtro-usuario-estado'>Estado</label>
+                  <select id='admin-reportes-filtro-usuario-estado'>
+                    <option value=''>Todos</option>
+                    <option value='activo'>Activo</option>
+                    <option value='inactivo'>Inactivo</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class='admin-form-actions admin-reportes-acciones'>
+                <button class='boton boton-principal' type='submit' id='admin-reportes-generar'>Aplicar filtros</button>
+                <button class='boton boton-secundario' type='button' id='admin-reportes-limpiar'>Limpiar</button>
+              </div>
+            </form>
+          </section>
+
+          <section class='admin-reportes-listado'>
+            <header class='admin-reportes-listado-header'>
+              <h3>
+                <svg class='admin-icon' viewBox='0 0 24 24' aria-hidden='true'><use href='#i-grid'></use></svg>
+                <span id='admin-reportes-listado-titulo'>Listado de servicios</span>
+              </h3>
+              <div class='admin-reportes-listado-acciones'>
+                <p class='admin-reportes-total'>Registros: <strong id='admin-reportes-total-registros'>0</strong></p>
+                <button class='boton boton-secundario admin-reportes-exportar' type='button' id='admin-reportes-exportar' disabled>
+                  <svg class='admin-icon' viewBox='0 0 24 24' aria-hidden='true'><use href='#i-file-sheet'></use></svg>
+                  <span>Exportar a Excel</span>
+                </button>
+              </div>
+            </header>
+
+            <div class='admin-servicios-list-wrap admin-reportes-tabla-wrap'>
+              <table class='admin-servicios-lista admin-reportes-lista' aria-label='Reporte de servicios'>
+                <thead id='admin-reportes-lista-head'>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody id='admin-reportes-lista-body'>
+                  <tr><td colspan='4'>Selecciona Servicios y aplica los filtros.</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class='admin-pagination' id='admin-reportes-pagination-wrap' hidden>
+              <span id='admin-reportes-pagination-summary'>Mostrando 0–0 de 0</span>
+              <div class='admin-pagination-nav'>
+                <button type='button' class='boton boton-secundario boton-pequeno' id='admin-reportes-pagination-prev'>Anterior</button>
+                <span id='admin-reportes-pagination-pageinfo'>Página 1 de 1</span>
+                <button type='button' class='boton boton-secundario boton-pequeno' id='admin-reportes-pagination-next'>Siguiente</button>
+              </div>
+            </div>
+          </section>
+
+          <p class='mensaje-formulario' id='admin-reportes-mensaje' aria-live='polite'></p>
+        </section>
+
+        <section class='admin-seccion admin-modulo' id='admin-configuracion' hidden>
+          <header class='admin-modulo-header admin-seccion-header'>
+            <div class='admin-seccion-header-main'>
+              <span class='admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-gear'></use></svg>
+              </span>
+              <div class='admin-seccion-header-text'>
+                <h2>Configuración</h2>
+                <p>Actualiza la información del gimnasio y las reglas operativas.</p>
+              </div>
+            </div>
+          </header>
+          <div class='kr' id='admin-configuracion-content'></div>
+        </section>
+
+        <section class='admin-seccion admin-modulo' id='admin-seguridad' hidden>
+          <header class='admin-modulo-header admin-seccion-header'>
+            <div class='admin-seccion-header-main'>
+              <span class='admin-seccion-header-icono' aria-hidden='true'>
+                <svg class='admin-icon' viewBox='0 0 24 24'><use href='#i-shield'></use></svg>
+              </span>
+              <div class='admin-seccion-header-text'>
+                <h2>Seguridad y auditoría</h2>
+                <p>Consulta de eventos de auditoría registrados en la plataforma.</p>
+              </div>
+            </div>
+          </header>
+
+          <form id='admin-auditoria-filtros-form' class='admin-filtros admin-auditoria-filtros' novalidate>
+            <div class='admin-form-field'>
+              <label for='admin-auditoria-filtro-usuario'>Usuario o correo</label>
+              <input id='admin-auditoria-filtro-usuario' type='text' maxlength='120' placeholder='Usuario o correo'>
+            </div>
+            <div class='admin-form-field'>
+              <label for='admin-auditoria-filtro-accion'>Acción</label>
+              <select id='admin-auditoria-filtro-accion'>
+                <option value=''>Todas las acciones</option>
+              </select>
+            </div>
+            <div class='admin-form-field'>
+              <label for='admin-auditoria-filtro-desde'>Desde</label>
+              <input id='admin-auditoria-filtro-desde' type='date'>
+            </div>
+            <div class='admin-form-field'>
+              <label for='admin-auditoria-filtro-hasta'>Hasta</label>
+              <input id='admin-auditoria-filtro-hasta' type='date'>
+            </div>
+            <div class='admin-form-actions admin-auditoria-filtros-acciones'>
+              <button class='boton boton-principal' type='submit'>Buscar</button>
+              <button class='boton boton-secundario' type='button' id='admin-auditoria-limpiar'>Limpiar</button>
+            </div>
+          </form>
+
+          <div class='admin-tabla-wrap'>
+            <table class='admin-tabla admin-auditoria-lista'>
+              <thead>
+                <tr>
+                  <th>Fecha y hora</th>
+                  <th>Usuario</th>
+                  <th>Acción</th>
+                  <th>Módulo</th>
+                  <th>Detalle</th>
+                </tr>
+              </thead>
+              <tbody id='admin-auditoria-lista-body'>
+                <tr><td colspan='5'>Cargando eventos...</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class='admin-pagination' id='admin-auditoria-paginacion'>
+            <span id='admin-auditoria-paginacion-resumen'>Mostrando 0–0 de 0</span>
+            <div class='admin-pagination-nav'>
+              <button class='boton boton-secundario boton-pequeno' type='button' id='admin-auditoria-prev'>Anterior</button>
+              <span id='admin-auditoria-pagina-info'>Página 1 de 1</span>
+              <button class='boton boton-secundario boton-pequeno' type='button' id='admin-auditoria-next'>Siguiente</button>
+            </div>
+          </div>
+
+          <p class='mensaje-formulario' id='admin-auditoria-mensaje' aria-live='polite'></p>
+        </section>
+      </div>
+    </section>
+  </main>
+  <footer class='site-footer' aria-label='Pie de página'></footer>
+  <script src='https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js' defer></script>
+  <script src='js/app.js?v=20261112-5' defer></script>
+  <script src='js/autenticacion.js?v=20261002-1' defer></script>
+  <script src='js/rutinas-ui.js?v=20261112-5' defer></script>
+  <script src='js/admin.js?v=20261112-4' defer></script>
+  <script src='js/rutinas-admin.js?v=20261111-2' defer></script>
+  <script src='js/gestion-web.js?v=20261111-2' defer></script>
+  <script src='js/site-info.js?v=20261112-5' defer></script>
+  <script src='js/reportes-web.js?v=20261111-2' defer></script>
+</body>
+</html>

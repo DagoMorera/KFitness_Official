@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>KFitness - Horarios</title>
+  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
+  <style>
+    #horarios-cliente { --bg:#101114; --card:#17181c; --line:#2d3038; --txt:#f3f3f3; --muted:#c7c9cf; --wine:linear-gradient(110deg,#791923 0%,#42151b 65%,#241719 100%); --red:#c83b46; position:relative; isolation:isolate; overflow:hidden; }
+    #horarios-cliente::before { content:''; position:absolute; inset:0; z-index:-2; background-image:url('img/fondo-modales.jpg'); background-size:cover; background-position:center; filter:blur(5px); transform:scale(1.04); }
+    #horarios-cliente::after { content:''; position:absolute; inset:0; z-index:-1; background:linear-gradient(160deg,rgba(8,8,10,.78),rgba(12,11,14,.72) 52%,rgba(33,10,15,.74)); }
+    #horarios-cliente .horarios-tabs { display:inline-flex; border:1px solid var(--line); border-radius:11px; padding:4px; background:#141419; gap:4px; margin:0 0 14px; }
+    #horarios-cliente .horarios-tabs button { background:transparent; color:#cfd1d6; border-color:transparent; padding:8px 14px; }
+    #horarios-cliente .horarios-tabs button[aria-selected='true'] { background:var(--wine); border-color:var(--red); color:#fff; font-weight:700; }
+    #horarios-cliente .horarios-filtros { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:0 0 14px; }
+    #horarios-cliente .horarios-filtros select { min-width:220px; background:#17181c; color:#fff; border:1px solid #353a44; }
+    #horarios-cliente .horarios-layout { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr); gap:16px; align-items:start; }
+    #horarios-cliente .horarios-card { background:rgba(23,24,28,.78); border:1px solid var(--line); border-radius:12px; padding:14px; backdrop-filter:blur(1.5px); }
+    #horarios-cliente .cal-head { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px; }
+    #horarios-cliente .cal-head h2 { margin:0; font-size:1.06rem; color:#fff; }
+    #horarios-cliente .cal-grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px; }
+    #horarios-cliente .cal-weekday { text-align:center; font-size:.78rem; color:#b8bcc3; }
+    #horarios-cliente .cal-day { background:rgba(27,29,34,.82); border:1px solid #2f333c; border-radius:8px; color:#fff; min-height:70px; padding:6px 3px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; }
+    #horarios-cliente .cal-day.is-empty { background:transparent; border-color:transparent; pointer-events:none; }
+    #horarios-cliente .cal-day .num { font-weight:700; line-height:1; }
+    #horarios-cliente .cal-day .count { font-size:.74rem; color:#d5d7dc; display:flex; align-items:center; gap:5px; }
+    #horarios-cliente .count-dot, #horarios-cliente .today-dot { width:6px; height:6px; border-radius:999px; background:#d91f28; display:inline-block; }
+    #horarios-cliente .cal-day .today-dot { background:#ffa15b; }
+    #horarios-cliente .cal-day:hover { background:linear-gradient(110deg,rgba(121,25,35,.35),rgba(66,21,27,.15)); }
+    #horarios-cliente .cal-day[data-selected='1'] { background:var(--wine); border-color:var(--red); box-shadow:0 0 0 1px var(--red) inset; }
+    #horarios-cliente .agenda-head { display:flex; justify-content:space-between; align-items:flex-end; gap:8px; margin-bottom:10px; }
+    #horarios-cliente .agenda-head h3 { margin:0; color:#fff; font-size:1.04rem; }
+    #horarios-cliente .agenda-head p { margin:0; color:#cdd0d6; font-size:.88rem; }
+    #horarios-cliente .agenda-list { display:grid; gap:10px; max-height:560px; overflow:auto; }
+    #horarios-cliente .agenda-item { background:linear-gradient(90deg,rgba(216,31,38,.14),transparent 42%),rgba(25,27,32,.86); border:1px solid #2f333c; border-left:3px solid #a92836; border-radius:10px; padding:10px; }
+    #horarios-cliente .agenda-item h4 { margin:0 0 4px; color:#fff; font-size:1.01rem; }
+    #horarios-cliente .agenda-item p { margin:0 0 5px; color:#d4d7dd; font-size:.88rem; }
+    #horarios-cliente .agenda-actions { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    #horarios-cliente .tag { display:inline-flex; padding:3px 8px; border-radius:999px; border:1px solid #4e5562; color:#ddd; font-size:.76rem; }
+    #horarios-cliente .tag.full { border-color:#7b5d40; color:#ffd7ab; }
+    #horarios-cliente .tag.expired { border-color:#636a78; color:#c7d0df; }
+    #horarios-cliente .tag.mine { border-color:#3c8cc6; color:#aee0ff; }
+    #horarios-cliente .horarios-empty { margin:0; padding:12px; border:1px dashed #3a3f49; border-radius:10px; color:#cfd3dc; background:rgba(21,24,30,.82); }
+    #horarios-cliente .hidden { display:none !important; }
+    #horarios-cliente .mis-reservas-wrap { display:grid; gap:12px; }
+    #horarios-cliente .reservas-bloque h3 { margin:0 0 8px; color:#fff; }
+    #horarios-cliente .reserva-item { background:#181a1f; border:1px solid #2f333c; border-radius:10px; padding:10px; display:grid; gap:6px; }
+    #horarios-cliente .reserva-item p { margin:0; color:#d0d4dc; font-size:.9rem; }
+    #horarios-cliente .modal-overlay { position:fixed; inset:0; display:grid; place-items:center; padding:14px; background:rgba(0,0,0,.62); z-index:12000; }
+    #horarios-cliente .modal-overlay[hidden] { display:none !important; }
+    #horarios-cliente .modal { width:min(620px,100%); max-height:90vh; border-radius:12px; display:flex; flex-direction:column; overflow:hidden; }
+    #horarios-cliente .modal-header { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; border-bottom:1px solid #2d3139; position:sticky; top:0; background:rgba(12,12,15,.96); z-index:1; }
+    #horarios-cliente .modal-header h3 { margin:0; color:#fff; }
+    #horarios-cliente .modal-body { padding:12px 14px; overflow:auto; color:#dbe0ea; }
+    #horarios-cliente .modal-actions { padding:10px 14px; border-top:1px solid #2d3139; display:flex; justify-content:flex-end; gap:8px; position:sticky; bottom:0; background:rgba(12,12,15,.96); }
+    #horarios-cliente .boton-principal { background:linear-gradient(110deg,#c91e2a,#a31723); border-color:#c83b46; }
+    @media (max-width:900px) {
+      #horarios-cliente .horarios-layout { grid-template-columns:1fr; }
+      #horarios-cliente .agenda-list { max-height:none; }
+    }
+    @media (max-width:430px) {
+      #horarios-cliente .cal-grid { gap:5px; }
+      #horarios-cliente .cal-day { min-height:54px; padding:4px 1px; }
+      #horarios-cliente .cal-day .num { font-size:.83rem; }
+      #horarios-cliente .cal-day .count { font-size:.62rem; }
+      #horarios-cliente .horarios-filtros select { min-width:190px; }
+    }
+  </style>
+</head>
+<body class='fondo-gimnasio-rojo horarios-fondo-local'>
+  <header class='site-header' aria-label='Encabezado del sitio'></header>
+  <main>
+    <section id='horarios-cliente' class='seccion horarios-principal'>
+      <div class='contenedor'>
+        <div class='pagina-intro-compacta'>
+          <h1 id='horarios-titulo'>Horarios</h1>
+          <p>Elegí tu día, revisá sesiones disponibles y gestioná tus reservas.</p>
+        </div>
+        <div class='horarios-tabs' role='tablist' aria-label='Vista de horarios'>
+          <button type='button' id='tab-calendario' role='tab' aria-controls='vista-calendario' aria-selected='true'>Calendario</button>
+          <button type='button' id='tab-mis-reservas' role='tab' aria-controls='vista-mis-reservas' aria-selected='false'>Mis reservas</button>
+        </div>
+
+        <div id='vista-calendario' role='tabpanel'>
+          <div class='horarios-filtros'>
+            <select id='horarios-filtro-servicio' aria-label='Filtrar por servicio'>
+              <option value=''>Todos los servicios</option>
+            </select>
+            <button type='button' class='boton boton-secundario boton-pequeno' id='mes-anterior' aria-label='Mes anterior'>◀</button>
+            <button type='button' class='boton boton-secundario boton-pequeno' id='ir-hoy'>Hoy</button>
+            <button type='button' class='boton boton-secundario boton-pequeno' id='mes-siguiente' aria-label='Mes siguiente'>▶</button>
+            <span id='horarios-estado' class='detalle' aria-live='polite'></span>
+          </div>
+
+          <div class='horarios-layout'>
+            <div class='horarios-card'>
+              <div class='cal-head'>
+                <h2 id='mes-label'>Mes</h2>
+              </div>
+              <div id='cal-grid' class='cal-grid' role='grid' aria-label='Calendario mensual'></div>
+            </div>
+
+            <div class='horarios-card'>
+              <div class='agenda-head'>
+                <h3 id='agenda-fecha'>Fecha</h3>
+                <p id='agenda-total'>0 sesiones</p>
+              </div>
+              <div id='agenda-list' class='agenda-list'></div>
+              <div class='pagination' id='agenda-pagination-wrap' hidden>
+                <span id='agenda-pagination-summary'>Mostrando 0–0 de 0</span>
+                <div class='pagination-nav'>
+                  <button type='button' class='boton boton-secundario boton-pequeno' id='agenda-pagination-prev'>Anterior</button>
+                  <span id='agenda-pagination-pageinfo'>Página 1 de 1</span>
+                  <button type='button' class='boton boton-secundario boton-pequeno' id='agenda-pagination-next'>Siguiente</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id='vista-mis-reservas' class='hidden' role='tabpanel'>
+          <div class='mis-reservas-wrap'>
+            <div class='reservas-bloque'>
+              <h3>Próximas reservas</h3>
+              <div id='reservas-proximas'></div>
+              <div class='pagination' id='reservas-proximas-pagination-wrap' hidden>
+                <span id='reservas-proximas-pagination-summary'>Mostrando 0–0 de 0</span>
+                <div class='pagination-nav'>
+                  <button type='button' class='boton boton-secundario boton-pequeno' id='reservas-proximas-pagination-prev'>Anterior</button>
+                  <span id='reservas-proximas-pagination-pageinfo'>Página 1 de 1</span>
+                  <button type='button' class='boton boton-secundario boton-pequeno' id='reservas-proximas-pagination-next'>Siguiente</button>
+                </div>
+              </div>
+            </div>
+            <div class='reservas-bloque'>
+              <h3>Historial</h3>
+              <div id='reservas-historial'></div>
+              <div class='pagination' id='reservas-historial-pagination-wrap' hidden>
+                <span id='reservas-historial-pagination-summary'>Mostrando 0–0 de 0</span>
+                <div class='pagination-nav'>
+                  <button type='button' class='boton boton-secundario boton-pequeno' id='reservas-historial-pagination-prev'>Anterior</button>
+                  <span id='reservas-historial-pagination-pageinfo'>Página 1 de 1</span>
+                  <button type='button' class='boton boton-secundario boton-pequeno' id='reservas-historial-pagination-next'>Siguiente</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id='horarios-modal' class='modal-overlay' hidden>
+        <div class='modal' role='dialog' aria-modal='true' aria-labelledby='horarios-modal-titulo'>
+          <div class='modal-header'>
+            <h3 id='horarios-modal-titulo'>Detalle</h3>
+            <button type='button' class='boton boton-secundario boton-pequeno' id='horarios-modal-cerrar' aria-label='Cerrar'>✕</button>
+          </div>
+          <div id='horarios-modal-body' class='modal-body'></div>
+          <div id='horarios-modal-actions' class='modal-actions'></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class='site-footer' aria-label='Pie de página'></footer>
+  <script src='js/carrito-store.js?v=20261111-3' defer></script>
+  <script src='js/app.js?v=20261112-5' defer></script>
+  <script src='js/horarios-cliente.js?v=20261112-1' defer></script>
+  <script src='js/site-info.js?v=20261112-5' defer></script>
+</body>
+</html>

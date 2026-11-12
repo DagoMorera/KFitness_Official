@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>KFitness - Historial de progreso</title>
+  <link rel='stylesheet' href='css/estilos.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/perfil.css?v=20261112-5'>
+  <link rel='stylesheet' href='css/responsive.css?v=20261112-5'>
+</head>
+<body class='fondo-gimnasio-rojo perfil-fondo'>
+  <header class='site-header' aria-label='Encabezado del sitio'></header>
+  <main>
+    <section class='seccion historial-progreso-principal' aria-labelledby='historial-progreso-titulo'>
+      <div class='contenedor'>
+        <div class='tarjeta'>
+          <div class='historial-progreso-encabezado'>
+            <div>
+              <h1 id='historial-progreso-titulo'>Historial de progreso</h1>
+              <p class='historial-progreso-estado'>Consultá y editá tus mediciones de la más reciente a la más antigua.</p>
+            </div>
+            <a href='perfil.html?seccion=perfil-progreso#perfil-progreso' class='boton boton-secundario'>Volver a Mi progreso</a>
+          </div>
+          <div id='historial-progreso-lista' class='historial-progreso-grid'></div>
+          <div class='historial-progreso-paginacion' id='historial-progreso-paginacion' hidden>
+            <span id='historial-progreso-paginacion-info' class='historial-progreso-estado'>Página 1 de 1</span>
+            <div class='historial-progreso-paginacion-controles'>
+              <button type='button' class='boton boton-secundario' id='historial-progreso-prev'>Anterior</button>
+              <button type='button' class='boton boton-secundario' id='historial-progreso-next'>Siguiente</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id='progreso-medicion-modal' class='perfil-cancelar-reserva-overlay perfil-progreso-modal-overlay' role='dialog' aria-modal='true' aria-labelledby='progreso-medicion-titulo' hidden>
+    <div class='perfil-cancelar-reserva-panel perfil-progreso-modal-panel'>
+      <form id='form-progreso-medicion' class='formulario perfil-progreso-form' novalidate>
+        <h3 id='progreso-medicion-titulo'>Editar registro</h3>
+        <input type='hidden' id='progreso-id'>
+        <div class='perfil-form-grid'>
+          <div class='perfil-form-campo'>
+            <label for='progreso-fecha'>Fecha</label>
+            <input type='date' id='progreso-fecha' name='fecha' required>
+          </div>
+          <div class='perfil-form-campo'>
+            <label for='progreso-peso'>Peso (kg)</label>
+            <input type='text' id='progreso-peso' name='pesoKg' inputmode='decimal' placeholder='Ej. 72,5' required>
+          </div>
+          <div class='perfil-form-campo'>
+            <label for='progreso-cintura'>Cintura (cm)</label>
+            <input type='text' id='progreso-cintura' name='cinturaCm' inputmode='decimal' placeholder='Opcional'>
+          </div>
+          <div class='perfil-form-campo'>
+            <label for='progreso-cadera'>Cadera (cm)</label>
+            <input type='text' id='progreso-cadera' name='caderaCm' inputmode='decimal' placeholder='Opcional'>
+          </div>
+          <div class='perfil-form-campo'>
+            <label for='progreso-pecho'>Pecho (cm)</label>
+            <input type='text' id='progreso-pecho' name='pechoCm' inputmode='decimal' placeholder='Opcional'>
+          </div>
+          <div class='perfil-form-campo'>
+            <label for='progreso-brazo'>Brazo (cm)</label>
+            <input type='text' id='progreso-brazo' name='brazoCm' inputmode='decimal' placeholder='Opcional'>
+          </div>
+          <div class='perfil-form-campo'>
+            <label for='progreso-muslo'>Muslo (cm)</label>
+            <input type='text' id='progreso-muslo' name='musloCm' inputmode='decimal' placeholder='Opcional'>
+          </div>
+        </div>
+        <div class='perfil-progreso-acciones'>
+          <button type='submit' class='boton boton-principal' id='progreso-guardar-btn'>Guardar corrección</button>
+          <button type='button' class='boton boton-secundario' id='progreso-cancelar-edicion'>Cancelar</button>
+        </div>
+        <p class='mensaje-formulario' id='progreso-medicion-mensaje' aria-live='polite'></p>
+      </form>
+    </div>
+  </div>
+
+  <script src='js/app.js?v=20261112-5' defer></script>
+  <script src='js/autenticacion.js?v=20261001-2' defer></script>
+  <script src='js/historial-progreso.js?v=20261112-5' defer></script>
+  <script src='js/site-info.js?v=20261112-5' defer></script>
+</body>
+</html>
