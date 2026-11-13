@@ -1995,3 +1995,87 @@ body.modal-open {
   margin-left: 8px;
   font-weight: 700;
 }
+/* ==========================================
+   KFITNESS - DETALLE DE SERVICIOS
+   PANEL LATERAL PREMIUM
+========================================== */
+
+/* Fondo oscuro */
+#servicio-detalle-modal.perfil-modal-overlay {
+    justify-content: flex-end;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(6px);
+}
+
+/* Panel lateral */
+#servicio-detalle-modal .perfil-modal {
+    width: min(480px, 100%);
+    max-width: none;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 32px;
+    border-radius: 22px 0 0 22px;
+    background: linear-gradient( 160deg, #19191c 0%, #0c0c0e 75% );
+    border-left: 2px solid #ED1C2E;
+    box-shadow: -20px 0 70px rgba(0, 0, 0, 0.65), -5px 0 35px rgba(237, 28, 46, 0.08);
+    overflow-y: auto;
+    animation: kfitnessPanelEntrada 0.4s ease-out;
+}
+
+/* Encabezado */
+#servicio-detalle-modal .perfil-modal-header {
+    padding-bottom: 18px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Títulos */
+#servicio-detalle-modal .perfil-modal h2,
+#servicio-detalle-modal .perfil-modal h3 {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* Texto */
+#servicio-detalle-modal .perfil-modal p {
+    color: #c5c5ca;
+    line-height: 1.7;
+}
+
+/* Botones */
+#servicio-detalle-modal .perfil-modal-actions {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Animación de entrada */
+@keyframes kfitnessPanelEntrada {
+    from {
+        opacity: 0.5;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Diseño para celulares */
+@media (max-width: 600px) {
+    #servicio-detalle-modal .perfil-modal {
+        width: 100%;
+        padding: 24px 20px;
+        border-radius: 0;
+    }
+}
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    #servicio-detalle-modal .perfil-modal {
+        animation: none;
+    }
+}
